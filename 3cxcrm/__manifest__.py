@@ -20,7 +20,7 @@
     'version': '15.0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'partner_firstname'],
+    'depends': ['base','crm', 'partner_firstname'],
     'license' : 'AGPL-3',
    
 
