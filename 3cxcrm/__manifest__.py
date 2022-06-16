@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "3cxcrm",
+    'name': "3CX CRM lookup",
 
     'summary': """
         lookup for incoming call from 3cx to odoo""",
@@ -9,6 +9,7 @@
         Look up contact or lead from 3cx incoming call
     """,
 
+    "images": ["static/description/banner.png"],
     'author': "FL1 sro",
     'website': "https://fl1.cz",
 
@@ -21,6 +22,7 @@
     # any module necessary for this one to work correctly
     'depends': ['base', 'partner_firstname'],
     'license' : 'AGPL-3',
+   
 
     # always loaded
     'data': [
