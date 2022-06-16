@@ -31,7 +31,6 @@ To use this module, you need to:
 * require partner_firstname from `partner-contact <https://github.com/OCA/partner-contact/tree/15.0>`_.
 * query database odoo on incoming call.
 * this require 3cx crm lookup to be configured.
-* upload xml on 3cx PBX inside the folder upload_on_3cx_pbx
 
 3CX PBX
 
