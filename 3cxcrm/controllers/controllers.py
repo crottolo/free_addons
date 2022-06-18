@@ -47,7 +47,7 @@ class Odoo3cxCrm(http.Controller):
                 if res_partner:
                     print('res_partner', res_partner)
                     b = res_partner
-                    link = f"web#id={b.id}&cids=1&menu_id=111&action=140&model=res.partner&view_type=form"
+                    link = f"web#id={b.id}&model=res.partner&view_type=form"
                     company = ""
                     if b.company_type == "company":
                         company = b.name
@@ -71,9 +71,9 @@ class Odoo3cxCrm(http.Controller):
                     print('crm_lead',crm_lead)
                     b = crm_lead
                     if b.type == 'lead':
-                        link = f"web#id={b.id}&menu_id=133&cids=1&action=189&model=crm.lead&view_type=form"
+                        link = f"web#id={b.id}&model=crm.lead&view_type=form"
                     elif b.type == 'opportunity':
-                        link = f"web#id={b.id}&menu_id=133&cids=1&action=192&model=crm.lead&view_type=form"
+                        link = f"web#id={b.id}&model=crm.lead&view_type=form"
 
                     data={
                         'partner_id': f"L{b.id}",
