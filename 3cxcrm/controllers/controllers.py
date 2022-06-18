@@ -39,7 +39,7 @@ class Odoo3cxCrm(http.Controller):
                 return BadRequest('Wrong APIKEY')
             else:
                 
-                res_partner = request.env['res.partner'].with_user(1).search([('phone_mobile_search','ilike', number)],limit=1)
+                res_partner = request.env['res.partner'].with_user(1).search([('phone_sanitized','ilike', number)],limit=1)
                 crm_lead = request.env['crm.lead'].with_user(1).search([('phone_mobile_search','ilike', number)],limit=1)
                 
 
