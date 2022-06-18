@@ -22,6 +22,7 @@ Configuration
 =============
 
 * Go to 'Settings / Technical / System parameters', and add the apikey for autentication on 3cx.
+
 Bugfix
 =============
 link to open form res partner and crm lead.
