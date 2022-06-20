@@ -27,6 +27,7 @@ Bugfix
 =============
 link to open form res partner and crm lead.
 
+* 06/20/2022 : bug fix to action_id on link to open form
 
 
 Usage

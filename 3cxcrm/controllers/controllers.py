@@ -41,13 +41,14 @@ class Odoo3cxCrm(http.Controller):
                 
                 res_partner = request.env['res.partner'].with_user(1).search([('phone_sanitized','ilike', number)],limit=1)
                 crm_lead = request.env['crm.lead'].with_user(1).search([('phone_mobile_search','ilike', number)],limit=1)
-                
+                partner_action_id = request.env.ref('contacts.action_contacts')
+                crm_action_id = request.env.ref('crm.crm_lead_all_leads')
 
                 
                 if res_partner:
                     print('res_partner', res_partner)
                     b = res_partner
-                    link = f"web#id={b.id}&model=res.partner&view_type=form"
+                    link = f"web#id={b.id}&model=res.partner&view_type=form&action={partner_action_id.id}"
                     company = ""
                     if b.company_type == "company":
                         company = b.name
@@ -71,9 +72,9 @@ class Odoo3cxCrm(http.Controller):
                     print('crm_lead',crm_lead)
                     b = crm_lead
                     if b.type == 'lead':
-                        link = f"web#id={b.id}&model=crm.lead&view_type=form"
+                        link = f"web#id={b.id}&model=crm.lead&view_type=form&action={crm_action_id.id}"
                     elif b.type == 'opportunity':
-                        link = f"web#id={b.id}&model=crm.lead&view_type=form"
+                        link = f"web#id={b.id}&model=crm.lead&view_type=form&action={crm_action_id.id}"
 
                     data={
                         'partner_id': f"L{b.id}",
