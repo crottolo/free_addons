@@ -45,6 +45,9 @@ To use this module, you need to:
 .. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf2.png?raw=true
 .. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf3.png?raw=true
 .. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf4.png?raw=true
+.. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf5.png?raw=true
+.. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf6.png?raw=true
+.. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf7.png?raw=true
 
 
 Bug Tracker
