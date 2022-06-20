@@ -5,9 +5,7 @@
     'summary': """
         lookup for incoming call from 3cx to odoo""",
 
-    'description': """
-        Look up contact or lead from 3cx incoming call
-    """,
+    
 
     "images": ["static/description/banner.png"],
     'author': "FL1 sro",
