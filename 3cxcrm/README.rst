@@ -35,16 +35,16 @@ Usage
 
 To use this module, you need to:
 
-* require partner_firstname from `partner-contact <https://github.com/OCA/partner-contact/tree/15.0>`_.
+* require partner_firstname from `partner-contact <https://github.com/OCA/partner-contact/tree/14.0>`_.
 * query database odoo on incoming call.
 * this require 3cx crm lookup to be configured.
 
 3CX PBX
 
-.. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf1.png?raw=true
-.. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf2.png?raw=true
-.. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf3.png?raw=true
-.. image:: https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf4.png?raw=true
+.. image:: https://github.com/crottolo/free_addons/blob/14.0/images/3cx_conf1.png?raw=true
+.. image:: https://github.com/crottolo/free_addons/blob/14.0/images/3cx_conf2.png?raw=true
+.. image:: https://github.com/crottolo/free_addons/blob/14.0/images/3cx_conf3.png?raw=true
+.. image:: https://github.com/crottolo/free_addons/blob/14.0/images/3cx_conf4.png?raw=true
 
 
 Bug Tracker
