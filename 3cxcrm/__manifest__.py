@@ -5,7 +5,9 @@
     'summary': """
         lookup for incoming call from 3cx to odoo""",
 
-    
+    'description': """
+        Look up contact or lead from 3cx incoming call
+    """,
 
     "images": ["static/description/banner.png"],
     'author': "FL1 sro",
@@ -15,7 +17,7 @@
     
     # for the full list
     'category': 'Productivity',
-    'version': '15.0.1',
+    'version': '14.0.1',
 
     # any module necessary for this one to work correctly
     'depends': ['base','crm', 'partner_firstname'],
