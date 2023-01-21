@@ -54,21 +54,21 @@ Configuration users
 
 inside the preferences of the user you can set the chatGPT bot as default bot.
 
-.. image:: static/description/images/image2.png
+.. image:: images/image2.png
 
 **You can activate or deactivate the chatGPT bot for each user.**
 **You can activate or deactivate the chatGPT directly in the chat window.** 
 
 You can type: ``#enable`` or ``#disable``
 
-.. image:: static/description/images/image3.png
+.. image:: images/image3.png
 
 Example
 =======
 
-.. image:: static/description/images/image4.png
+.. image:: images/image4.png
 
-.. image:: static/description/images/gif_chat.gif
+.. image:: images/gif_chat.gif
 
 Bug Tracker
 ===========
