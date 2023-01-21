@@ -27,7 +27,8 @@ Configuration
 
 * Go to 'Settings / chatGPT bot and set an API key'.
 * you can retrive an api Key from https://beta.openai.com/ and create a new key here: https://beta.openai.com/account/api-keys
-
+* This module require the offical library openai
+* you install with ``pip install openai``
 
 Bugfix
 =============
@@ -46,9 +47,6 @@ To use this module, you need to:
 * Then restart the server and see a logs file in server console.
 
 
-This module require the offical library openai
-
-you install with ``pip install openai``
 
 .. image:: images/image1.png
 
