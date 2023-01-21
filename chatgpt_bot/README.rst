@@ -45,7 +45,7 @@ To use this module, you need to:
 * ``server_wide_modules = base,web,queue_job`` add ``queue_job``
 * Then restart the server and see a logs file in server console.
 
-.. image:: static/description/images/image1.png
+.. image:: images/image1.png
 
 **This module is required for not blocking the server when the API is called.**
 
