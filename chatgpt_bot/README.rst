@@ -41,7 +41,7 @@ Usage
 
 To use this module, you need to:
 
-* require queque_job from `queue_job <https://github.com/OCA/queue/tree/15.0/queue_job>`_.
+* require queque_job from `queue_job <https://github.com/OCA/queue/tree/14.0/queue_job>`_.
 * After the installation to this module, you must change the configuration and add this on the configuration file:
 * ``server_wide_modules = base,web,queue_job`` add ``queue_job``
 * Then restart the server and see a logs file in server console.
