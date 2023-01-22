@@ -25,7 +25,7 @@
     'license': 'AGPL-3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'website', 'mail', 'queue_job'],
+    'depends': ['base', 'mail', 'queue_job'],
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
