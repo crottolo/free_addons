@@ -42,10 +42,13 @@ class Odoo3cxCrm(http.Controller):
                 res_partner = request.env['res.partner'].with_user(1).search([('phone_sanitized','ilike', number)],limit=1)
                 crm_lead = request.env['crm.lead'].with_user(1).search([('phone_mobile_search','ilike', number)],limit=1)
 <<<<<<< HEAD
+<<<<<<< HEAD
                 
                 partner_action_id = request.env.ref('contacts.action_contacts')
                 crm_action_id = request.env.ref('crm.crm_lead_all_leads')
 =======
+=======
+>>>>>>> 55d71fc232d9b53f23c6f8bc44c94c92ca4be823
                 partner_action_id = request.env.ref('contacts.action_contacts')
                 crm_action_id = request.env.ref('crm.crm_lead_all_leads')
 

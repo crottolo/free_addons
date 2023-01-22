@@ -3,18 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <title>README.rst</title>
 <style type="text/css">
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
+:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
 
-See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
 */
 
@@ -363,50 +363,59 @@ ul.auto-toc {
 <div class="document">
 
 
-<div class="section" id="cx-odoo-lookup">
-<h1>3cx Odoo Lookup</h1>
-<p><a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a></p>
-<p>This module look up incoming call on 3cx to query odoo Leads and contacts to provide client name and info from odoo</p>
+<div class="section" id="openai-chatgpt-odoo-module">
+<h1>OpenAI ChatGPT Odoo Module</h1>
+<p><a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a></p>
+<dl class="docutils">
+<dt>This Odoo module allows for seamless integration with the OpenAI ChatGPT API,</dt>
+<dd>providing advanced natural language processing capabilities within the Odoo platform.
+With this module, users can leverage the power of ChatGPT to generate human-like text,
+perform language translation, and more.
+It utilizes API calls to communicate with the OpenAI service,
+making it easy to set up and use.</dd>
+</dl>
 <p><strong>Table of contents</strong></p>
 </div>
 <div class="section" id="configuration">
 <h1>Configuration</h1>
 <ul class="simple">
-<li>Go to 'Settings / Technical / System parameters', and add the apikey for autentication on 3cx.</li>
+<li>Go to 'Settings / chatGPT bot and set an API key'.</li>
+<li>you can retrive an api Key from <a class="reference external" href="https://beta.openai.com/">https://beta.openai.com/</a> and create a new key here: <a class="reference external" href="https://beta.openai.com/account/api-keys">https://beta.openai.com/account/api-keys</a></li>
+<li>This module require the offical library openai</li>
+<li>you install with <tt class="docutils literal">pip install openai</tt></li>
 </ul>
 </div>
 <div class="section" id="bugfix">
 <h1>Bugfix</h1>
-<p>link to open form res partner and crm lead.</p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 <ul class="simple">
-<li>06/20/2022 : bug fix to action_id on link to open form</li>
+<li>fix error when no api key is set</li>
 </ul>
->>>>>>> 9e341cc7a08778b3d96a420966763ecfebc47c46
-=======
-<ul class="simple">
-<li>06/20/2022 : bug fix to action_id on link to open form</li>
-</ul>
->>>>>>> 55d71fc232d9b53f23c6f8bc44c94c92ca4be823
 </div>
 <div class="section" id="usage">
 <h1>Usage</h1>
 <p>To use this module, you need to:</p>
 <ul class="simple">
-<li>require partner_firstname from <a class="reference external" href="https://github.com/OCA/partner-contact/tree/15.0">partner-contact</a>.</li>
-<li>query database odoo on incoming call.</li>
-<li>this require 3cx crm lookup to be configured.</li>
+<li>require queque_job from <a class="reference external" href="https://github.com/OCA/queue/tree/14.0/queue_job">queue_job</a>.</li>
+<li>After the installation to this module, you must change the configuration and add this on the configuration file:</li>
+<li><tt class="docutils literal">server_wide_modules = base,web,queue_job</tt> add <tt class="docutils literal">queue_job</tt></li>
+<li>Then restart the server and see a logs file in server console.</li>
 </ul>
-<p>3CX PBX</p>
-<img alt="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf1.png?raw=true" src="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf1.png?raw=true" />
-<img alt="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf2.png?raw=true" src="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf2.png?raw=true" />
-<img alt="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf3.png?raw=true" src="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf3.png?raw=true" />
-<img alt="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf4.png?raw=true" src="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf4.png?raw=true" />
-<img alt="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf5.png?raw=true" src="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf5.png?raw=true" />
-<img alt="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf6.png?raw=true" src="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf6.png?raw=true" />
-<img alt="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf7.png?raw=true" src="https://github.com/crottolo/free_addons/blob/15.0/images/3cx_conf7.png?raw=true" />
+<img alt="images/image1.png" src="images/image1.png" />
+<p><strong>This module is required for not blocking the server when the API is called.</strong></p>
+</div>
+<div class="section" id="configuration-users">
+<h1>Configuration users</h1>
+<p>inside the preferences of the user you can set the chatGPT bot as default bot.</p>
+<img alt="images/image2.png" src="images/image2.png" />
+<p><strong>You can activate or deactivate the chatGPT bot for each user.</strong>
+<strong>You can activate or deactivate the chatGPT directly in the chat window.</strong></p>
+<p>You can type: <tt class="docutils literal">#enable</tt> or <tt class="docutils literal">#disable</tt></p>
+<img alt="images/image3.png" src="images/image3.png" />
+</div>
+<div class="section" id="example">
+<h1>Example</h1>
+<img alt="images/image4.png" src="images/image4.png" />
+<img alt="images/gif_chat.gif" src="images/gif_chat.gif" />
 </div>
 <div class="section" id="bug-tracker">
 <h1>Bug Tracker</h1>
@@ -432,7 +441,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2>Maintainers</h2>
 <p>This module is maintained by the FL1.</p>
-<a class="reference external image-reference" href="https://fl1.cz"><img alt="Odoo Community Association" src="https://fl1.cz/web/image/website/7/logo/FL1?unique=d1f5119" style="width: 50px;" /></a>
+<a class="reference external image-reference" href="https://fl1.cz"><img alt="Odoo Fl1 sro" src="https://fl1.cz/web/image/1156-2d6fce00/FL1%20logo%20def.png" style="width: 50px;" /></a>
 </div>
 </div>
 </div>
