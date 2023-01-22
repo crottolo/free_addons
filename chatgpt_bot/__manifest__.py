@@ -39,7 +39,7 @@
     "external_dependencies": {
         "python" : ["openai"]
         },
-    'price': 10.00,
+    'price': 0.00,
     'currency': 'EUR',
 
 }
