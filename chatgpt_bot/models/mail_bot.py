@@ -120,8 +120,9 @@ class ChatGptBot(models.AbstractModel):
         
         if odoobot_state == 'chatgpt' and not msg_sys:
             print(odoobot_state)
-            res = self.with_delay().risposta(record, body)
-            return res
+            self.with_delay().risposta(record, body)
+            print("res::::::::::", res)
+            return 
         else:
             return res
 
