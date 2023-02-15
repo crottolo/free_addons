@@ -387,6 +387,8 @@ making it easy to set up and use.</dd>
 </li>
 <li><p class="first">you install with <tt class="docutils literal">pip install openai</tt></p>
 </li>
+<li><p class="first">Now you can use the chatGPT bot in the chat window.</p>
+</li>
 <li><p class="first">you can set the default bot in the file <tt class="docutils literal">mail_bot.py</tt></p>
 <blockquote>
 <p>( f&quot;if they ask you who you are, your name is OdooBot.n&quot;
@@ -419,6 +421,12 @@ f&quot;text latest question:n&quot;)</p>
 <li>After the installation to this module, you must change the configuration and add this on the configuration file:</li>
 <li><tt class="docutils literal">server_wide_modules = base,web,queue_job</tt> add <tt class="docutils literal">queue_job</tt></li>
 <li>Then restart the server and see a logs file in server console.</li>
+</ul>
+<p><strong>History Context</strong></p>
+<ul class="simple">
+<li>Now you can use the chatGPT with latest conversation and maintain the context of the conversation.</li>
+<li>default pass a 10 latest conversation and some data in the context.</li>
+<li>The conversation is natural and contextual.</li>
 </ul>
 <img alt="images/image1.png" src="images/image1.png" />
 <p><strong>This module is required for not blocking the server when the API is called.</strong></p>

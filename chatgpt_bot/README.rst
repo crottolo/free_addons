@@ -29,6 +29,7 @@ Configuration
 * you can retrive an api Key from https://beta.openai.com/ and create a new key here: https://beta.openai.com/account/api-keys
 * This module require the offical library openai
 * you install with ``pip install openai``
+* Now you can use the chatGPT bot in the chat window.
 * you can set the default bot in the file ``mail_bot.py``
   
 
@@ -65,6 +66,13 @@ To use this module, you need to:
 * After the installation to this module, you must change the configuration and add this on the configuration file:
 * ``server_wide_modules = base,web,queue_job`` add ``queue_job``
 * Then restart the server and see a logs file in server console.
+
+**History Context**
+
+- Now you can use the chatGPT with latest conversation and maintain the context of the conversation.
+- default pass a 10 latest conversation and some data in the context.
+- The conversation is natural and contextual.
+
 
 
 

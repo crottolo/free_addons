@@ -119,6 +119,9 @@ class ChatGptBot(models.AbstractModel):
         
         
         if odoobot_state == 'chatgpt' and not msg_sys:
+            lang = self.env.user.lang 
+            lang = self.env['res.lang'].search([('code', '=', lang)]).name
+            print("lang::::::::", lang)
             app = self.env['ir.module.module'].search([('state', '=', 'installed'), ('application', '=',True)]).mapped('name')
             pre = ( f"if they ask you who you are, your name is OdooBot.\n"
                     f"the system when type is ODOO.\n"
@@ -129,15 +132,13 @@ class ChatGptBot(models.AbstractModel):
                     f"Now is {datetime.datetime.now()}.\n"
                     f"preventivi a system: {10}.\n"
                     f"number of contacts in the system: {200}.\n"
-                    f"The answers must be in ITALIAN.\n"
                     f"The apps installed is {app}\n"
                     
-                    f"the previous conversation is:[{old_conv}].\n"
-                    f"text latest question:\n"
-                    f"{body}\n"
+                    f"the previous conversation is:[{old_conv}].\n\n\n"
+                    
                     )
             # prepare_conv =f'my name is {self.env.user.name}.  work for {self.env.company.name}.\n Your answer is from "OdooBOT" and reply ALWAYS in ITALIAN.\n\n the previous conversation is:[{old_conv}]'
-            body = pre
+            body = pre + f"{body}\nThe answers must be in {lang}"
             # print("body::::::::::", body)
             self.with_delay().risposta(record, body)
             # print("res::::::::::", res)
