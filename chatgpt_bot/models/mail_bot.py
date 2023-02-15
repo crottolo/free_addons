@@ -165,7 +165,7 @@ class ChatGptBot(models.AbstractModel):
             stop=[" Human:", " AI:"],
             echo = False,
             )
-        gpt = "<strong>OpenAI: </strong>"+(response['choices'][0]['text'])
+        gpt = (response['choices'][0]['text'])
         odoobot_id = self.env['ir.model.data']._xmlid_to_res_id("base.partner_root")
         mod_response = self.env['mail.channel'].with_context(chatgpt=True).browse(record.id).message_post(body=gpt, message_type='comment', subtype_xmlid='mail.mt_comment', author_id=odoobot_id)
         return mod_response
