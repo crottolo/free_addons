@@ -73,7 +73,8 @@ To use this module, you need to:
 - default pass a 10 latest conversation and some data in the context.
 - The conversation is natural and contextual.
 
-
+**Added support for same user language**
+- you can set the language in the user preferences.
 
 
 .. image:: images/image1.png
