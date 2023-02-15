@@ -7,7 +7,7 @@ import aiohttp
 import asyncio
 import requests
 from bs4 import BeautifulSoup as BS
-
+import datetime
 
 class ChatGptBot(models.AbstractModel):
     _inherit = 'mail.bot'
@@ -98,7 +98,7 @@ class ChatGptBot(models.AbstractModel):
 
         
         get_last_message = self.env['mail.channel'].search([('id', '=', record.id)]).message_ids.ids
-        messages = self.env['mail.message'].search([('id', 'in', get_last_message)], order='id desc', limit=2).mapped('body')
+        messages = self.env['mail.message'].search([('id', 'in', get_last_message)], order='id desc', limit=10).mapped('body')
         old_conv = ""
         for msg in messages:
             if msg:
@@ -119,9 +119,28 @@ class ChatGptBot(models.AbstractModel):
         
         
         if odoobot_state == 'chatgpt' and not msg_sys:
-            print(odoobot_state)
+            app = self.env['ir.module.module'].search([('state', '=', 'installed'), ('application', '=',True)]).mapped('name')
+            pre = ( f"if they ask you who you are, your name is OdooBot.\n"
+                    f"the system when type is ODOO.\n"
+                    f"Insert emoji to indicate your availability status.\n"
+                    f"Respond in a friendly and concise manner.\n"
+                    f"The company I work for is {self.env.company.name}.\n"
+                    f"My name is {self.env.user.name}.\n"
+                    f"Now is {datetime.datetime.now()}.\n"
+                    f"preventivi a system: {10}.\n"
+                    f"number of contacts in the system: {200}.\n"
+                    f"The answers must be in ITALIAN.\n"
+                    f"The apps installed is {app}\n"
+                    
+                    f"the previous conversation is:[{old_conv}].\n"
+                    f"text latest question:\n"
+                    f"{body}\n"
+                    )
+            # prepare_conv =f'my name is {self.env.user.name}.  work for {self.env.company.name}.\n Your answer is from "OdooBOT" and reply ALWAYS in ITALIAN.\n\n the previous conversation is:[{old_conv}]'
+            body = pre
+            # print("body::::::::::", body)
             self.with_delay().risposta(record, body)
-            print("res::::::::::", res)
+            # print("res::::::::::", res)
             return 
         else:
             return res

@@ -29,10 +29,28 @@ Configuration
 * you can retrive an api Key from https://beta.openai.com/ and create a new key here: https://beta.openai.com/account/api-keys
 * This module require the offical library openai
 * you install with ``pip install openai``
-
+* you can set the default bot in the file ``mail_bot.py``
+```python
+pre = ( f"if they ask you who you are, your name is OdooBot.\n"
+                    f"the system when type is ODOO.\n"
+                    f"Insert emoji to indicate your availability status.\n"
+                    f"Respond in a friendly and concise manner.\n"
+                    f"The company I work for is {self.env.company.name}.\n"
+                    f"My name is {self.env.user.name}.\n"
+                    f"Now is {datetime.datetime.now()}.\n"
+                    f"preventivi a system: {10}.\n"
+                    f"number of contacts in the system: {200}.\n"
+                    f"The answers must be in ITALIAN.\n"
+                    f"The apps installed is {app}\n"
+                    
+                    f"the previous conversation is:[{old_conv}].\n"
+                    f"text latest question:\n"
+                    )
+```
 Bugfix
 =============
-* fix error when no api key is set
+15/12/2023
+* add support latest conversartion and some data in mail_bot.py
 
 
 
