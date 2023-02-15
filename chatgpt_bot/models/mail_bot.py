@@ -133,9 +133,8 @@ class ChatGptBot(models.AbstractModel):
                     f"preventivi a system: {10}.\n"
                     f"number of contacts in the system: {200}.\n"
                     f"The apps installed is {app}\n"
-                    
-                    f"the previous conversation is:[{old_conv}].\n\n\n"
-                    
+                    f"any source code example put it in the <pre></pre> tag\n"
+                    f"the previous conversation is:[{old_conv}].\n\n\n"                    
                     )
             # prepare_conv =f'my name is {self.env.user.name}.  work for {self.env.company.name}.\n Your answer is from "OdooBOT" and reply ALWAYS in ITALIAN.\n\n the previous conversation is:[{old_conv}]'
             body = pre + f"{body}\nThe answers must be in {lang}"
