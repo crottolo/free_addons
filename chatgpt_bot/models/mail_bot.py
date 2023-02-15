@@ -120,6 +120,8 @@ class ChatGptBot(models.AbstractModel):
         
         if odoobot_state == 'chatgpt' and not msg_sys:
             lang = self.env.user.lang 
+            tz = self.env.user.tz
+            print(tz)
             lang = self.env['res.lang'].search([('code', '=', lang)]).name
             print("lang::::::::", lang)
             app = self.env['ir.module.module'].search([('state', '=', 'installed'), ('application', '=',True)]).mapped('name')
@@ -129,15 +131,15 @@ class ChatGptBot(models.AbstractModel):
                     f"Respond in a friendly and concise manner.\n"
                     f"The company I work for is {self.env.company.name}.\n"
                     f"My name is {self.env.user.name}.\n"
-                    f"Now is {datetime.datetime.now()}.\n"
+                    f"Now is {datetime.datetime.now()};apply this timezone {tz}\n"
                     f"preventivi a system: {10}.\n"
                     f"number of contacts in the system: {200}.\n"
                     f"The apps installed is {app}\n"
-                    f"any source code example put it in the <pre></pre> tag\n"
+                    f"any source code example put it in the <pre></pre> tag,\n"
                     f"the previous conversation is:[{old_conv}].\n\n\n"                    
                     )
             # prepare_conv =f'my name is {self.env.user.name}.  work for {self.env.company.name}.\n Your answer is from "OdooBOT" and reply ALWAYS in ITALIAN.\n\n the previous conversation is:[{old_conv}]'
-            body = pre + f"{body}\nThe answers must be in {lang}"
+            body = pre + f"{body}\nThe answers must be in {lang} and HTML formatted."
             # print("body::::::::::", body)
             self.with_delay().risposta(record, body)
             # print("res::::::::::", res)
