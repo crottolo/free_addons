@@ -52,6 +52,9 @@ Configuration
 
 Bugfix
 =============
+24/02/2023
+* bugfix error in coversation review the last response
+
 15/12/2023
 * add support latest conversartion and some data in mail_bot.py
 
@@ -72,6 +75,7 @@ To use this module, you need to:
 - Now you can use the chatGPT with latest conversation and maintain the context of the conversation.
 - default pass a 10 latest conversation and some data in the context.
 - The conversation is natural and contextual.
+- You can answer: how many company in the system? how many contacts in a system? whats is today?
 
 **Added support for same user language**
 - you can set the language in the user preferences.
