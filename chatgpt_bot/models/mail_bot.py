@@ -2,10 +2,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 import openai
-import json
-import aiohttp
-import asyncio
-import requests
+import pytz
 from bs4 import BeautifulSoup as BS
 import datetime
 
@@ -44,7 +41,8 @@ class ChatGptBot(models.AbstractModel):
         
         get_last_message = self.env['mail.channel'].search([('id', '=', record.id)]).message_ids.ids
         messages = self.env['mail.message'].search([('id', 'in', get_last_message)], order='id desc', limit=10).mapped('body')
-        
+        print("messages::::::::", get_last_message[1:])
+        print("messages::::::::", messages)
         old_conv = tuple()
         for msg in messages: 
             if msg:
@@ -57,6 +55,9 @@ class ChatGptBot(models.AbstractModel):
         if body =="#disable":
             self.env.user.odoobot_state = 'disabled'
             return "ChatGpt disabled"
+        if body =="#clear":
+            self.env['mail.message'].search([('id', 'in', get_last_message[1:])], order='id desc').unlink()
+            return "cleared last 10 messages"
         
         list = {'o_mail_notification', 'o_mail_redirect', 'o_channel_redirect'}
         msg_sys = [ele for ele in list if(ele in body)]
@@ -68,13 +69,16 @@ class ChatGptBot(models.AbstractModel):
         if odoobot_state == 'chatgpt' and not msg_sys:
             lang = self.env.user.lang 
             tz = self.env.user.tz
+            local = pytz.timezone(tz)
+            now = datetime.datetime.strftime(pytz.utc.localize(datetime.datetime.utcnow()).astimezone(local), "%Y-%m-%d %H:%M:%S")
+            print(now)
             lang = self.env['res.lang'].search([('code', '=', lang)]).name
             app = self.env['ir.module.module'].search([('state', '=', 'installed'), ('application', '=',True)]).mapped('name')
-            pre = ( f"YOU ARE OdooBot.\n"
+            pre = ( f"I AM OdooBot.\n"
                     f"the system when type is ODOO 15+\n"
                     f"The company I work for is {self.env.company.name}.\n"
-                    f"I'am is {self.env.user.name}.\n"
-                    f"Now is {datetime.datetime.now()} and convert always to this timezone {tz}\n"
+                    f"You are is {self.env.user.name}.\n"
+                    f"Now is {now}\n"
                     # f"preventivi a system: {10}.\n"
                     f"our have a {ct} contacts and {comp} are companies.\n"
                     f"The apps installed is {app}\n"
@@ -90,7 +94,7 @@ class ChatGptBot(models.AbstractModel):
                     f"The answers must be in {lang} and HTML formatted.\n"\
                     f"The last question [{latest}]"
             
-            print("body::::::::::\n", body)
+            # print("body::::::::::\n", body)
             self.with_delay().risposta(record, body)
             # print("res::::::::::", res)
             return 
@@ -114,7 +118,7 @@ class ChatGptBot(models.AbstractModel):
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
-            stop=[" Human:", " AI:"],
+            # stop=[" Human:", " AI:"],
             echo = False,
             )
         gpt = (response['choices'][0]['text'])
