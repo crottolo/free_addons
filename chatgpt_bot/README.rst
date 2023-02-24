@@ -18,6 +18,8 @@ This Odoo module allows for seamless integration with the OpenAI ChatGPT API,
 				It utilizes API calls to communicate with the OpenAI service, 
 				making it easy to set up and use.
 
+``You can answer: how many company in the system? how many contacts in a system? whats is today?``
+
 **Table of contents**
 
 
