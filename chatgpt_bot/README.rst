@@ -24,10 +24,8 @@ This Odoo module allows for seamless integration with the OpenAI ChatGPT API,
 
 **Table of contents**
 
-
-.. raw:: html
-    
-        <iframe width="560" height="650" src="https://www.youtube.com/embed/8eiaRQZu4II" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+**video**
+* https://www.youtube.com/watch?v=8eiaRQZu4II
 
 Configuration
 =============
