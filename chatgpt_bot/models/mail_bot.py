@@ -40,7 +40,7 @@ class ChatGptBot(models.AbstractModel):
         
         
         get_last_message = self.env['mail.channel'].search([('id', '=', record.id)]).message_ids.ids
-        messages = self.env['mail.message'].search([('id', 'in', get_last_message)], order='id desc', limit=10).mapped('body')
+        messages = self.env['mail.message'].search([('id', 'in', get_last_message)], order='id desc', limit=40).mapped('body')
         
         if body =="#enable":
             self.env.user.odoobot_state = 'chatgpt'
