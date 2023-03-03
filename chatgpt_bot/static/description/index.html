@@ -374,43 +374,25 @@ perform language translation, and more.
 It utilizes API calls to communicate with the OpenAI service,
 making it easy to set up and use.</dd>
 </dl>
-<p><tt class="docutils literal">You can answer: how many company in the system? how many contacts in a system? whats is today?</tt></p>
+<p><tt class="docutils literal">You can answer: how many company in the system? how many contacts in a system? whats is today?</tt>
+&gt; <strong>Add gpt-3.5-turbo model</strong></p>
 <p><strong>Table of contents</strong></p>
-</div>
+<iframe width="560" height="650" src="https://www.youtube.com/embed/8eiaRQZu4II" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
 <div class="section" id="configuration">
 <h1>Configuration</h1>
-<ul>
-<li><p class="first">Go to 'Settings / chatGPT bot and set an API key'.</p>
-</li>
-<li><p class="first">you can retrive an api Key from <a class="reference external" href="https://beta.openai.com/">https://beta.openai.com/</a> and create a new key here: <a class="reference external" href="https://beta.openai.com/account/api-keys">https://beta.openai.com/account/api-keys</a></p>
-</li>
-<li><p class="first">This module require the offical library openai</p>
-</li>
-<li><p class="first">you install with <tt class="docutils literal">pip install openai</tt></p>
-</li>
-<li><p class="first">Now you can use the chatGPT bot in the chat window.</p>
-</li>
-<li><p class="first">you can set the default bot in the file <tt class="docutils literal">mail_bot.py</tt></p>
-<blockquote>
-<p>( f&quot;if they ask you who you are, your name is OdooBot.n&quot;
-f&quot;the system when type is ODOO.n&quot;
-f&quot;Insert emoji to indicate your availability status.n&quot;
-f&quot;Respond in a friendly and concise manner.n&quot;
-f&quot;The company I work for is {self.env.company.name}.n&quot;
-f&quot;My name is {self.env.user.name}.n&quot;
-f&quot;Now is {datetime.datetime.now()}.n&quot;
-f&quot;preventivi a system: {10}.n&quot;
-f&quot;number of contacts in the system: {200}.n&quot;
-f&quot;The answers must be in ITALIAN.n&quot;
-f&quot;The apps installed is {app}n&quot;</p>
-<p>f&quot;the previous conversation is:[{old_conv}].n&quot;
-f&quot;text latest question:n&quot;)</p>
-</blockquote>
-</li>
+<ul class="simple">
+<li>Go to 'Settings / chatGPT bot and set an API key'.</li>
+<li>you can retrive an api Key from <a class="reference external" href="https://beta.openai.com/">https://beta.openai.com/</a> and create a new key here: <a class="reference external" href="https://beta.openai.com/account/api-keys">https://beta.openai.com/account/api-keys</a></li>
+<li>This module require the offical library openai</li>
+<li>you install with <tt class="docutils literal">pip install openai</tt></li>
+<li>Now you can use the chatGPT bot in the chat window.</li>
+<li>you can set the default bot in the file <tt class="docutils literal">mail_bot.py</tt></li>
 </ul>
 </div>
-<div class="section" id="bugfix">
-<h1>Bugfix</h1>
+<div class="section" id="bugfix-and-new-features">
+<h1>Bugfix and new features</h1>
+<p>03/03/2023
+* add support for gpt-3.5-turbo model</p>
 <p>24/02/2023
 * bugfix error in coversation review the last response</p>
 <p>15/12/2023

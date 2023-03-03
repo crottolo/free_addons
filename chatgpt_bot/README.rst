@@ -11,6 +11,7 @@ OpenAI ChatGPT Odoo Module
 
 |badge2|  
 
+
 This Odoo module allows for seamless integration with the OpenAI ChatGPT API, 
 				providing advanced natural language processing capabilities within the Odoo platform. 
 				With this module, users can leverage the power of ChatGPT to generate human-like text, 
@@ -19,10 +20,14 @@ This Odoo module allows for seamless integration with the OpenAI ChatGPT API,
 				making it easy to set up and use.
 
 ``You can answer: how many company in the system? how many contacts in a system? whats is today?``
+> **Add gpt-3.5-turbo model**
 
 **Table of contents**
 
 
+.. raw:: html
+    
+        <iframe width="560" height="650" src="https://www.youtube.com/embed/8eiaRQZu4II" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Configuration
 =============
@@ -35,25 +40,14 @@ Configuration
 * you can set the default bot in the file ``mail_bot.py``
   
 
-        ( f"if they ask you who you are, your name is OdooBot.\n"
-        f"the system when type is ODOO.\n"
-        f"Insert emoji to indicate your availability status.\n"
-        f"Respond in a friendly and concise manner.\n"
-        f"The company I work for is {self.env.company.name}.\n"
-        f"My name is {self.env.user.name}.\n"
-        f"Now is {datetime.datetime.now()}.\n"
-        f"preventivi a system: {10}.\n"
-        f"number of contacts in the system: {200}.\n"
-        f"The answers must be in ITALIAN.\n"
-        f"The apps installed is {app}\n"
-
-        f"the previous conversation is:[{old_conv}].\n"
-        f"text latest question:\n")
 
 
 
-Bugfix
-=============
+Bugfix and new features
+=======================
+03/03/2023
+* add support for gpt-3.5-turbo model
+
 24/02/2023
 * bugfix error in coversation review the last response
 
