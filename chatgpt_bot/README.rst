@@ -43,6 +43,8 @@ Configuration
 
 Bugfix and new features
 =======================
+05/03/2023
+* add historic conversation for new model and correct order for message
 03/03/2023
 * add support for gpt-3.5-turbo model
 
