@@ -37,7 +37,7 @@
         'demo/demo.xml',
     ],
     "external_dependencies": {
-        "python" : ["openai"]
+        "python" : ['openai', 'markdown']
         },
     'price': 0.00,
     'currency': 'EUR',
