@@ -16,13 +16,13 @@
     """,
     'assets': {
         'web._assets_primary_variables': [
-            '/legion_enterprise_theme/static/src/scss/primary_variables_custom.scss',
+            '/enterprise_theme/static/src/scss/primary_variables_custom.scss',
         ],
         'web._assets_secondary_variablesweb.assets_backend': [
-            '/legion_enterprise_theme/static/src/scss/fields_extra_custom.scss',
+            '/enterprise_theme/static/src/scss/fields_extra_custom.scss',
         ],
         'web._assets_secondary_variables': [
-            '/legion_enterprise_theme/static/src/scss/secondary_variables.scss',
+            '/enterprise_theme/static/src/scss/secondary_variables.scss',
         ],
     },
     'price':0,
