@@ -16,19 +16,19 @@
     """,
     'assets': {
         'web._assets_primary_variables': [
-            '/enterprise_theme/static/src/scss/primary_variables_custom.scss',
+            '/enterprise_theme_mod/static/src/scss/primary_variables_custom.scss',
         ],
         'web._assets_secondary_variablesweb.assets_backend': [
-            '/enterprise_theme/static/src/scss/fields_extra_custom.scss',
+            '/enterprise_theme_mod/static/src/scss/fields_extra_custom.scss',
         ],
         'web._assets_secondary_variables': [
-            '/enterprise_theme/static/src/scss/secondary_variables.scss',
+            '/enterprise_theme_mod/static/src/scss/secondary_variables.scss',
         ],
     },
     'price':0,
-    'currency':'USD',
+    'currency':'EUR',
     'installable': True,
     'auto_install': False,
     'application': True,
-    'images': ['static/description/icon.png','static/description/main_screenshot.png']
+    'images': ['static/description/icon.png']
 }
