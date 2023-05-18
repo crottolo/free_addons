@@ -72,7 +72,6 @@ class ChatGptBot(models.AbstractModel):
         revert = list(reversed(messages_old))
 
         #create message
-        
         contatti = self.env['res.partner'].search([])
         comp = len(contatti.filtered(lambda x: x.is_company == True))
         ct = len(contatti.filtered(lambda x: x.is_company == False))
@@ -98,15 +97,6 @@ class ChatGptBot(models.AbstractModel):
                 
                 {"role": "user", "content": 'Mi chiamo '+ self.env.user.name},
                 {"role": "assistant", "content": 'Ciao'+self.env.user.name+' Roberto! Come posso esserti utile?'},
-
-    # {"role": "system", "content": "You are OdooBot"},
-    # {"role": "system", "content": "Roberto has 14 practices with our company"},
-    # {"role": "system", "content": "3 practices are in progress"},
-    # {"role": "system", "content": "2 practices closed and the revenue is 1.578€"},
-    # {"role": "system", "content": "5 practices are in the first phase"},
-    # {"role": "system", "content": "4 practices are draft"},
-    # {"role": "system", "content": "provide an intent for each question from this list: saluto, stato_pratica, info_generiche, altro"},
-    # {"role": "system", "content": "insert a response in json format: {'risposta': 'testo della risposta', 'intento': 'intenzione'}"},
             ]
 
             for item in revert:
