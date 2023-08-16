@@ -1,7 +1,7 @@
 from odoo import http, _
 import logging
 import json
-from odoo.http import HttpRequest, request, JsonRequest, Response
+from odoo.http import  request, Response
 from odoo.tools import date_utils
 import datetime  
 from werkzeug.exceptions import BadRequest
@@ -11,24 +11,12 @@ _logger = logging.getLogger(__name__)
 
 
 
-def alternative_json_response(self, result=None, error=None):
-  if error is not None:
-      response = error
-  if result is not None:
-      response = result
-  mime = 'application/json'
-  body = json.dumps(response, default=date_utils.json_default)
-  return Response(
-    body, status=error and error.pop('http_status', 200) or 200,
-    headers=[('Content-Type', mime), ('Content-Length', len(body))]
-  )
 
 class Odoo3cxCrm(http.Controller):
     @http.route('/api/3cx/crm', auth='public', csrf=False, type='json', methods=['POST'])
     def odoo_3cx_query (self, ** kw):
         
         token = request.env.ref('3cxcrm.token_3cx_crm').sudo().value
-        request._json_response = alternative_json_response.__get__(request, JsonRequest)
         data = json.loads(request.httprequest.data) 
         apikey = request.httprequest.headers.get('apikey')
 
