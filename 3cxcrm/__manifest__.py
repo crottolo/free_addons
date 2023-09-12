@@ -15,7 +15,7 @@
     
     # for the full list
     'category': 'Productivity',
-    'version': '15.0.1',
+    'version': '16.0.1',
 
     # any module necessary for this one to work correctly
     'depends': ['base','crm', 'partner_firstname'],
