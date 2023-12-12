@@ -19,30 +19,30 @@
         </PostValues>
       </Request>
       <Rules>
-        <Rule Type="Any">partner_id</Rule>
+        <Rule Type="Any">result.partner_id</Rule>
       </Rules>
       <Variables>
-        <Variable Name="ContactID" Path="partner_id">
+        <Variable Name="ContactID" Path="result.partner_id">
           <Filter />
         </Variable>
-        <Variable Name="FirstName" Path="first">
+        <Variable Name="FirstName" Path="result.first">
           <Filter />
         </Variable>
-        <Variable Name="Email" Path="email">
+        <Variable Name="Email" Path="result.email">
           <Filter />
         </Variable>
-        <Variable Name="PhoneMobile" Path="mobile">
+        <Variable Name="PhoneMobile" Path="result.mobile">
           <Filter />
         </Variable>
-        <Variable Name="ContactUrl" Path="url">
+        <Variable Name="ContactUrl" Path="result.url">
           <Filter />
         </Variable>
-        <Variable Name="firstname">firstname<Filter /></Variable>
-        <Variable Name="lastname">lastname<Filter /></Variable>
-        <Variable Name="phone">phone<Filter /></Variable>
-        <Variable Name="web_url">web_url<Filter /></Variable>
-        <Variable Name="company_type">company_type<Filter /></Variable>
-        <Variable Name="name">name<Filter /></Variable>
+        <Variable Name="firstname">result.firstname<Filter /></Variable>
+        <Variable Name="lastname">result.lastname<Filter /></Variable>
+        <Variable Name="phone">result.phone<Filter /></Variable>
+        <Variable Name="web_url">result.web_url<Filter /></Variable>
+        <Variable Name="company_type">result.company_type<Filter /></Variable>
+        <Variable Name="name">result.name<Filter /></Variable>
       </Variables>
       <Outputs Next="" AllowEmpty="false">
         <Output Type="ContactID" Passes="0" Value="[ContactID]" />
