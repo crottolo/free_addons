@@ -1,4 +1,4 @@
- .o_input {
+.o_input {
     border: 1px solid #ccc;
     border-top-style: none;
     border-right-style: none;
@@ -187,6 +187,22 @@
     padding: 0 20px 1px 0;}
 
 
+.o_main_navbar {
+    border-bottom: 1px solid #875A7B;
+    background: #875A7B;
+    }
+
+
+.o_main_navbar {
+        --o-navbar-height: 46px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        height: var(--o-navbar-height);
+        min-width: min-content;
+        border-bottom: 1px solid #875A7B;
+        background: #875A7B;
+    }
 .nav-tabs .nav-link {
     color: #666666;
     background-color: white;
@@ -299,3 +315,23 @@
         background-color:#FFF;
     }
 }
+
+
+
+
+.o_main_navbar {
+    border-bottom: 1px solid #875A7B;
+    background: #875A7B;
+    }
+
+
+.o_main_navbar {
+        --o-navbar-height: 46px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        height: var(--o-navbar-height);
+        min-width: min-content;
+        border-bottom: 1px solid #875A7B;
+        background: #875A7B;
+    }

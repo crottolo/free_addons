@@ -1,6 +1,6 @@
 {
     'name': 'Odoo Enterprise Theme',
-    'version': '16.0.0.1',
+    'version': '16.0.0.3',
     'summary': 'Odoo Enterprise Theme',
     'author': 'fl1 sro',
     'license': 'AGPL-3',
@@ -18,7 +18,7 @@
         'web._assets_primary_variables': [
             '/enterprise_theme_mod/static/src/scss/primary_variables_custom.scss',
         ],
-        'web._assets_secondary_variablesweb.assets_backend': [
+        'web.assets_common': [
             '/enterprise_theme_mod/static/src/scss/fields_extra_custom.scss',
         ],
         'web._assets_secondary_variables': [
