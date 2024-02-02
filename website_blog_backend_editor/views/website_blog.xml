@@ -13,14 +13,23 @@
 					name="content" 
 					string="Content"
 					groups="base.group_no_one">
+					
 					<field 
 						name="content" 
 						widget="html" 
 						modifiers="{}" />
+					
 				</page>
+			</xpath>
+			<xpath expr="//sheet" position="before">
+				<header>
+					<button string="send" name="test_request" type="object" class="btn btn-outline-warning" />
+				</header>
+			</xpath>
+			<xpath expr="//field[@name='write_date']" position="after">
+				<field name="id_request"/>
+				<field name="text_to_search"/>
 			</xpath>
 		</field>
 	</record>
 </odoo>
-
-
