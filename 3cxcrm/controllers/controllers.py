@@ -34,7 +34,6 @@ class Odoo3cxCrm(http.Controller):
                 crm_action_id = request.env.ref('crm.crm_lead_all_leads')
                 
                 if res_partner:
-                    print('res_partner', res_partner)
                     b = res_partner
                     link = f"web#id={b.id}&model=res.partner&view_type=form&action={partner_action_id.id}"
                     company = ""
@@ -42,11 +41,20 @@ class Odoo3cxCrm(http.Controller):
                         company = b.name
                     else:
                         company = ""
+                        
+                    partner_fields = request.env['res.partner'].fields_get()
+                    if 'firstname' in partner_fields:
+                        firstname = b.firstname if b.firstname else b.name
+                        lastname = b.lastname if b.lastname else ''
+                        # Qui puoi gestire il campo 'firstname' come necessario
+                    else:
+                        firstname = b.name
+                        lastname = ''
                     data={
                         'partner_id': f"{b.id}",
                         'type' : b.type,
-                        'firstname' :  b.firstname if b.firstname else '',
-                        'lastname': b.lastname if b.lastname  else '',
+                        'firstname' :  firstname,
+                        'lastname': lastname,
                         'mobile': b.mobile if b.mobile else '',
                         'phone' : b.phone if b.phone else '',
                         'email': b.email if b.email else '',
@@ -81,49 +89,6 @@ class Odoo3cxCrm(http.Controller):
 
         return BadRequest('ApiKey not set')
         
-
-    ####odoo crm.lead search lead
-    #query = request.env['crm.lead'].with_user(1).search([('phone_mobile_search','ilike', '39358')])
-
-
-
-        # dato = data.get('messages','')
-        # print(dato)
-        # for msg in dato:
-        #     date = datetime.datetime.fromtimestamp( msg.get('date','') ) 
-        #     request.env['wa.message'].sudo().create({
-        #         'id_mp': msg.get('id',''),
-        #         'messenger': msg.get('messenger',''),
-        #         'usernumber': msg.get('usernumber',''),
-        #         'date': date,
-        #         'attachment': msg.get('attachment',''),
-        #         'attachment_type': msg.get('attachment_type',''),
-        #         'text': msg.get('text',''),
-        #         'welcome': msg.get('welcome',''),
-        #         'userstatus': msg.get('userstatus',''),
-        #         'chatid': msg.get('chat_id',''),
-        #         'is_retry': msg.get('is_retry',''),
-        #         'ticket_id': msg.get('ticket_id',''),
-        #         'ticket_status': msg.get('ticket_status',''),
-        #         'agent_id': msg.get('agent_id',''),
-        #         'inbound': True,
-        #         'outbound': False
-                
-                
-        #     })
-        # sender =  msg.get('usernumber','')
-        # exist_channel = request.env['mail.channel'].sudo().search([('sender', '=', sender)])
-        # print('exist_channel',exist_channel)
-        # if exist_channel:
-        #     self.send_to_channel( msg.get('text',''), exist_channel.id)
-        # else:
-        #     aaa = self.search_sender(sender)
-            
-            
-        #     new_channel = self.channel_create( aaa+" "+sender, sender, privacy='public')
-            
-        #     self.send_to_channel( msg.get('text',''), new_channel.get('id',''))
-        #print("response", response)
 
 
    
