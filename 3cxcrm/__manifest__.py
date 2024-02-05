@@ -18,7 +18,7 @@
     'version': '15.0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','crm', 'partner_firstname'],
+    'depends': ['base','crm'],
     'license' : 'AGPL-3',
    
 

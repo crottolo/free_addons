@@ -54,11 +54,20 @@ class Odoo3cxCrm(http.Controller):
                         company = b.name
                     else:
                         company = ""
+                        
+                    partner_fields = request.env['res.partner'].fields_get()
+                    if 'firstname' in partner_fields:
+                        firstname = b.firstname if b.firstname else b.name
+                        lastname = b.lastname if b.lastname else ''
+                        # Qui puoi gestire il campo 'firstname' come necessario
+                    else:
+                        firstname = b.name
+                        lastname = ''
                     data={
                         'partner_id': f"{b.id}",
                         'type' : b.type,
-                        'firstname' :  b.firstname if b.firstname else '',
-                        'lastname': b.lastname if b.lastname  else '',
+                        'firstname' :  firstname,
+                        'lastname': lastname,
                         'mobile': b.mobile if b.mobile else '',
                         'phone' : b.phone if b.phone else '',
                         'email': b.email if b.email else '',
