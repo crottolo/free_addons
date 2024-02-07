@@ -9,14 +9,15 @@
 
 
   </data>
-  <data noupdate="0">
-    <record id="my_config_settings" model="res.config.settings">
-      <field name="group_use_lead" eval="True"/>
+  <data noupdate="1">
+    <record id="3cx_crm_lead_config_settings" model="res.config.settings">
+        <field name="group_use_lead" eval="True" />
     </record>
     <function model="res.config.settings" name="execute">
-      <value model="res.config.settings" search="[('id', '=', ref('my_config_settings'))]"/>
+        <value model="res.config.settings"
+            search="[('id', '=', ref('3cxcrm.3cx_crm_lead_config_settings'))]" />
     </function>
-  </data>
+</data>
 
 
 </odoo>
