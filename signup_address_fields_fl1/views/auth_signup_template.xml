@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- -*- coding: utf-8 -*- -->
+<!-- Part of Odoo Module Developed by Bizople Solutions Pvt. Ltd. -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<odoo>
+    <template id="auth_sighup_inherit" inherit_id="auth_signup.fields">
+        <xpath expr="//div[hasclass('field-login')]" position="before">
+            <div class="d-flex field-user-type form-group justify-content-around">
+                <label class="radio-inline user_btn">
+                    <input type="radio" name="company_type" value="person" class="person" checked="checked" required="required" />
+                    Individual
+                </label>
+                <label class="radio-inline company_btn">
+                    <input type="radio" name="company_type" value="company" class="company" required="required" />
+                    Company
+                </label>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('field-name')]" position="after">
+            
+            <div class="mb-3 form-group field-mobile">
+                <label for="mobile">Mobile*</label>
+                <input type="text" name="mobile" t-att-value="mobile" id="mobile" class="form-control form-control-sm" required="required"  />
+            </div>
+           
+        </xpath>
+    </template>
+</odoo>
