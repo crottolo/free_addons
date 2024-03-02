@@ -1,0 +1,96 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* signup_address_fields_bizople
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-02 09:37+0000\n"
+"PO-Revision-Date: 2024-03-02 09:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "<option value=\"0\" country_id=\"0\">--select--</option>"
+msgstr ""
+
+#. module: signup_address_fields_bizople
+#. odoo-python
+#: code:addons/signup_address_fields_bizople/controllers/main.py:0
+#, python-format
+msgid "Another user is already registered using this email address."
+msgstr "Un altro utente è già registrato utilizzando questo indirizzo email."
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "City"
+msgstr "Città"
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "Company"
+msgstr "Azienda"
+
+#. module: signup_address_fields_bizople
+#. odoo-python
+#: code:addons/signup_address_fields_bizople/controllers/main.py:0
+#, python-format
+msgid "Could not create a new account."
+msgstr "Non è stato possibile creare un nuovo account."
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "Country"
+msgstr "Nazione"
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "Individual"
+msgstr "Persona fisica"
+
+#. module: signup_address_fields_bizople
+#. odoo-python
+#: code:addons/signup_address_fields_bizople/controllers/main.py:0
+#, python-format
+msgid "Invalid signup token"
+msgstr "Token di registrazione non valido"
+
+#. module: signup_address_fields_bizople
+#. odoo-python
+#: code:addons/signup_address_fields_bizople/controllers/main.py:0
+#, python-format
+msgid "Passwords do not match; please retype them."
+msgstr "Password non corrispondenti; si prega di reinserirle."
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "State"
+msgstr "Stato"
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "Street &amp; Number"
+msgstr "Indirizzo e numero"
+
+#. module: signup_address_fields_bizople
+#. odoo-python
+#: code:addons/signup_address_fields_bizople/controllers/main.py:0
+#, python-format
+msgid "The form was not properly filled in."
+msgstr "Il modulo non è stato compilato correttamente."
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "VAT"
+msgstr "Partita IVA"
+
+#. module: signup_address_fields_bizople
+#: model_terms:ir.ui.view,arch_db:signup_address_fields_bizople.auth_sighup_inherit
+msgid "Zipcode"
+msgstr "CAP"

@@ -5,7 +5,9 @@ __pycache__/
 
 # C extensions
 *.so
-
+# owncloud
+.owncloudsync.log
+.sync_journal.*
 # Distribution / packaging
 .Python
 build/
