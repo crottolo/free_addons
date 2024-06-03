@@ -26,6 +26,9 @@ Configuration
 Bugfix
 =============
 link to open form res partner and crm lead.
+05/03/2024
+* fix bug on 3cx_odoo_v20.xml
+
 
 
 
