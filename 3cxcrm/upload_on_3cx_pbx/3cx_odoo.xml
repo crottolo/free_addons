@@ -3,9 +3,11 @@
   <Number Prefix="AsIs" MaxLength="[MaxLength]" />
   <Connection MaxConcurrentRequests="4" />
   <Parameters>
-    <Parameter Name="apikey" Type="String" Editor="String" Title="ApiKey" Default="123A" />
-    <Parameter Name="hostodoo" Type="String" Editor="String" Title="Host odoo" Default="http://127.0.0.1:8069" ListValues="http://127.0.0.1:8069" />
-    <Parameter Name="country" Type="String" Editor="String" Title="Country" Default="IT" ListValues="IT;US;" />
+    <Parameter Name="apikey" Parent="General Configuration" Type="String" Editor="String" Title="ApiKey" Default="123A" />
+    <Parameter Name="hostodoo" Parent="General Configuration" Type="String" Editor="String" Title="Host odoo"
+      Default="http://127.0.0.1:8069" ListValues="http://127.0.0.1:8069" />
+    <Parameter Name="country" Parent="General Configuration" Type="String" Editor="String" Title="Country" Default="IT"
+      ListValues="IT;US;" />
   </Parameters>
   <Authentication Type="No" />
   <Scenarios>
