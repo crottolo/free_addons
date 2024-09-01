@@ -1,65 +1,33 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Add ABI and CAB to bank",
-
+    'name': "ABI e CAB per Banche Italiane",
     'summary': """
-        Add ABI and CAB to bank
-        """,
-
-    'description': """
-    Modulo per la gestione e l'aggiornamento dei codici ABI e CAB delle banche italiane.
-    Per maggiori dettagli, consultare la descrizione completa nel file index.html.
+        Gestione e aggiornamento dei codici ABI e CAB delle banche italiane
     """,
-
+    'description': """
+        Questo modulo estende le funzionalità di Odoo per la gestione delle banche italiane, aggiungendo i campi ABI e CAB.
+        Fornisce funzionalità per il download e l'aggiornamento automatico dei dati ABI/CAB da un repository GitHub.
+    """,
     'author': "FL1 sro",
     'website': "https://fl1.cz",
     'maintainer': 'FL1 sro',
     'version': '16.0.0.1',
-    'installable': True,
-    'auto_install': False,
-    'application': False,
     'license': 'LGPL-3',
-    'category': 'Localization',
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/16.0/odoo/addons/base/data/ir_module_category_data.xml
-    
-    # Available options: Technical, Accounting, Localization, Payroll Localization, Payroll Localization, Account Charts,
-    # User types, Invoicing, Sales, Human Resources, Marketing, Manufacturing, Website, Theme, Administration, Appraisals, Sign,
-    # Services, Helpdesk, Field Service, Inventory, Productivity, Customizations, Administration, Extra Rights, Other Extra Rights
-    
-
-
-
-    # any module necessary for this one to work correctly
-    'depends': ['base'],
-    'external_dependencies': {
-        'python': [
-  
-        ],
-    },
-
-
+    'category': 'Accounting/Localizations',
+    'images': ['static/description/banner.png'],
+    'depends': ['base', 'account'],
     'data': [
-        
         'security/ir.model.access.csv',
-        
-       
         'data/data.xml',
-        
-       
         'views/abicab.xml',
-        
     ],
-    
-    'demo': [
-        # 'demo/demo.xml',
-    ],
-    
-    "assets": {
+    'assets': {
         "web.assets_backend": [
             "bank_abicab/static/src/xml/list_controller.xml",
             "bank_abicab/static/src/js/list_controller.js",
         ],
     },
+    'installable': True,
+    'application': False,
+    'auto_install': False,
 }
