@@ -2,11 +2,10 @@
 {
     'name': "ABI e CAB per Banche Italiane",
     'summary': """
-        Gestione e aggiornamento dei codici ABI e CAB delle banche italiane
+        Gestione e aggiornamento automatico dei codici ABI e CAB delle banche italiane
     """,
     'description': """
         Questo modulo estende le funzionalità di Odoo per la gestione delle banche italiane, aggiungendo i campi ABI e CAB.
-        Fornisce funzionalità per il download e l'aggiornamento automatico dei dati ABI/CAB da un repository GitHub.
     """,
     'author': "FL1 sro",
     'website': "https://fl1.cz",
@@ -14,7 +13,7 @@
     'version': '16.0.0.1',
     'license': 'LGPL-3',
     'category': 'Accounting/Localizations',
-    'images': ['static/description/banner.png'],
+    'images': ['images/main_screenshot.png'],
     'depends': ['base', 'account'],
     'data': [
         'security/ir.model.access.csv',
