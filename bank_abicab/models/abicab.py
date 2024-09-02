@@ -1,10 +1,14 @@
 from odoo import models, fields, api, _
-import requests
-import json
-import re
 import logging
 
 _logger = logging.getLogger(__name__)
+
+try:
+    from schwifty import IBAN
+except ImportError:
+    _logger.warning(
+        'schwifty not installed, BIC/SWIFT will not be available install it with "pip install schwifty"')
+    IBAN = None
 
 
 class ResBank(models.Model):
@@ -21,105 +25,47 @@ class ResPartnerBank(models.Model):
                            related="bank_id.abi", store=True)
     bank_cab = fields.Char(size=5, string="CAB",
                            related="bank_id.cab", store=True)
-
-
-class BancheItaliane(models.Model):
-    _name = "bank.abicab"
-    _description = "Banche Italiane"
-
-    abi = fields.Char(size=5, string="ABI")
-    cab = fields.Char(size=5, string="CAB")
-    istituto = fields.Char(string="Istituto")
-    sportello = fields.Char(string="Sportello")
-    indirizzo = fields.Char(string="Indirizzo")
-    citta = fields.Char(string="Città")
-    cap = fields.Char(size=5, string="CAP")
-    provincia = fields.Char(size=2, string="Provincia")
-
-
-#################################################################################################
-#                                    ONCHANGE && COMPUTE                                        #
-#################################################################################################
-
-
-
-#################################################################################################
-#                                 SMARTBUTTON & COUNT VALUE                                     #
-#################################################################################################
-
-
-
-#################################################################################################
-#                                        BUTTON FUNCTION                                        #
-#################################################################################################
-
-
-
-#################################################################################################
-#                              ORM FUNCTION DEFAULT & OVVERRIDE                                 #
-#################################################################################################
-
-
-    #@api.model_create_multi
-    #def create(self, vals_list):
-        #for values in vals_list:
-            #res = super().create(values)
-            #code = self.env['ir.sequence'].next_by_code('model.technical.name')
-            #res.code = code
-            #return res
-
-
-
+    
 
 
 #################################################################################################
 #                                      CUSTOM FUNCTION                                          #
 #################################################################################################
 
+
     @api.model
-    def download_file_github(self):
-        url = "https://raw.githubusercontent.com/crottolo/ABICAB/main/abi_cab.json"
-        headers = {'Accept-Encoding': 'identity'}
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
+    def cron_associate_bank_abicab(self):
+        search_empty = self.search([('acc_number', 'like', 'IT'), ('bank_abi', '=', False), ('bank_cab', '=', False)])
+        
+        for bank in search_empty:
             try:
-                content = response.content.decode('utf-8-sig')
-                content_cleaned = re.sub(r'[\x00-\x1F\x7F-\x9F]', '', content)
-                data = json.loads(content_cleaned)
+                acc_number = bank.acc_number.replace(' ', '')
+                iban = IBAN(acc_number)
+                _logger.info('iban %s', iban.bic)
                 
-                if isinstance(data, dict) and 'abicab' in data:
-                    banche = data['abicab']
-                    if isinstance(banche, list):
-                        # Elimina tutti i record esistenti
-                        self.search([]).unlink()
-                        _logger.info("Tutti i record esistenti sono stati eliminati.")
-
-                        # Crea i nuovi record
-                        for banca in banche:
-                            self.create({
-                                'abi': banca.get('ABI'),
-                                'cab': banca.get('CAB'),
-                                'istituto': banca.get('Istituto'),
-                                'sportello': banca.get('Sportello'),
-                                'indirizzo': banca.get('Indirizzo'),
-                                'citta': banca.get('Citta'),
-                                'cap': banca.get('CAP'),
-                                'provincia': banca.get('Provincia')
-                            })
-
-                        _logger.info("Operazione completata. Totale nuovi record creati: %s", len(banche))
-                    else:
-                        _logger.warning("La chiave 'abicab' non contiene una lista come previsto.")
-                else:
-                    _logger.warning("La struttura del JSON non è come previsto.")
-                
-                return True
-            except json.JSONDecodeError as e:
-                _logger.error("Errore durante il parsing del JSON: %s", e)
-                return False
+                abi = acc_number[5:10]
+                cab = acc_number[10:15]
+                bank_abicab = self.env['bank.abicab'].search([('abi', '=', abi), ('cab', '=', cab)], limit=1)
+                if bank_abicab:
+                    _logger.info('bank_abicab: %s', bank_abicab)
+                    search_bank = self.env['res.bank'].search([('abi', '=', abi), ('cab', '=', cab)], limit=1)
+                    if not search_bank:
+                        state_id = self.env['res.country.state'].search([('code', '=', bank_abicab.provincia)], limit=1)
+                        create_bank = self.env['res.bank'].create({
+                            'abi': abi,
+                            'cab': cab,
+                            'name': bank_abicab.name.title() if bank_abicab.name else '',
+                            'street': bank_abicab.indirizzo.title() if bank_abicab.indirizzo else '',
+                            'city': bank_abicab.citta.title() if bank_abicab.citta else ''  ,
+                            'zip': bank_abicab.cap,
+                            'state': state_id.id,
+                            'country': state_id.country_id.id,
+                            'bic': iban.bic
+                        })
+                        bank.bank_id = create_bank.id
+                    if search_bank:
+                        bank.bank_id = search_bank.id
             except Exception as e:
-                _logger.error("Errore generico durante l'elaborazione: %s", e)
-                return False
-        else:
-            _logger.error("Errore nel download del file. Status code: %s", response.status_code)
-            return False
+                # bank.message_post(body=_("Errore durante l'elaborazione della banca %s: %s", bank.id, e))
+                _logger.error("Errore durante l'elaborazione della banca %s: %s", bank.id, e)
+        

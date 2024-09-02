@@ -6,5 +6,15 @@
             <field eval="7" name="padding" />
             <field name="prefix"></field>
         </record> -->
+        <record id="cron_bank_abicab" model="ir.cron">
+            <field name="name">Associa Abi e Cab ai dati del conto bancario</field>
+            <field name="model_id" ref="model_res_partner_bank" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+            <field name="state">code</field>
+            <field name="code">model.cron_associate_bank_abicab()</field>
+        </record>
     </data>
 </odoo>

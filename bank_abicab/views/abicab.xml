@@ -63,7 +63,7 @@
                         <!-- Add your fields here -->
                         <field name="abi" />
                         <field name="cab" />
-                        <field name="istituto" />
+                        <field name="istituto" required="1"/>
                         <field name="sportello" />
                         <field name="indirizzo" />
                         <field name="citta" />
@@ -103,14 +103,24 @@
         <field name="arch" type="xml">
             <search>
                 <!-- Add your fields here -->
+                <field name="istituto" />
                 <field name="abi" />
                 <field name="cab" />
-                <field name="istituto" />
                 <field name="sportello" />
                 <field name="indirizzo" />
                 <field name="citta" />
                 <field name="cap" />
                 <field name="provincia" />
+                <group expand="0" name="group_by" string="Group By">
+                    <filter name="abi" string="ABI" context="{'group_by': 'abi'}" />
+                    <filter name="cab" string="CAB" context="{'group_by': 'cab'}" />
+                    <filter name="provincia" string="Provincia" context="{'group_by': 'provincia'}" />
+                    <filter name="citta" string="Città" context="{'group_by': 'citta'}" />
+                    <filter name="istituto" string="Istituto" context="{'group_by': 'istituto'}" />
+                    <filter name="sportello" string="Sportello" context="{'group_by': 'sportello'}" />
+                    <filter name="indirizzo" string="Indirizzo" context="{'group_by': 'indirizzo'}" />
+                    <filter name="cap" string="CAP" context="{'group_by': 'cap'}" />
+                </group>
             </search>
         </field>
     </record>
@@ -124,7 +134,7 @@
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
-                Non ci sono banche italiane registrate. Clicca sul pulsante "Crea" per aggiungerne una.
+                Non ci sono banche italiane registrate. Clicca sul pulsante "Scarica lista istituti" per scaricare la lista delle banche italiane.
             </p><p>
                 Questa azione ti consente di visualizzare e gestire le banche italiane associate alle operazioni bancarie.
             </p>

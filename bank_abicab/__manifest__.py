@@ -14,7 +14,10 @@
     'license': 'LGPL-3',
     'category': 'Accounting/Localizations',
     'images': ['images/main_screenshot.png'],
-    'depends': ['base', 'account'],
+    'depends': ['base', 'account', 'contacts'],
+    "external_dependencies": {
+        "python": ['schwifty']
+    },
     'data': [
         'security/ir.model.access.csv',
         'data/data.xml',
