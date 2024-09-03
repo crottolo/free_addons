@@ -59,7 +59,7 @@ class ResPartnerBank(models.Model):
                             'city': bank_abicab.citta.title() if bank_abicab.citta else ''  ,
                             'zip': bank_abicab.cap,
                             'state': state_id.id,
-                            'country': state_id.country_id.id or self.env.company.country_id.id,
+                            'country': self.env.company.country_id.id,
                             'bic': iban.bic
                         })
                         bank.bank_id = create_bank.id
