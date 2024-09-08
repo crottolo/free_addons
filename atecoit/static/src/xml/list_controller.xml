@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+    <t t-name="atecoit.category.ListView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="extension" owl="1">
+        <xpath expr="//*[@class='btn btn-primary o_list_button_add']" position="after">
+            <button type="button" class="btn btn-primary o_list_button_add" data-hotkey="c"
+                t-on-click="downloadAtecoCategory" t-if="model.root.resModel == 'atecoit.category'">
+                <i title="Download ATECO categories" class="fa fa-download"></i>
+                <span class="d-none d-sm-inline"> Download ATECO categories</span>
+            </button>
+        </xpath>
+        <!-- invisible button create xpath attribute class dnone-->
+        <xpath expr="//*[@class='btn btn-primary o_list_button_add']" position="attributes">
+            <attribute name="t-attf-class">
+                btn btn-primary o_list_button_add #{model.root.resModel == 'atecoit.category' and 'd-none' or ''}
+            </attribute>
+        </xpath>
+    </t>
+</templates>

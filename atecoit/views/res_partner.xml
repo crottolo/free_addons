@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<odoo>
+
+        <record id="atecoit_category_partner_form_inherit" model="ir.ui.view">
+            <field name="name">atecoit.category.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Ateco">
+                        <field name="ateco_category_ids" nolabel="1" options="{'no_create': True}">
+                            <tree>
+                                <field name="code" />
+                                <field name="name" />
+                                <field name="update" optional="hide" />
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+</odoo>

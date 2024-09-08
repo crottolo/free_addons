@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- atecoit.category form view -->
+    <record id="atecoit_category_view_form" model="ir.ui.view">
+        <field name="name">atecoit_category.view.form</field>
+        <field name="model">atecoit.category</field>
+        <field name="arch" type="xml">
+            <form string="Atecoit Category">
+                <header>
+                    <!--<field name="state" widget="statusbar"  options="{'clickable': '1'}"></field> -->
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name" />
+                        <h1>
+                            <field class="o_text_overflow" name="name" readonly="0" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" />
+                            <field name="name" />
+                            <field name="update" />
+                            <field name="parent_id" />
+                            <field name="sequence" />
+                        </group>
+                        <field name="partner_ids" nolabel="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- atecoit.category tree view -->
+    <record id="atecoit_category_view_tree" model="ir.ui.view">
+        <field name="name">atecoit.category.view.tree</field>
+        <field name="model">atecoit.category</field>
+        <field name="type">tree</field>
+        <field name="field_parent">child_ids</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code" />
+                <field name="name" class="text-no-wrap" />
+                <field name="update" optional="hide" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- atecoit.category search view -->
+    <record id="atecoit_category_view_search" model="ir.ui.view">
+        <field name="name">atecoit.category.view.search</field>
+        <field name="model">atecoit.category</field>
+        <field name="arch" type="xml">
+            <search string="Search Ateco Category">
+                <field name="name" />
+                <field name="code" />
+                <field name="update" />
+                <!-- <filter name="draft" string="Draft" domain="[('state','=', 'draft')]" /> 
+                <group expand="0" string="Group By...">
+                    <filter name="name" string="Name" context="{'group_by': 'name'}" />
+                </group> -->
+                
+            </search>
+        </field>
+    </record>
+
+    <!-- atecoit.category action window -->
+    <record id="atecoit_category_action" model="ir.actions.act_window">
+        <field name="name">Atecoit Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">atecoit.category</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="search_view_id" ref="atecoit_category_view_search" />
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p><p>
+                <!-- More details about what a user can do with this object will be OK --> 
+            </p>
+        </field>
+    </record>
+
+    <!-- menu root atecoit.category for application -->
+    <menuitem
+        id="atecoit_category_menu_root"
+        name="Ateco IT Category"
+        action="atecoit_category_action"
+        parent="contacts.res_partner_menu_config"
+        sequence="10" />
+    <!-- web_icon="base_folder,static/description/icon.png"-->
+
+
+</odoo>
