@@ -53,8 +53,8 @@
         <field name="model">atecoit.category</field>
         <field name="arch" type="xml">
             <search string="Search Ateco Category">
-                <field name="name" />
                 <field name="code" />
+                <field name="name" />
                 <field name="update" />
                 <!-- <filter name="draft" string="Draft" domain="[('state','=', 'draft')]" /> 
                 <group expand="0" string="Group By...">
