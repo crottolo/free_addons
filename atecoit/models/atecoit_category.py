@@ -38,6 +38,7 @@ class AtecoitCategory(models.Model):
 
     def name_get(self):
         res = []
+
         for record in self:
             name = record.name
             if record.code:
