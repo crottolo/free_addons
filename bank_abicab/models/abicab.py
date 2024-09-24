@@ -35,7 +35,7 @@ class ResPartnerBank(models.Model):
 
     @api.model
     def cron_associate_bank_abicab(self):
-        search_empty = self.search([('acc_number', 'like', 'IT'), ('bank_abi', '=', False), ('bank_cab', '=', False)])
+        search_empty = self.search([('acc_number', 'like', 'IT'), ('bank_abi', '=', False), ('bank_cab', '=', False)], limit=500)
         
         for bank in search_empty:
             try:
