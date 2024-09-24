@@ -47,7 +47,7 @@ class ResPartnerBank(models.Model):
                 cab = acc_number[10:15]
                 bank_abicab = self.env['bank.abicab'].search([('abi', '=', abi), ('cab', '=', cab)], limit=1)
                 if bank_abicab:
-                    _logger.info('bank_abicab: %s', bank_abicab)
+                    _logger.info('bank_abicab: %s', bank_abicab.name)
                     search_bank = self.env['res.bank'].search([('abi', '=', abi), ('cab', '=', cab)], limit=1)
                     if not search_bank:
                         state_id = self.env['res.country.state'].search([('code', '=', bank_abicab.provincia)], limit=1)
@@ -65,6 +65,8 @@ class ResPartnerBank(models.Model):
                         bank.bank_id = create_bank.id
                     if search_bank:
                         bank.bank_id = search_bank.id
+                else:
+                    _logger.info('bank_abicab not found: %s', bank.id)
             except Exception as e:
                 # bank.message_post(body=_("Errore durante l'elaborazione della banca %s: %s", bank.id, e))
                 _logger.error("Errore durante l'elaborazione della banca %s: %s", bank.id, e)
