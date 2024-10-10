@@ -23,8 +23,22 @@
                                 <field name="file_name" invisible="1" />
                                 <field name="attachment_id" widget="binary" filename="file_name"
                                     attrs="{'invisible': [('document_type_id', '=', False)]}" />
+                                <button name="set_default_identity" type="object" string="Default" class="btn-success" icon="fa-solid fa-star"/>
+                                <field name="is_default" readonly="1"/>
                             </tree>
                         </field>
+                        <group>
+                            <field name="doc_type" readonly="1" force_save="1"
+                                attrs="{'invisible': [('doc_type', '=', False)]}" />
+                            <field name="doc_number" readonly="1" force_save="1"
+                                attrs="{'invisible': [('doc_number', '=', False)]}" />
+                            <field name="doc_issuing_date" readonly="1" force_save="1"
+                                attrs="{'invisible': [('doc_issuing_date', '=', False)]}" />
+                            <field name="doc_expiration_date" readonly="1" force_save="1"
+                                attrs="{'invisible': [('doc_expiration_date', '=', False)]}" />
+                            <field name="doc_issuing_authority" readonly="1" force_save="1"
+                                attrs="{'invisible': [('doc_issuing_authority', '=', False)]}" />
+                        </group>
                     </form>
                     
                 </page>
