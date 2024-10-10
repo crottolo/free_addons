@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- res.partner inherit form view -->
+    <record id="res_partner_inherit_form_view" model="ir.ui.view">
+        <field name="name">res.partner.inherit.view.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//notebook" position="inside">
+                <page name="identity_page" string="Identity">
+                    <form>
+                        <field name="identity_ids">
+                            <tree editable="bottom">
+                                <field name="document_type_id" required="1"
+                                    options="{'no_quick_create': True, 'no_create': True}" force_save="1"
+                                    attrs="{'readonly': [('attachment_id', '!=', False)]}" help="If you uploaded an attachment, you can't edit the type"/>
+                                <field name="document_number"/>
+                                <field name="document_issuing_date" optional="show"/>
+                                <field name="document_expiration_date" optional="show"/>
+                                <field name="document_issuing_authority" optional="hide"/>
+                                <field name="file_name" invisible="1" />
+                                <field name="attachment_id" widget="binary" filename="file_name"
+                                    attrs="{'invisible': [('document_type_id', '=', False)]}" />
+                            </tree>
+                        </field>
+                    </form>
+                    
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- partner.identity.type tree view -->
+    <record id="partner_identity_type_view_tree" model="ir.ui.view">
+        <field name="name">partner.identity.type.view.tree</field>
+        <field name="model">partner.identity.type</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- partner.identity.type action window -->
+    <record id="partner_identity_type_action" model="ir.actions.act_window">
+        <field name="name">Partner Identity Type</field>
+        <field name="res_model">partner.identity.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                You can manage the identity types here.
+            </p><p>
+                You can edit the name of the identity type here.
+            
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_partner_identity_config"
+        parent="contacts.res_partner_menu_config"
+        name="Identity Types"
+    />
+    <menuitem id="menu_partner_identity_type_config"
+        parent="menu_partner_identity_config"
+        name="Type documents"
+        action="partner_identity_type_action"
+    />
+
+</odoo>

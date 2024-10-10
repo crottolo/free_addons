@@ -1,0 +1,245 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_identity_id
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-10 13:23+0000\n"
+"PO-Revision-Date: 2024-10-10 13:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__active
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__active
+msgid "Active"
+msgstr "Attivo"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.company_articles_association_type
+msgid "Articles of Association"
+msgstr "Atto costitutivo"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__attachment_id
+msgid "Attachment"
+msgstr "Allegato"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.chamber_commerce_registration_type
+msgid "Chamber of Commerce Registration"
+msgstr "Registro della camera di commercio"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__color
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__color
+msgid "Color"
+msgstr "Colore"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__company_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.company_bylaws_type
+msgid "Company Bylaws"
+msgstr "Statuto"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.company_financial_statements_type
+msgid "Company Financial Statements"
+msgstr "Bilancio"
+
+#. module: partner_identity_id
+#: model:ir.model,name:partner_identity_id.model_res_partner
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__create_uid
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__create_date
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__display_name
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.driver_license_type
+msgid "Driver License"
+msgstr "Patente"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__document_expiration_date
+msgid "Expiration Date"
+msgstr "Data di scadenza"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__file_name
+msgid "File Name"
+msgstr "Nome file"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.fiscal_code_type
+msgid "Fiscal Code"
+msgstr "Codice fiscale"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.fiscal_code_card_type
+msgid "Fiscal Code Card"
+msgstr "Carta codice fiscale"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__id
+msgid "ID"
+msgstr "ID"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_res_partner__identity_ids
+#: model:ir.model.fields,field_description:partner_identity_id.field_res_users__identity_ids
+msgid "Identities"
+msgstr "Identità"
+
+#. module: partner_identity_id
+#: model_terms:ir.ui.view,arch_db:partner_identity_id.res_partner_inherit_form_view
+msgid "Identity"
+msgstr "Identità"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.identity_card_type
+msgid "Identity Card"
+msgstr "Carta d'identità"
+
+#. module: partner_identity_id
+#: model:ir.ui.menu,name:partner_identity_id.menu_partner_identity_config
+msgid "Identity Types"
+msgstr "Tipi di identità"
+
+#. module: partner_identity_id
+#: model_terms:ir.ui.view,arch_db:partner_identity_id.res_partner_inherit_form_view
+msgid "If you uploaded an attachment, you can't edit the type"
+msgstr "Se hai caricato un allegato, non puoi modificare il tipo"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__document_issuing_authority
+msgid "Issuing Authority"
+msgstr "Emesso da"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__document_issuing_date
+msgid "Issuing Date"
+msgstr "Data emissione"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity____last_update
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__write_uid
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__write_uid
+msgid "Last Updated by"
+msgstr "Ultima modifica da"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__write_date
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__write_date
+msgid "Last Updated on"
+msgstr "Ultima modifica il"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__name
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__document_number
+msgid "Number"
+msgstr "Numero"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__partner_id
+msgid "Partner"
+msgstr "Contatto"
+
+#. module: partner_identity_id
+#: model:ir.actions.act_window,name:partner_identity_id.partner_identity_type_action
+msgid "Partner Identity Type"
+msgstr "Tipi di identità"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.passport_type
+msgid "Passport"
+msgstr "Passaporto"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity_type__sequence
+msgid "Sequence"
+msgstr "Sequenza"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.company_tax_code_certificate_type
+msgid "Tax Code Certificate"
+msgstr "Certificato attribuzione codice fiscale"
+
+#. module: partner_identity_id
+#. odoo-python
+#: code:addons/partner_identity_id/models/res_partner.py:0
+#, python-format
+msgid "The issuing date cannot be greater than the expiration date"
+msgstr "La data di emissione non può essere maggiore della data di scadenza"
+
+#. module: partner_identity_id
+#: model:ir.model.fields,field_description:partner_identity_id.field_partner_identity__document_type_id
+msgid "Type"
+msgstr "Tipo"
+
+#. module: partner_identity_id
+#: model:ir.ui.menu,name:partner_identity_id.menu_partner_identity_type_config
+msgid "Type documents"
+msgstr "Tipi di documenti"
+
+#. module: partner_identity_id
+#: model:partner.identity.type,name:partner_identity_id.vat_number_assignment_type
+msgid "VAT Number Assignment"
+msgstr "Assegnazione numero IVA"
+
+#. module: partner_identity_id
+#: model_terms:ir.actions.act_window,help:partner_identity_id.partner_identity_type_action
+msgid "You can edit the name of the identity type here."
+msgstr "Puoi modificare il nome del tipo di identità qui."
+
+#. module: partner_identity_id
+#: model_terms:ir.actions.act_window,help:partner_identity_id.partner_identity_type_action
+msgid "You can manage the identity types here."
+msgstr "Puoi gestire i tipi di identità qui."
+
+#. module: partner_identity_id
+#: model:ir.model,name:partner_identity_id.model_partner_identity
+msgid "partner.identity"
+msgstr "Identità"
+
+#. module: partner_identity_id
+#: model:ir.model,name:partner_identity_id.model_partner_identity_type
+msgid "partner.identity.type"
+msgstr "Tipo di identità"
