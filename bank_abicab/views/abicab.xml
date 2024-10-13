@@ -10,6 +10,7 @@
                 <field name="name" />
                 <field name="abi" />
                 <field name="cab" />
+                
             </search>
         </field>
     </record>
@@ -124,6 +125,16 @@
             </search>
         </field>
     </record>
+    <record id="view_partner_bank_search" model="ir.ui.view">
+        <field name="name">res.partner.bank.search</field>
+        <field name="model">res.partner.bank</field>
+        <field name="inherit_id" ref="base.view_partner_bank_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <filter name="bank_id_not_set" string="Banca Non Impostata" domain="[('bank_id', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
 
     <!-- azione -->
     <record id="action_bank_abicab" model="ir.actions.act_window">
@@ -140,7 +151,6 @@
             </p>
         </field>
     </record>
-       
 
 
     <!-- menu -->
