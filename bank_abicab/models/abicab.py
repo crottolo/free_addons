@@ -71,3 +71,46 @@ class ResPartnerBank(models.Model):
                 # bank.message_post(body=_("Errore durante l'elaborazione della banca %s: %s", bank.id, e))
                 _logger.error("Errore durante l'elaborazione della banca %s: %s", bank.id, e)
         
+        
+#################################################################################################
+#                                    ONCHANGE && COMPUTE                                        #
+#################################################################################################
+  
+
+    @api.onchange('acc_number')
+    @api.depends('acc_number')
+    def compute_single_bank_abicab(self):
+        for rec in self:
+            if rec.acc_number and 'IT' in rec.acc_number:
+                print(rec.acc_number)
+                try:
+                    acc_number = rec.acc_number.replace(' ', '')
+                    iban = IBAN(acc_number)
+                    _logger.info('iban %s', iban.bic)
+                    
+                    abi = acc_number[5:10]
+                    cab = acc_number[10:15]
+                    bank_abicab = self.env['bank.abicab'].search([('abi', '=', abi), ('cab', '=', cab)], limit=1)
+                    if bank_abicab:
+                        _logger.info('bank_abicab: %s', bank_abicab.name)
+                        search_bank = self.env['res.bank'].search([('abi', '=', abi), ('cab', '=', cab)], limit=1)
+                        if not search_bank:
+                            state_id = self.env['res.country.state'].search([('code', '=', bank_abicab.provincia)], limit=1)
+                            create_bank = self.env['res.bank'].create({
+                                'abi': abi,
+                                'cab': cab,
+                                'name': bank_abicab.name.title() if bank_abicab.name else '',
+                                'street': bank_abicab.indirizzo.title() if bank_abicab.indirizzo else '',
+                                'city': bank_abicab.citta.title() if bank_abicab.citta else '',
+                                'zip': bank_abicab.cap,
+                                'state': state_id.id,
+                                'country': self.env.company.country_id.id,
+                                'bic': iban.bic
+                            })
+                            rec.bank_id = create_bank.id
+                        if search_bank:
+                            rec.bank_id = search_bank.id
+                    else:
+                        _logger.info('bank_abicab not found: %s', rec.id)
+                except Exception as e:
+                    _logger.error("Errore durante l'elaborazione della banca %s: %s", rec.id, e)
