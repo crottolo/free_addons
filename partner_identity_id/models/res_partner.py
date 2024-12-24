@@ -37,6 +37,47 @@ class ResPartner(models.Model):
             self.doc_issuing_authority = identity.document_issuing_authority
 
 
+    def create(self, vals_list):
+        if not isinstance(vals_list, list):
+            vals_list = [vals_list]
+        
+        for vals in vals_list:
+            if 'identity_ids' in vals:
+                for command in vals['identity_ids']:
+                    # Command format: (0, 0, values) for create
+                    if command[0] == 0:  # Create
+                        values = command[2]
+                        document_type_id = values.get('document_type_id')
+                        if document_type_id:
+                            ref_id_card = self.env.ref('partner_identity_id.identity_card_type')
+                            if document_type_id == ref_id_card.id:
+                                # Set is_default = True for identity card
+                                values['is_default'] = True
+        
+        res = super().create(vals_list)
+        return res
+
+    def write(self, vals):
+        if 'identity_ids' in vals:
+            for command in vals['identity_ids']:
+                # Command format: (0, 0, values) for create
+                #                (1, id, values) for update
+                #                (2, id, 0) for delete
+                if command[0] == 0:  # Create
+                    values = command[2]
+                    document_type_id = values.get('document_type_id')
+                    if document_type_id:
+                        ref_id_card = self.env.ref('partner_identity_id.identity_card_type')
+                        if document_type_id == ref_id_card.id:
+                            # Set is_default = True in the values for the new record
+                            values['is_default'] = True
+                            # Set other identity cards to not default
+                            identity = self.identity_ids.filtered(lambda x: x.document_type_id.id == ref_id_card.id)
+                            if identity:
+                                identity.write({'is_default': False})
+        res = super().write(vals)
+        return res
+
 #################################################################################################
 #################################################################################################
 #################################################################################################
