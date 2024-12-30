@@ -119,6 +119,14 @@ class PartnerIdentity(models.Model):
                 if rec.document_issuing_date > rec.document_expiration_date:
                     raise UserError(_('The issuing date cannot be greater than the expiration date'))
 
+    @api.onchange('document_type_id')
+    def _onchange_document_type_id(self):
+        if self.document_type_id:
+            ref = self.env.ref('partner_identity_id.identity_card_type')
+            if self.document_type_id == ref:
+                self.is_default = True
+            else:
+                self.is_default = False
 #################################################################################################
 #                                 SMARTBUTTON & COUNT VALUE                                     #
 #################################################################################################
@@ -146,7 +154,11 @@ class PartnerIdentity(models.Model):
 
 
 
-
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        ref = self.env.ref('partner_identity_id.identity_card_type')
+        res['document_type_id'] = ref.id
+        return res
 
 #################################################################################################
 #                                      CUSTOM FUNCTION                                          #
