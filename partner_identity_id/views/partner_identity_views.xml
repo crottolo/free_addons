@@ -11,8 +11,7 @@
             <xpath expr="//page[@name='sales_purchases']" position="after">
                 <page name="identity_page" string="Identity">
                     <form>
-                        <field name="identity_ids">
-                            <tree editable="bottom">
+                        <field name="identity_ids"> list<editable="bottom">
                                 <field name="document_type_id" required="1"
                                     options="{'no_quick_create': True, 'no_create': True}" force_save="1"
                                     attrs="{'readonly': [('attachment_id', '!=', False)]}" help="If you uploaded an attachment, you can't edit the type"/>
@@ -24,8 +23,7 @@
                                 <field name="attachment_id" widget="binary" filename="file_name"
                                     attrs="{'invisible': [('document_type_id', '=', False)]}" />
                                 <button name="set_default_identity" type="object" string="Default" class="btn-success" icon="fa-solid fa-star"/>
-                                <field name="is_default" readonly="1"/>
-                            </tree>
+                                <field name="is_default" readonly="1"/><list/
                         </field>
                         <group>
                             <field name="doc_type" readonly="1" force_save="1"
@@ -46,16 +44,14 @@
         </field>
     </record>
 
-    <!-- partner.identity.type tree view -->
+    <!-- partner.identity.type list view -->
     <record id="partner_identity_type_view_tree" model="ir.ui.view">
         <field name="name">partner.identity.type.view.tree</field>
         <field name="model">partner.identity.type</field>
-        <field name="arch" type="xml">
-            <tree editable="bottom">
+        <field name="arch" type="xml"> list<editable="bottom">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
-                <field name="color" widget="color_picker"/>
-            </tree>
+                <field name="color" widget="color_picker"/><list/
         </field>
     </record>
 
@@ -63,7 +59,7 @@
     <record id="partner_identity_type_action" model="ir.actions.act_window">
         <field name="name">Partner Identity Type</field>
         <field name="res_model">partner.identity.type</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         

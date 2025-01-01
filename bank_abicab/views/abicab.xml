@@ -77,12 +77,11 @@
     </record>
 
     <!-- Banche Italiane tree -->
-    <!-- model.name tree view -->
+    <!-- model.name list view -->
     <record id="bank_abicab_view_tree" model="ir.ui.view">
         <field name="name">bank.abicab.view.tree</field>
         <field name="model">bank.abicab</field>
-        <field name="arch" type="xml">
-            <tree >
+        <field name="arch" type="xml"> list<>
                 <!-- Add your fields here -->
                 <field name="abi" />
                 <field name="cab" />
@@ -91,8 +90,7 @@
                 <field name="indirizzo" />
                 <field name="citta" />
                 <field name="cap" />
-                <field name="provincia" />
-            </tree>
+                <field name="provincia" /><list/
         </field>
     </record>
 
@@ -141,7 +139,7 @@
         <field name="name">Banche Italiane</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">bank.abicab</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">

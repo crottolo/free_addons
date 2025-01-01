@@ -31,19 +31,17 @@
         </field>
     </record>
 
-    <!-- atecoit.category tree view -->
+    <!-- atecoit.category list view -->
     <record id="atecoit_category_view_tree" model="ir.ui.view">
         <field name="name">atecoit.category.view.tree</field>
         <field name="model">atecoit.category</field>
         <field name="type">tree</field>
         <field name="field_parent">child_ids</field>
-        <field name="arch" type="xml">
-            <tree editable="bottom">
+        <field name="arch" type="xml"> list<editable="bottom">
                 <field name="sequence" widget="handle"/>
                 <field name="code" />
                 <field name="name" class="text-no-wrap" />
-                <field name="update" optional="hide" />
-            </tree>
+                <field name="update" optional="hide" /><list/
         </field>
     </record>
 
@@ -70,7 +68,7 @@
         <field name="name">Atecoit Category</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">atecoit.category</field>
-        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_mode">list,form,pivot</field>
         <field name="search_view_id" ref="atecoit_category_view_search" />
         <field name="context">{}</field>
         <field name="help" type="html">

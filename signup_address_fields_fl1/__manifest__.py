@@ -7,7 +7,7 @@
     'description': """ Signup Address Fields """,
     'summary': """ Signup Address Fields """,
     'category': 'Website',
-    'version': '16.1.0.0',
+    'version': '18.0.0.1',
     'author': 'Bizople Solutions Pvt. Ltd.',
     'website': 'https://www.bizople.com/',
     'depends': [

@@ -9,12 +9,10 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="Ateco">
-                        <field name="ateco_category_ids" nolabel="1" options="{'no_create': True}">
-                            <tree>
+                        <field name="ateco_category_ids" nolabel="1" options="{'no_create': True}"> list<
                                 <field name="code" />
                                 <field name="name" />
-                                <field name="update" optional="hide" />
-                            </tree>
+                                <field name="update" optional="hide" /><list/
                         </field>
                     </page>
                 </notebook>

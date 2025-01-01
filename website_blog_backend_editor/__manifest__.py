@@ -6,7 +6,7 @@
     'author': 'FL1 sro',
     'website': 'https://fl1.cz',
     'category': 'Website/Website',
-    'version': '16.0.0.1',
+    'version': '18.0.0.1',
     'depends': [
         'website',
         'website_blog',

@@ -1,6 +1,6 @@
 {
     'name': 'Odoo Enterprise Theme',
-    'version': '16.0.0.3',
+    'version': '18.0.0.3',
     'summary': 'Odoo Enterprise Theme',
     'author': 'fl1 sro',
     'license': 'AGPL-3',

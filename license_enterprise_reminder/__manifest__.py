@@ -10,7 +10,7 @@
     'author': "FL1 sro",
     'website': "https://fl1.cz",
     'maintainer': 'FL1 sro',
-    'version': '16.0.0.1',
+    'version': '18.0.0.1',
     'installable': True,
     'auto_install': False,
     'application': False,

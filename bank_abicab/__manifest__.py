@@ -10,7 +10,7 @@
     'author': "FL1 sro",
     'website': "https://fl1.cz",
     'maintainer': 'FL1 sro',
-    'version': '16.0.0.1',
+    'version': '18.0.0.1',
     'license': 'LGPL-3',
     'category': 'Accounting/Localizations',
     'images': ['images/main_screenshot.png'],
