@@ -8,7 +8,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <notebook position="inside">
-                    <page string="Ateco">
+                    <page string="Ateco" name="ateco">
                         <field name="ateco_category_ids" nolabel="1" options="{'no_create': True}">
                             <tree>
                                 <field name="code" />
