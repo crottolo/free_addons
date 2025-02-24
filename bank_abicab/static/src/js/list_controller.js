@@ -4,7 +4,6 @@ import { ListController } from "@web/views/list/list_controller";
 import { patch } from "@web/core/utils/patch";
 import { useService } from "@web/core/utils/hooks";
 
-console.log("list_controller.js");
 
 patch(ListController.prototype, "bank_abicab", {
     setup() {
