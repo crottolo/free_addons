@@ -24,10 +24,7 @@
         'views/abicab.xml',
     ],
     'assets': {
-        "web.assets_backend": [
-            "bank_abicab/static/src/xml/list_controller.xml",
-            "bank_abicab/static/src/js/list_controller.js",
-        ],
+       
     },
     'installable': True,
     'application': False,

@@ -81,8 +81,11 @@
     <record id="bank_abicab_view_tree" model="ir.ui.view">
         <field name="name">bank.abicab.view.tree</field>
         <field name="model">bank.abicab</field>
-        <field name="arch" type="xml"> list<>
-                <!-- Add your fields here -->
+        <field name="arch" type="xml"> 
+        <list>
+                <header>
+                    <button name="download_file_github" string="Scarica lista istituti" display="always" type="object" class="btn-primary" />
+                </header>
                 <field name="abi" />
                 <field name="cab" />
                 <field name="istituto" />
@@ -90,7 +93,8 @@
                 <field name="indirizzo" />
                 <field name="citta" />
                 <field name="cap" />
-                <field name="provincia" /><list/
+                <field name="provincia" />
+            </list>
         </field>
     </record>
 

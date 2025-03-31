@@ -46,7 +46,7 @@ class AtecoitCategory(models.Model):
             res.append((record.id, name))
         return res
 
-    @api.model
+    # @api.model
     def download_ateco_category(self):
         url = "https://raw.githubusercontent.com/italia/daf-ontologie-vocabolari-controllati/master/VocabolariControllati/classifications-for-organizations/ateco-2007/ateco-2007.csv"
         

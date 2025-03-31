@@ -27,12 +27,11 @@
     ],
     'assets': {
         "web.assets_backend": [
-            "atecoit/static/src/xml/list_controller.xml",
-            "atecoit/static/src/js/list_controller.js",
+
         ],
     },
     'installable': True,
     'application': False,
     'auto_install': False,
-    'post_init_hook': 'init_ateco_categories',
+    'post_init_hook': 'post_init_hook',
 }

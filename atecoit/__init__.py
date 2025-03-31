@@ -4,7 +4,12 @@ from . import controllers
 from . import models
 
 
-from odoo import api, SUPERUSER_ID
-def init_ateco_categories(cr, registry):
-    env = api.Environment(cr, SUPERUSER_ID, {})
+def post_init_hook(env):
+    """
+    Post init hook for downloading ATECO categories.
+    This hook will be executed after the module is installed.
+    
+    Args:
+        env: Odoo environment
+    """
     env['atecoit.category'].download_ateco_category()

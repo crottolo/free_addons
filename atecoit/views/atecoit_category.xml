@@ -35,13 +35,18 @@
     <record id="atecoit_category_view_tree" model="ir.ui.view">
         <field name="name">atecoit.category.view.tree</field>
         <field name="model">atecoit.category</field>
-        <field name="type">tree</field>
-        <field name="field_parent">child_ids</field>
-        <field name="arch" type="xml"> list<editable="bottom">
+        <field name="type">list</field>
+        <!-- <field name="field_parent">child_ids</field> -->
+        <field name="arch" type="xml">
+        <list editable="bottom">
+                <header>
+                    <button name="download_ateco_category" type="object" icon="fa-download" string="ATECO" class="btn-primary" display="always"/>
+                </header>
                 <field name="sequence" widget="handle"/>
                 <field name="code" />
                 <field name="name" class="text-no-wrap" />
-                <field name="update" optional="hide" /><list/
+                <field name="update" optional="hide" />
+            </list>
         </field>
     </record>
 

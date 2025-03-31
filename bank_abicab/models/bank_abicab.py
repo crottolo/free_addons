@@ -61,7 +61,7 @@ class BancheItaliane(models.Model):
 #################################################################################################
 
 
-    @api.model
+    # @api.model
     def download_file_github(self):
         url = "https://raw.githubusercontent.com/crottolo/ABICAB/main/abi_cab.json"
         headers = {'Accept-Encoding': 'identity'}
