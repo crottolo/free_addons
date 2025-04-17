@@ -11,7 +11,8 @@
             <xpath expr="//page[@name='sales_purchases']" position="after">
                 <page name="identity_page" string="Identity">
                     <form>
-                        <field name="identity_ids"> list<editable="bottom">
+                        <field name="identity_ids">
+                            <list editable="bottom">
                                 <field name="document_type_id" required="1"
                                     options="{'no_quick_create': True, 'no_create': True}" force_save="1"
                                     attrs="{'readonly': [('attachment_id', '!=', False)]}" help="If you uploaded an attachment, you can't edit the type"/>
@@ -23,7 +24,8 @@
                                 <field name="attachment_id" widget="binary" filename="file_name"
                                     attrs="{'invisible': [('document_type_id', '=', False)]}" />
                                 <button name="set_default_identity" type="object" string="Default" class="btn-success" icon="fa-solid fa-star"/>
-                                <field name="is_default" readonly="1"/><list/
+                                <field name="is_default" readonly="1"/>
+                            </list>
                         </field>
                         <group>
                             <field name="doc_type" readonly="1" force_save="1"
@@ -48,10 +50,12 @@
     <record id="partner_identity_type_view_tree" model="ir.ui.view">
         <field name="name">partner.identity.type.view.tree</field>
         <field name="model">partner.identity.type</field>
-        <field name="arch" type="xml"> list<editable="bottom">
+        <field name="arch" type="xml">
+            <list editable="bottom">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
-                <field name="color" widget="color_picker"/><list/
+                <field name="color" widget="color_picker"/>
+            </list>
         </field>
     </record>
 
