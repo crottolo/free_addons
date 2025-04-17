@@ -15,29 +15,29 @@
                             <list editable="bottom">
                                 <field name="document_type_id" required="1"
                                     options="{'no_quick_create': True, 'no_create': True}" force_save="1"
-                                    attrs="{'readonly': [('attachment_id', '!=', False)]}" help="If you uploaded an attachment, you can't edit the type"/>
+                                    readonly="attachment_id" help="If you uploaded an attachment, you can't edit the type"/>
                                 <field name="document_number"/>
                                 <field name="document_issuing_date" optional="show"/>
                                 <field name="document_expiration_date" optional="show"/>
                                 <field name="document_issuing_authority" optional="hide"/>
                                 <field name="file_name" invisible="1" />
                                 <field name="attachment_id" widget="binary" filename="file_name"
-                                    attrs="{'invisible': [('document_type_id', '=', False)]}" />
+                                    invisible="not document_type_id" />
                                 <button name="set_default_identity" type="object" string="Default" class="btn-success" icon="fa-solid fa-star"/>
                                 <field name="is_default" readonly="1"/>
                             </list>
                         </field>
                         <group>
                             <field name="doc_type" readonly="1" force_save="1"
-                                attrs="{'invisible': [('doc_type', '=', False)]}" />
+                                invisible="not doc_type" />
                             <field name="doc_number" readonly="1" force_save="1"
-                                attrs="{'invisible': [('doc_number', '=', False)]}" />
+                                invisible="not doc_number" />
                             <field name="doc_issuing_date" readonly="1" force_save="1"
-                                attrs="{'invisible': [('doc_issuing_date', '=', False)]}" />
+                                invisible="not doc_issuing_date" />
                             <field name="doc_expiration_date" readonly="1" force_save="1"
-                                attrs="{'invisible': [('doc_expiration_date', '=', False)]}" />
+                                invisible="not doc_expiration_date" />
                             <field name="doc_issuing_authority" readonly="1" force_save="1"
-                                attrs="{'invisible': [('doc_issuing_authority', '=', False)]}" />
+                                invisible="not doc_issuing_authority" />
                         </group>
                     </form>
                     
@@ -48,7 +48,7 @@
 
     <!-- partner.identity.type list view -->
     <record id="partner_identity_type_view_tree" model="ir.ui.view">
-        <field name="name">partner.identity.type.view.tree</field>
+        <field name="name">partner.identity.type.view.list</field>
         <field name="model">partner.identity.type</field>
         <field name="arch" type="xml">
             <list editable="bottom">
