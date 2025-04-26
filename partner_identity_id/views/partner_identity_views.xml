@@ -24,6 +24,7 @@
                                 <field name="attachment_id" widget="binary" filename="file_name"
                                     invisible="not document_type_id" />
                                 <button name="set_default_identity" type="object" string="Default" class="btn-success" icon="fa-solid fa-star"/>
+                                <button name="open_view_attachment" type="object" string=" " class="btn-info" icon="fa-solid fa-eye"/>
                                 <field name="is_default" readonly="1"/>
                             </list>
                         </field>
@@ -38,6 +39,8 @@
                                 invisible="not doc_expiration_date" />
                             <field name="doc_issuing_authority" readonly="1" force_save="1"
                                 invisible="not doc_issuing_authority" />
+                            <field name="is_attach_present" readonly="1" force_save="1"
+                                invisible="not is_attach_present" />
                         </group>
                     </form>
                     
@@ -45,6 +48,45 @@
             </xpath>
         </field>
     </record>
+
+    <!-- partner.identity view attachment form view -->
+    <record id="partner_identity_view_attachment_form" model="ir.ui.view">
+        <field name="name">partner.identity.view.attachment.form</field>
+        <field name="model">partner.identity</field>
+        <field name="arch" type="xml">
+            <form string="Document">
+                <sheet>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <separator />
+                            <group>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="document_type_id" readonly="0"/>
+                                <field name="document_number" readonly="0"/>
+                                <field name="document_expiration_date" readonly="0"/>
+                                <field name="document_issuing_authority" readonly="0"/>
+                                <field name="document_issuing_date" readonly="0"/>
+                                <field name="file_name" invisible="1" />
+                                <field name="is_default" readonly="1"/>
+                            </group>
+                        </div>
+                        <div class="col-md-8" >
+                            <style>
+                                .o_pdfview_iframe {
+                                min-height: 600px !important;
+                                height: 84vh !important;
+                                
+                                }
+                            </style>
+                            <field name="attachment_id" widget="pdf_viewer" filename="file_name" />
+                        </div>
+                    </div>
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+    
 
     <!-- partner.identity.type list view -->
     <record id="partner_identity_type_view_tree" model="ir.ui.view">

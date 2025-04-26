@@ -2,7 +2,7 @@ from odoo import models, fields, api, _
 from random import randint
 from odoo.exceptions import UserError
 from odoo.tools import translate
-
+import base64
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -15,6 +15,7 @@ class ResPartner(models.Model):
     doc_issuing_date = fields.Date(string='Issuing Date')
     doc_expiration_date = fields.Date(string='Expiration Date')
     doc_issuing_authority = fields.Char(string='Issuing Authority')
+    is_attach_present = fields.Boolean(string='Attachment Present', compute='_compute_is_attach_present')
 
 
 
@@ -24,17 +25,28 @@ class ResPartner(models.Model):
 #################################################################################################
 
     @api.depends('identity_ids')
+    def _compute_is_attach_present(self):
+        for rec in self:
+            rec.is_attach_present = rec.identity_ids.filtered(lambda x: x.attachment_id and x.is_default == True)
+
+    @api.depends('identity_ids')
     @api.onchange('identity_ids')
     def compute_identity_fields(self):
-        self.ensure_one()
-        identity = self.identity_ids.filtered(lambda x: x.is_default == True)
-        if identity:
-            identity = identity[0]
-            self.doc_type = identity.document_type_id.name
-            self.doc_number = identity.document_number
-            self.doc_issuing_date = identity.document_issuing_date
-            self.doc_expiration_date = identity.document_expiration_date
-            self.doc_issuing_authority = identity.document_issuing_authority
+        for rec in self:
+            identity = rec.identity_ids.filtered(lambda x: x.is_default == True)
+            if identity:
+                identity = identity[0]
+                rec.doc_type = identity.document_type_id.name
+                rec.doc_number = identity.document_number
+                rec.doc_issuing_date = identity.document_issuing_date
+                rec.doc_expiration_date = identity.document_expiration_date
+                rec.doc_issuing_authority = identity.document_issuing_authority
+            else:
+                rec.doc_type = None
+                rec.doc_number = None
+                rec.doc_issuing_date = None
+                rec.doc_expiration_date = None
+                rec.doc_issuing_authority = None
 
 
     def create(self, vals_list):
@@ -90,6 +102,7 @@ class PartnerIdentity(models.Model):
     
     _name = 'partner.identity'
     _description = 'partner.identity'
+    _rec_name = 'id'
     
     color = fields.Integer(string='Color', default=_get_default_color)
     company_id = fields.Many2one('res.company', string='Company', index=True, default=lambda self: self.env.user.company_id.id)
@@ -137,27 +150,31 @@ class PartnerIdentity(models.Model):
 #                                        BUTTON FUNCTION                                        #
 #################################################################################################
 
+    def open_view_attachment(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Attachment'),
+            'res_model': 'partner.identity',
+            'view_mode': 'form',
+            'res_id': self.id,
+            'target': 'new'
+        }
 
 
 #################################################################################################
 #                              ORM FUNCTION DEFAULT & OVVERRIDE                                 #
 #################################################################################################
 
-
-    #@api.model_create_multi
-    #def create(self, vals_list):
-        #for values in vals_list:
-            #res = super().create(values)
-            #code = self.env['ir.sequence'].next_by_code('model.technical.name')
-            #res.code = code
-            #return res
-
-
-
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
         ref = self.env.ref('partner_identity_id.identity_card_type')
         res['document_type_id'] = ref.id
+        return res
+
+    def write(self, vals):
+        res = super().write(vals)
+        
+        self.partner_id.compute_identity_fields()
         return res
 
 #################################################################################################
@@ -174,7 +191,6 @@ class PartnerIdentity(models.Model):
         self.write({'is_default': True})
         self.partner_id.compute_identity_fields()
         return True
-
 
 
 
