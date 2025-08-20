@@ -40,7 +40,7 @@
     'installable': True,
     'auto_install': False,
     'application': False,
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'category': 'Customizations',
     
     # Odoo Apps Store specific fields
