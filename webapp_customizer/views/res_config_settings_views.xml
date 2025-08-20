@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.webapp.customizer</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add PWA icon to existing PWA settings section -->
+            <xpath expr="//block[@id='pwa_settings']" position="inside">
+                <setting string="PWA Icon" help="Icon shown when installing as Progressive Web App">
+                    <field name="pwa_icon" widget="image" options="{'size': [192, 192]}"/>
+                    <div class="text-muted">
+                        This icon will be used when users install Odoo as a Progressive Web App
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

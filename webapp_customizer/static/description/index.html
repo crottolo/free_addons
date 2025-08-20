@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Favicon &amp; PWA Customizer</title>
+    <style>
+        .oe_container { max-width: 1140px; margin: 0 auto; padding: 20px; }
+        .oe_row { display: flex; flex-wrap: wrap; margin: 0 -15px; }
+        .oe_col-12 { flex: 0 0 100%; max-width: 100%; padding: 0 15px; }
+        .oe_col-6 { flex: 0 0 50%; max-width: 50%; padding: 0 15px; }
+        .oe_col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; padding: 0 15px; }
+        .oe_dark { background: #2c3e50; color: white; padding: 50px 0; }
+        .oe_light { background: #f8f9fa; padding: 50px 0; }
+        .oe_white { background: white; padding: 50px 0; }
+        .oe_centered { text-align: center; }
+        .oe_row_img { margin: 30px 0; text-align: center; }
+        .oe_row_img img { max-width: 100%; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .oe_feature_box { background: white; padding: 30px; margin: 15px 0; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .oe_feature_icon { font-size: 48px; color: #875A7B; margin-bottom: 20px; }
+        .oe_price { background: #875A7B; color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0; }
+        .oe_price h2 { margin: 0; font-size: 2.5em; }
+        .oe_price p { margin: 10px 0 0 0; opacity: 0.9; }
+        .oe_highlight { background: #e8f4fd; padding: 20px; border-left: 4px solid #875A7B; margin: 20px 0; }
+        .oe_button { display: inline-block; background: #875A7B; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .oe_step { background: #f8f9fa; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #875A7B; }
+        .oe_step_number { background: #875A7B; color: white; width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; }
+        @media (max-width: 768px) { 
+            .oe_col-6, .oe_col-4 { flex: 0 0 100%; max-width: 100%; } 
+            .oe_row_img img { max-width: 95%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="oe_container oe_dark">
+        <div class="oe_row">
+            <div class="oe_col-12 oe_centered">
+                <h1 style="font-size: 3em; margin-bottom: 20px;">Company Favicon &amp; PWA Customizer</h1>
+                <h2 style="font-weight: 300; margin-bottom: 30px; opacity: 0.9;">Transform your Odoo with company-specific favicons and customizable Progressive Web App icons</h2>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="oe_container oe_light">
+        <div class="oe_row">
+            <div class="oe_col-12 oe_centered">
+                <h2 style="font-size: 2.5em; margin-bottom: 50px;">Key Features</h2>
+            </div>
+        </div>
+        <div class="oe_row">
+            <div class="oe_col-4">
+                <div class="oe_feature_box oe_centered">
+                    <div class="oe_feature_icon">🏢</div>
+                    <h3>Company-Specific Favicons</h3>
+                    <p>Set unique favicons for each company in your multi-company setup. Browser tabs and bookmarks will display the correct company branding automatically.</p>
+                </div>
+            </div>
+            <div class="oe_col-4">
+                <div class="oe_feature_box oe_centered">
+                    <div class="oe_feature_icon">📱</div>
+                    <h3>Progressive Web App Icons</h3>
+                    <p>Customize the icon used when users install your Odoo as a Progressive Web App on their devices. Professional branding for mobile experiences.</p>
+                </div>
+            </div>
+            <div class="oe_col-4">
+                <div class="oe_feature_box oe_centered">
+                    <div class="oe_feature_icon">🎨</div>
+                    <h3>Automatic Color-Coding</h3>
+                    <p>New companies automatically get unique color-coded default favicons, making it easy to distinguish between different company environments.</p>
+                </div>
+            </div>
+        </div>
+        <div class="oe_row">
+            <div class="oe_col-4">
+                <div class="oe_feature_box oe_centered">
+                    <div class="oe_feature_icon">🔄</div>
+                    <h3>Dynamic Switching</h3>
+                    <p>Favicon automatically changes when switching between companies, providing immediate visual feedback about which company context you're working in.</p>
+                </div>
+            </div>
+            <div class="oe_col-4">
+                <div class="oe_feature_box oe_centered">
+                    <div class="oe_feature_icon">⚡</div>
+                    <h3>Seamless Integration</h3>
+                    <p>Works perfectly with Odoo 18's native PWA system and integrates cleanly with existing company settings. No conflicts with other modules.</p>
+                </div>
+            </div>
+            <div class="oe_col-4">
+                <div class="oe_feature_box oe_centered">
+                    <div class="oe_feature_icon">🛠️</div>
+                    <h3>Easy Configuration</h3>
+                    <p>Simple setup through familiar Settings interface. Upload icons directly in company settings and PWA configuration. No technical expertise required.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Module Activation -->
+    <section class="oe_container oe_white">
+        <div class="oe_row">
+            <div class="oe_col-12">
+                <h2 style="text-align: center; margin-bottom: 40px;">Easy Installation</h2>
+                <div class="oe_highlight">
+                    <strong>Quick Setup:</strong> Install the module directly from the Odoo Apps interface and start customizing your company branding immediately.
+                </div>
+            </div>
+        </div>
+        <div class="oe_row_img">
+            <img src="01_module_activation.png" alt="Module activation in Odoo Apps interface" />
+            <p style="text-align: center; margin-top: 15px; color: #666;"><em>Activate the Company Favicon &amp; PWA Customizer module from the Apps menu</em></p>
+        </div>
+    </section>
+
+    <!-- PWA Icon Configuration -->
+    <section class="oe_container oe_light">
+        <div class="oe_row">
+            <div class="oe_col-6">
+                <h2>Progressive Web App Icon Setup</h2>
+                <p>Configure your global PWA icon through the Settings interface. This icon will be used when users install your Odoo instance as a Progressive Web App on their mobile devices or desktops.</p>
+                <ul>
+                    <li><strong>Access Settings:</strong> Navigate to Settings from your Odoo interface</li>
+                    <li><strong>Upload Icon:</strong> Select a high-quality PNG image (recommended 512x512 pixels)</li>
+                    <li><strong>Automatic Scaling:</strong> The module automatically generates different sizes (192x192, 512x512) for optimal compatibility</li>
+                    <li><strong>Instant Application:</strong> Changes take effect immediately for new PWA installations</li>
+                </ul>
+            </div>
+            <div class="oe_col-6">
+                <div class="oe_row_img">
+                    <img src="02_settings_access.png" alt="Settings access icon" />
+                    <p style="text-align: center; margin: 10px 0; color: #666;"><em>Click the Settings icon to access configuration</em></p>
+                </div>
+            </div>
+        </div>
+        <div class="oe_row_img">
+            <img src="03_pwa_icon_settings.png" alt="PWA icon configuration in settings" />
+            <p style="text-align: center; margin-top: 15px; color: #666;"><em>Configure your Progressive Web App icon in the General Settings</em></p>
+        </div>
+    </section>
+
+    <!-- Company Favicon Configuration -->
+    <section class="oe_container oe_white">
+        <div class="oe_row">
+            <div class="oe_col-6">
+                <h2>Company-Specific Favicons</h2>
+                <p>Set unique favicons for each company in your multi-company environment. Perfect for organizations that need to distinguish between different business units, subsidiaries, or brands.</p>
+                <div class="oe_step">
+                    <span class="oe_step_number">1</span>
+                    <strong>Navigate to Companies:</strong> Go to Settings → Users &amp; Companies → Companies
+                </div>
+                <div class="oe_step">
+                    <span class="oe_step_number">2</span>
+                    <strong>Select Company:</strong> Choose the company you want to customize
+                </div>
+                <div class="oe_step">
+                    <span class="oe_step_number">3</span>
+                    <strong>Upload Favicon:</strong> Add your custom favicon in the Company Favicon field
+                </div>
+                <div class="oe_step">
+                    <span class="oe_step_number">4</span>
+                    <strong>Automatic Application:</strong> The favicon will automatically appear in browser tabs when working in that company context
+                </div>
+            </div>
+            <div class="oe_col-6">
+                <div class="oe_row_img">
+                    <img src="04_companies_menu.png" alt="Companies menu navigation" />
+                    <p style="text-align: center; margin: 10px 0; color: #666;"><em>Access company settings through Users &amp; Companies</em></p>
+                </div>
+            </div>
+        </div>
+        <div class="oe_row_img">
+            <img src="05_company_favicon_field.png" alt="Company favicon field in company settings" />
+            <p style="text-align: center; margin-top: 15px; color: #666;"><em>Upload custom favicons directly in company settings</em></p>
+        </div>
+    </section>
+
+    <!-- PWA Installation Experience -->
+    <section class="oe_container oe_light">
+        <div class="oe_row">
+            <div class="oe_col-12">
+                <h2 style="text-align: center; margin-bottom: 30px;">Professional PWA Installation Experience</h2>
+                <p style="text-align: center; margin-bottom: 40px;">When users install your Odoo as a Progressive Web App, they'll see your custom branding throughout the installation process and in their device's app list.</p>
+            </div>
+        </div>
+        <div class="oe_row_img">
+            <img src="06_pwa_installation.png" alt="PWA installation dialog with custom icon" />
+            <p style="text-align: center; margin-top: 15px; color: #666;"><em>Professional PWA installation experience with your custom icon</em></p>
+        </div>
+        <div class="oe_row">
+            <div class="oe_col-12">
+                <div class="oe_highlight">
+                    <strong>Enhanced User Experience:</strong> Your custom PWA icon appears in the installation dialog, on the user's home screen, in the app drawer, and in the system's app list, providing consistent branding across all touchpoints.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Benefits -->
+    <section class="oe_container oe_white">
+        <div class="oe_row">
+            <div class="oe_col-12 oe_centered">
+                <h2 style="margin-bottom: 40px;">Technical Benefits</h2>
+            </div>
+        </div>
+        <div class="oe_row">
+            <div class="oe_col-6">
+                <h3>🔧 Clean Integration</h3>
+                <ul>
+                    <li>Seamlessly integrates with Odoo 18's native PWA system</li>
+                    <li>Uses Odoo's standard attachment system for icon storage</li>
+                    <li>Inherits WebManifest controller for proper PWA integration</li>
+                    <li>No conflicts with existing modules or customizations</li>
+                </ul>
+                
+                <h3>⚡ Performance Optimized</h3>
+                <ul>
+                    <li>Automatic image resizing and caching</li>
+                    <li>Efficient JavaScript for dynamic favicon switching</li>
+                    <li>Minimal server load with proper HTTP caching headers</li>
+                    <li>Uses Pillow library for high-quality image processing</li>
+                </ul>
+            </div>
+            <div class="oe_col-6">
+                <h3>🛡️ Enterprise Ready</h3>
+                <ul>
+                    <li>Full multi-company support with isolated favicon settings</li>
+                    <li>Automatic fallback to default favicon if none configured</li>
+                    <li>Color-coded default favicons for new companies</li>
+                    <li>Secure attachment handling with proper access controls</li>
+                </ul>
+                
+                <h3>🔄 Future Proof</h3>
+                <ul>
+                    <li>Built specifically for Odoo 18</li>
+                    <li>Follows Odoo development best practices</li>
+                    <li>Compatible with standard Odoo deployment methods</li>
+                    <li>Easy to maintain and extend</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="oe_container oe_light">
+        <div class="oe_row">
+            <div class="oe_col-12 oe_centered">
+                <h2 style="margin-bottom: 40px;">Perfect For</h2>
+            </div>
+        </div>
+        <div class="oe_row">
+            <div class="oe_col-4">
+                <div class="oe_feature_box">
+                    <h3>🏢 Multi-Company Organizations</h3>
+                    <p>Distinguish between different business units, subsidiaries, or brands with unique favicons for each company entity.</p>
+                </div>
+            </div>
+            <div class="oe_col-4">
+                <div class="oe_feature_box">
+                    <h3>🎨 Branding-Conscious Businesses</h3>
+                    <p>Maintain consistent brand identity across all digital touchpoints, including browser tabs and mobile app installations.</p>
+                </div>
+            </div>
+            <div class="oe_col-4">
+                <div class="oe_feature_box">
+                    <h3>📱 Mobile-First Companies</h3>
+                    <p>Provide professional PWA installation experience for users who prefer mobile access to your Odoo system.</p>
+                </div>
+            </div>
+        </div>
+        <div class="oe_row">
+            <div class="oe_col-4">
+                <div class="oe_feature_box">
+                    <h3>🏭 Service Providers</h3>
+                    <p>Offer white-label Odoo solutions with client-specific branding for favicons and PWA icons.</p>
+                </div>
+            </div>
+            <div class="oe_col-4">
+                <div class="oe_feature_box">
+                    <h3>🌐 SaaS Platforms</h3>
+                    <p>Allow customers to customize their Odoo experience with their own branding elements.</p>
+                </div>
+            </div>
+            <div class="oe_col-4">
+                <div class="oe_feature_box">
+                    <h3>👥 User Experience Teams</h3>
+                    <p>Improve user experience by providing visual context clues about which company environment users are working in.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Guide -->
+    <section class="oe_container oe_white">
+        <div class="oe_row">
+            <div class="oe_col-12">
+                <h2 style="text-align: center; margin-bottom: 40px;">Installation &amp; Setup Guide</h2>
+            </div>
+        </div>
+        <div class="oe_row">
+            <div class="oe_col-6">
+                <h3>📦 Installation Requirements</h3>
+                <ul>
+                    <li><strong>Odoo Version:</strong> 18.0+</li>
+                    <li><strong>Python Dependencies:</strong> Pillow (included with Odoo)</li>
+                    <li><strong>Browser Support:</strong> All modern browsers</li>
+                    <li><strong>PWA Support:</strong> Chrome, Firefox, Safari, Edge</li>
+                </ul>
+                
+                <h3>⚙️ Configuration Steps</h3>
+                <ol>
+                    <li><strong>Install Module:</strong> Activate from Apps menu</li>
+                    <li><strong>Configure PWA Icon:</strong> Upload in Settings → General Settings</li>
+                    <li><strong>Set Company Favicons:</strong> Configure in Settings → Companies</li>
+                    <li><strong>Test:</strong> Switch companies to verify favicon changes</li>
+                </ol>
+            </div>
+            <div class="oe_col-6">
+                <h3>🎨 Image Specifications</h3>
+                <ul>
+                    <li><strong>PWA Icon:</strong> PNG format, 512x512 pixels recommended</li>
+                    <li><strong>Company Favicon:</strong> ICO, PNG, or JPG format</li>
+                    <li><strong>File Size:</strong> Maximum 1MB per image</li>
+                    <li><strong>Quality:</strong> High-resolution for best results</li>
+                </ul>
+                
+                <h3>🔧 Technical Details</h3>
+                <ul>
+                    <li><strong>Storage:</strong> Favicon in company record, PWA icon as attachment</li>
+                    <li><strong>Caching:</strong> Automatic browser and server-side caching</li>
+                    <li><strong>Fallback:</strong> Automatic default favicon generation</li>
+                    <li><strong>Compatibility:</strong> Works with all Odoo deployment methods</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support & Contact -->
+    <section class="oe_container oe_dark">
+        <div class="oe_row">
+            <div class="oe_col-12 oe_centered">
+                <h2 style="margin-bottom: 30px;">Professional Support</h2>
+                <div class="oe_row">
+                    <div class="oe_col-4">
+                        <h3>🎯 Expert Development</h3>
+                        <p>Developed by FL1 sro, specialists in Odoo customization with deep understanding of Odoo's PWA and multi-company architecture.</p>
+                    </div>
+                    <div class="oe_col-4">
+                        <h3>🔧 Lifetime Support</h3>
+                        <p>Get ongoing support for installation, configuration, and troubleshooting. We're committed to your success with this module.</p>
+                    </div>
+                    <div class="oe_col-4">
+                        <h3>🆙 Free Updates</h3>
+                        <p>Receive free updates and improvements as we enhance the module and add new features based on user feedback.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <p><strong>Contact:</strong> FL1 sro | <strong>Website:</strong> https://fl1.cz</p>
+                    <p style="opacity: 0.8;">For technical support, customization requests, or questions about this module, reach out to our team.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+   
+</body>
+</html>
