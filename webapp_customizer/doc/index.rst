@@ -5,9 +5,9 @@ Company Favicon & PWA Customizer
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production
-.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
-    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
-    :alt: License: LGPL-3
+.. |badge2| image:: https://img.shields.io/badge/licence-OPL--1-blue.png
+    :target: https://www.odoo.com/documentation/16.0/legal/licenses/licenses.html#odoo-proprietary-license-v1-0
+    :alt: License: OPL-1
 .. |badge3| image:: https://img.shields.io/badge/price-€13.00-brightgreen.svg
     :target: https://apps.odoo.com/apps/modules/18.0/webapp_customizer/
     :alt: Price €13.00
@@ -284,7 +284,9 @@ For technical support, customization requests, or questions about this module:
 License
 =======
 
-This module is licensed under LGPL-3.
+This module is licensed under OPL-1 (Odoo Proprietary License).
+
+This is a proprietary commercial module. The license restricts usage to valid Odoo Enterprise subscriptions and allows customization only within the bounds of the OPL-1 license terms.
 
 Changelog
 =========

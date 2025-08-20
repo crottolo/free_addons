@@ -91,7 +91,7 @@ All screenshots renamed with descriptive names and integrated into documentation
 
 **Manifest Validation**:
 - [x] Version: 18.0.1.0.0 (correct format)
-- [x] License: LGPL-3 (store compatible)
+- [x] License: OPL-1 (commercial/proprietary)
 - [x] Price: €13.00 (above €9.00 minimum)
 - [x] Currency: EUR (accepted)
 - [x] Images: All 6 screenshots + icon listed
@@ -136,7 +136,7 @@ All screenshots renamed with descriptive names and integrated into documentation
 - [x] Price set to €13.00 with EUR currency
 - [x] Complete RST documentation generated
 - [x] Support and contact information verified
-- [x] License compliance confirmed (LGPL-3)
+- [x] License compliance confirmed (OPL-1)
 - [x] Technical validation completed
 
 ### Estimated Time to Store-Ready Status: ✅ **0 HOURS - READY NOW**

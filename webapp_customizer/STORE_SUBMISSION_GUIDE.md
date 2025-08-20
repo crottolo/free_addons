@@ -7,7 +7,7 @@
 **Version**: 18.0.1.0.0  
 **Price**: €13.00  
 **Category**: Customizations  
-**License**: LGPL-3  
+**License**: OPL-1  
 
 ## Store Submission Checklist
 
@@ -15,7 +15,7 @@
 
 - [x] **Manifest Compliance**: Version follows 18.0.x.x.x format
 - [x] **Price Validation**: Set to €13.00 (minimum 9 EUR requirement met)
-- [x] **License**: LGPL-3 for free/commercial compatibility
+- [x] **License**: OPL-1 for commercial/proprietary use
 - [x] **Images**: 6 professional screenshots + icon included
 - [x] **Description**: Professional HTML store description created
 - [x] **Documentation**: Complete RST documentation provided
@@ -29,7 +29,7 @@
     'summary': "Company-specific favicons and Progressive Web App icon customization for enhanced branding",
     'price': 13.00,
     'currency': 'EUR',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'category': 'Customizations',
     'author': "FL1 sro",
     'website': "https://fl1.cz",
@@ -165,7 +165,7 @@
 - Clean module structure
 
 **Compliance**:
-- LGPL-3 license allows commercial use
+- OPL-1 license for proprietary commercial use
 - No conflicts with Odoo Enterprise
 - Standard Odoo development patterns
 - Proper manifest configuration
@@ -186,7 +186,7 @@
 **Critical Requirements Met**:
 - [x] Version format: 18.0.1.0.0 ✅
 - [x] Price: €13.00 (≥ €9.00) ✅
-- [x] License: LGPL-3 ✅
+- [x] License: OPL-1 ✅
 - [x] Description: Professional HTML ✅
 - [x] Screenshots: 6 high-quality images ✅
 - [x] Documentation: Complete RST docs ✅

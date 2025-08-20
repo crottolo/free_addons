@@ -44,7 +44,7 @@
     'category': 'Customizations',
     
     # Odoo Apps Store specific fields
-    'price': 13.00,
+    'price': 13.0,
     'currency': 'EUR',
     'live_test_url': '',
     'support': 'https://fl1.cz',
