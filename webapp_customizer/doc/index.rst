@@ -280,7 +280,6 @@ For technical support, customization requests, or questions about this module:
 
 * **Website**: https://fl1.cz
 * **Email**: Contact through website form
-* **Documentation**: https://fl1.cz/odoo-modules/webapp-customizer
 
 License
 =======
