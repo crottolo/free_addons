@@ -51,9 +51,9 @@
     
     # Images for store listing
     'images': [
+        'static/description/03_pwa_icon_settings.png',
         'static/description/01_module_activation.png',
         'static/description/02_settings_access.png', 
-        'static/description/03_pwa_icon_settings.png',
         'static/description/04_companies_menu.png',
         'static/description/05_company_favicon_field.png',
         'static/description/06_pwa_installation.png',
