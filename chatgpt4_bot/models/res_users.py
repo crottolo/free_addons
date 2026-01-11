@@ -1,8 +1,7 @@
-from odoo import api, fields, models, _
+from odoo import fields, models
 
 
 class ResUsers(models.Model):
-    _inherit = 'res.users'
-    
-    
-    odoobot_state = fields.Selection(selection_add=[('chatgpt', 'ChatGPT')])
+    _inherit = "res.users"
+
+    odoobot_state = fields.Selection(selection_add=[("chatgpt", "ChatGPT")])

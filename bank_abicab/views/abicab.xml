@@ -10,7 +10,7 @@
                 <field name="name" />
                 <field name="abi" />
                 <field name="cab" />
-                
+
             </search>
         </field>
     </record>
@@ -81,7 +81,7 @@
     <record id="bank_abicab_view_tree" model="ir.ui.view">
         <field name="name">bank.abicab.view.tree</field>
         <field name="model">bank.abicab</field>
-        <field name="arch" type="xml"> 
+        <field name="arch" type="xml">
         <list>
                 <header>
                     <button name="download_file_github" string="Scarica lista istituti" display="always" type="object" class="btn-primary" />
@@ -98,7 +98,7 @@
         </field>
     </record>
 
-    <!-- Banche Italiane search --> 
+    <!-- Banche Italiane search -->
     <!-- model.name search view -->
     <record id="bank_abicab_view_search" model="ir.ui.view">
         <field name="name">bank.abicab.view.search</field>

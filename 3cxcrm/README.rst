@@ -9,7 +9,7 @@
 
 
 
-|badge2|  
+|badge2|
 
 This module look up incoming call on 3cx to query odoo Leads and contacts to provide client name and info from odoo
 
@@ -84,5 +84,3 @@ This module is maintained by the FL1.
    :alt: Odoo Community Association
    :target: https://fl1.cz
    :width: 50 px
-
-

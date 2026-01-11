@@ -21,7 +21,7 @@ class TestMailMultiCompany(TransactionCase):
                     Command.link(cls.company1.id),
                     Command.link(cls.company2.id),
                 ],
-            }
+            },
         )
         cls.server1 = server_obj.create({"name": "server 1", "smtp_host": "teset.smtp"})
         cls.server2 = server_obj.create({"name": "server 1", "smtp_host": "test.smtp"})
@@ -35,7 +35,7 @@ class TestMailMultiCompany(TransactionCase):
                     "reply_to": "test.reply@example.com",
                     "email_from": "test.from@example.com",
                     "author_id": self.user_demo.partner_id.id,
-                }
+                },
             )
         )
 

@@ -82,12 +82,12 @@ Progressive Web App Icon Setup
 -------------------------------
 
 1. **Access Settings**:
-   
+
    * Navigate to Settings from your Odoo home screen
    * Click on "General Settings" tab
 
 2. **Configure PWA Icon**:
-   
+
    * Scroll to "Progressive Web App" section
    * Click on the "PWA Icon" field
    * Upload your custom icon (recommended: PNG format, 512x512 pixels)
@@ -100,18 +100,18 @@ Company Favicon Configuration
 -----------------------------
 
 1. **Navigate to Companies**:
-   
+
    * Go to Settings → Users & Companies → Companies
    * Select the company you want to customize
 
 2. **Upload Company Favicon**:
-   
+
    * Scroll to the "Company Favicon" field
    * Upload your favicon image (ICO, PNG, or JPG format recommended)
    * Save the company record
 
 3. **Verify Configuration**:
-   
+
    * Switch between companies to see the favicon change automatically
    * Check browser tabs and bookmarks for the new favicon
 

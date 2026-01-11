@@ -3,7 +3,7 @@
     "name": "Email Gateway Multi company",
     "version": "18.0.1.0.1",
     "category": "Extra Tools",
-    "author": "Odoo Community Association (OCA), " "Comunitea",
+    "author": "Odoo Community Association (OCA), Comunitea",
     "maintainers": [
         "luisg123v",
     ],

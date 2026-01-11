@@ -73,37 +73,37 @@ Odoo Configuration
 ------------------
 
 1. **Set API Authentication Key**:
-   
+
    Navigate to *Settings → Technical → System Parameters* and modify:
-   
+
    - **Key**: ``crm.3cx.auth``
    - **Value**: Your secure API key (replace default "123A" with a strong key)
 
 2. **Verify CRM Settings**:
-   
+
    Go to *CRM Settings* and ensure "Leads" are enabled if you want to search lead records.
 
 3. **Test API Endpoint**:
-   
+
    The API endpoint is available at: ``https://your-odoo-domain.com/api/3cx/crm``
 
 3CX Configuration
 -----------------
 
 1. **Download Configuration File**:
-   
+
    Use the provided XML configuration file from the module directory:
    ``upload_on_3cx_pbx/3cx_odoo_v20.xml``
 
 2. **Upload to 3CX**:
-   
+
    - Open 3CX Management Console
    - Go to *Settings → CRM Integration*
    - Click "Add" and select "Upload from file"
    - Choose the ``3cx_odoo_v20.xml`` file
 
 3. **Configure Connection Parameters**:
-   
+
    - **ApiKey**: Enter the same API key you set in Odoo system parameters
    - **Host odoo**: Your Odoo server URL (e.g., ``https://your-odoo-domain.com``)
    - **Country**: Your country code (IT, US, etc.)
@@ -192,7 +192,7 @@ Response Formats
      "partner_id": "123",
      "type": "contact",
      "firstname": "John",
-     "lastname": "Smith", 
+     "lastname": "Smith",
      "mobile": "+1234567890",
      "phone": "+1234567891",
      "email": "john.smith@example.com",
@@ -210,7 +210,7 @@ Response Formats
      "type": "lead",
      "name": "John Smith",
      "contact_name": "New Business Inquiry",
-     "mobile": "+1234567890", 
+     "mobile": "+1234567890",
      "phone": "+1234567891",
      "web_url": "https://your-odoo.com/web#id=456&model=crm.lead&view_type=form&action=789",
      "link_end": "link_end"
@@ -378,7 +378,7 @@ Support
 * **Website**: https://www.fl1.cz
 * **GitHub Issues**: https://github.com/crottolo/free_addons/issues
 
-For professional support, custom development, or enterprise implementations, 
+For professional support, custom development, or enterprise implementations,
 please contact FL1 sro directly.
 
 License
@@ -386,5 +386,5 @@ License
 
 This module is licensed under AGPL-3.
 
-You are free to use, modify, and distribute this software under the terms 
+You are free to use, modify, and distribute this software under the terms
 of the GNU Affero General Public License version 3.

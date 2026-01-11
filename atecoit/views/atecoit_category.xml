@@ -59,11 +59,11 @@
                 <field name="code" />
                 <field name="name" />
                 <field name="update" />
-                <!-- <filter name="draft" string="Draft" domain="[('state','=', 'draft')]" /> 
+                <!-- <filter name="draft" string="Draft" domain="[('state','=', 'draft')]" />
                 <group expand="0" string="Group By...">
                     <filter name="name" string="Name" context="{'group_by': 'name'}" />
                 </group> -->
-                
+
             </search>
         </field>
     </record>
@@ -80,7 +80,7 @@
             <p class="oe_view_nocontent_create">
                 <!-- Add Text Here -->
             </p><p>
-                <!-- More details about what a user can do with this object will be OK --> 
+                <!-- More details about what a user can do with this object will be OK -->
             </p>
         </field>
     </record>

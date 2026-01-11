@@ -17,12 +17,12 @@
             </div>
         </xpath>
         <xpath expr="//div[hasclass('field-name')]" position="after">
-            
+
             <div class="mb-3 form-group field-mobile">
                 <label for="mobile">Mobile*</label>
                 <input type="text" name="mobile" t-att-value="mobile" id="mobile" class="form-control form-control-sm" required="required"  />
             </div>
-           
+
         </xpath>
     </template>
 </odoo>

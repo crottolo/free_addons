@@ -9,14 +9,14 @@ OpenAI ChatGPT Odoo Module
 
 
 
-|badge2|  
+|badge2|
 
 
-This Odoo module allows for seamless integration with the OpenAI ChatGPT API, 
-				providing advanced natural language processing capabilities within the Odoo platform. 
-				With this module, users can leverage the power of ChatGPT to generate human-like text, 
-				perform language translation, and more. 
-				It utilizes API calls to communicate with the OpenAI service, 
+This Odoo module allows for seamless integration with the OpenAI ChatGPT API,
+				providing advanced natural language processing capabilities within the Odoo platform.
+				With this module, users can leverage the power of ChatGPT to generate human-like text,
+				perform language translation, and more.
+				It utilizes API calls to communicate with the OpenAI service,
 				making it easy to set up and use.
 
 ``You can answer: how many company in the system? how many contacts in a system? whats is today?``
@@ -36,7 +36,7 @@ Configuration
 * you install with ``pip install openai``
 * Now you can use the chatGPT bot in the chat window.
 * you can set the default bot in the file ``mail_bot.py``
-  
+
 
 
 
@@ -89,7 +89,7 @@ inside the preferences of the user you can set the chatGPT bot as default bot.
 .. image:: images/image2.png
 
 **You can activate or deactivate the chatGPT bot for each user.**
-**You can activate or deactivate the chatGPT directly in the chat window.** 
+**You can activate or deactivate the chatGPT directly in the chat window.**
 
 You can type: ``#enable`` or ``#disable``
 
@@ -134,5 +134,3 @@ This module is maintained by the FL1.
    :alt: Odoo Fl1 sro
    :target: https://fl1.cz
    :width: 50 px
-
-

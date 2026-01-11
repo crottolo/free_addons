@@ -1,5 +1,6 @@
-from odoo import models, fields, api, _
 from random import randint
+
+from odoo import fields, models
 
 
 def _get_default_color(self):
@@ -9,9 +10,13 @@ def _get_default_color(self):
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-
-    color = fields.Integer(string='Color', default=_get_default_color)
-    company_id = fields.Many2one('res.company', string='Company', index=True, default=lambda self: self.env.user.company_id.id)
+    color = fields.Integer(string="Color", default=_get_default_color)
+    company_id = fields.Many2one(
+        "res.company",
+        string="Company",
+        index=True,
+        default=lambda self: self.env.user.company_id.id,
+    )
 
     ateco_category_ids = fields.Many2many(
         comodel_name="atecoit.category",
@@ -22,11 +27,9 @@ class ResPartner(models.Model):
     )
 
 
-
 #################################################################################################
 #                                    ONCHANGE && COMPUTE                                        #
 #################################################################################################
-
 
 
 #################################################################################################
@@ -34,11 +37,9 @@ class ResPartner(models.Model):
 #################################################################################################
 
 
-
 #################################################################################################
 #                                        BUTTON FUNCTION                                        #
 #################################################################################################
-
 
 
 #################################################################################################
@@ -46,10 +47,6 @@ class ResPartner(models.Model):
 #################################################################################################
 
 
-
-
 #################################################################################################
 #                                      CUSTOM FUNCTION                                          #
 #################################################################################################
-
-

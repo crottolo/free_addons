@@ -43,7 +43,7 @@
                                 invisible="not is_attach_present" />
                         </group>
                     </form>
-                    
+
                 </page>
             </xpath>
         </field>
@@ -75,18 +75,18 @@
                                 .o_pdfview_iframe {
                                 min-height: 600px !important;
                                 height: 84vh !important;
-                                
+
                                 }
                             </style>
                             <field name="attachment_id" widget="pdf_viewer" filename="file_name" />
                         </div>
                     </div>
                 </sheet>
-                
+
             </form>
         </field>
     </record>
-    
+
 
     <!-- partner.identity.type list view -->
     <record id="partner_identity_type_view_tree" model="ir.ui.view">
@@ -108,13 +108,13 @@
         <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
-        
+
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 You can manage the identity types here.
             </p><p>
                 You can edit the name of the identity type here.
-            
+
             </p>
         </field>
     </record>
