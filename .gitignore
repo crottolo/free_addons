@@ -132,3 +132,4 @@ dmypy.json
 .pyre/
 
 CLAUDE.md
+.ruff_cache
