@@ -82,36 +82,40 @@
     </div>
 </section>
 
-<section class="oe_container oe_dark">
+<section class="oe_container">
     <div class="oe_row oe_spaced">
         <h2 class="oe_slogan" style="color:#875A7B;">Usage Examples</h2>
     </div>
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
-            <p style="font-size:14px; color:#333;"><strong>Basic Request (single database instance):</strong></p>
-            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:13px; overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" https://your-odoo.com/api/server/info</pre>
+            <p><strong>Basic Request (single database instance):</strong></p>
+            <p class="alert alert-info">
+                <code>curl -H "Authorization: Bearer YOUR_TOKEN" https://your-odoo.com/api/server/info</code>
+            </p>
         </div>
     </div>
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
-            <p style="font-size:14px; color:#333;"><strong>Multi-Database - Query Parameter:</strong></p>
-            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:13px; overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" \
-     "https://your-odoo.com/api/server/info?db=production"</pre>
+            <p><strong>Multi-Database - Query Parameter:</strong></p>
+            <p class="alert alert-info">
+                <code>curl -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/info?db=production"</code>
+            </p>
         </div>
     </div>
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
-            <p style="font-size:14px; color:#333;"><strong>Multi-Database - Header:</strong></p>
-            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:13px; overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" \
-     -H "X-Odoo-Database: production" \
-     https://your-odoo.com/api/server/info</pre>
+            <p><strong>Multi-Database - Header:</strong></p>
+            <p class="alert alert-info">
+                <code>curl -H "Authorization: Bearer YOUR_TOKEN" -H "X-Odoo-Database: production" https://your-odoo.com/api/server/info</code>
+            </p>
         </div>
     </div>
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
-            <p style="font-size:14px; color:#333;"><strong>With Module List Refresh:</strong></p>
-            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:13px; overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" \
-     "https://your-odoo.com/api/server/info?db=production&amp;refresh=true"</pre>
+            <p><strong>With Module List Refresh:</strong></p>
+            <p class="alert alert-info">
+                <code>curl -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/info?db=production&amp;refresh=true"</code>
+            </p>
         </div>
     </div>
 </section>
@@ -169,20 +173,16 @@
     </div>
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
-            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:12px; overflow-x:auto;">{
+            <div class="alert alert-info">
+<pre>{
   "success": true,
   "timestamp": "2026-01-23T12:00:00",
   "database": "production_db",
-  "server": {
-    "version": "18.0+e",
-    "version_info": [18, 0, 0, "final", 0, "e"],
-    "serie": "18.0"
-  },
+  "server": {"version": "18.0+e", "serie": "18.0"},
   "license": {
     "is_enterprise": true,
-    "expiration_date": "2027-12-16 00:00:00",
+    "expiration_date": "2027-12-16",
     "enterprise_code": "M22110752881618",
-    "expiration_reason": "renewal",
     "is_neutralized": false
   },
   "users": {
@@ -190,39 +190,15 @@
     "active_last_30_days": 18,
     "total_portal": 150,
     "total_inactive": 5,
-    "list": [
-      {
-        "id": 2,
-        "login": "admin",
-        "name": "Administrator",
-        "last_activity": "2026-01-23T09:21:23"
-      }
-    ]
+    "list": [{"id": 2, "login": "admin", "name": "Administrator", "last_activity": "2026-01-23T09:21:23"}]
   },
-  "addons_paths": [
-    "/opt/odoo/odoo/addons",
-    "/opt/odoo/enterprise",
-    "/opt/odoo/custom"
-  ],
+  "addons_paths": ["/opt/odoo/addons", "/opt/odoo/enterprise"],
   "modules": {
-    "available": {
-      "total": 1745,
-      "list": [
-        {"name": "base", "version": "18.0.1.3.0",
-         "state": "installed", "author": "Odoo S.A.",
-         "application": false}
-      ]
-    },
-    "installed": {
-      "total": 225,
-      "to_upgrade": 0,
-      "list": [
-        {"name": "base", "version": "18.0.1.3.0",
-         "author": "Odoo S.A.", "application": false}
-      ]
-    }
+    "available": {"total": 1745, "list": [...]},
+    "installed": {"total": 225, "to_upgrade": 0, "list": [...]}
   }
 }</pre>
+            </div>
         </div>
     </div>
 </section>
