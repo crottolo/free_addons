@@ -1,0 +1,366 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Server Info Monitor</h2>
+        <h3 class="oe_slogan">REST API endpoint to monitor Odoo instances with multi-database support</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <p class="text-center" style="font-size:16px; color:#666;">
+            A lightweight module that exposes server information via a secure REST API.
+            Perfect for DevOps dashboards, multi-instance monitoring, and automated health checks.
+            Now with full multi-database support for complex Odoo deployments.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Key Features</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Multi-Database Support</strong></p>
+            <p>Query any database on the same Odoo instance via query parameter or header. Monitor all your databases from a single endpoint.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Server Version Info</strong></p>
+            <p>Get Odoo version, version_info array, and series. Instantly know if you're running Community or Enterprise.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">License Monitoring</strong></p>
+            <p>Track Enterprise expiration dates, license codes, renewal reasons, and detect neutralized (demo/test) databases.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">User Statistics</strong></p>
+            <p>Monitor internal users, portal users, active users (last 30 days), and inactive accounts with last login dates.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Module Inventory</strong></p>
+            <p>List all available and installed modules with versions, authors, application flags, and pending upgrades count.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Addons Paths</strong></p>
+            <p>See all configured addons paths on the server. Useful for understanding module deployment structure.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">API Endpoint</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333;">
+                <strong>Endpoint:</strong> <code style="background:#f5f5f5; padding:2px 6px;">GET /api/server/info</code>
+            </p>
+            <p style="font-size:14px; color:#333;">
+                <strong>Authentication:</strong> Bearer token via Authorization header
+            </p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333; margin-top:10px;"><strong>Query Parameters:</strong></p>
+            <ul style="font-size:14px; color:#666;">
+                <li><code style="background:#f5f5f5; padding:2px 6px;">?db=database_name</code> - Specify target database (for multi-db instances)</li>
+                <li><code style="background:#f5f5f5; padding:2px 6px;">?refresh=true</code> - Refresh module list before returning</li>
+            </ul>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333; margin-top:10px;"><strong>Alternative Database Selection:</strong></p>
+            <ul style="font-size:14px; color:#666;">
+                <li>Header: <code style="background:#f5f5f5; padding:2px 6px;">X-Odoo-Database: database_name</code></li>
+                <li>Fallback: Uses config db_name if not specified</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Usage Examples</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333;"><strong>Basic Request (single database instance):</strong></p>
+            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:13px; overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" https://your-odoo.com/api/server/info</pre>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333;"><strong>Multi-Database - Query Parameter:</strong></p>
+            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:13px; overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" \
+     "https://your-odoo.com/api/server/info?db=production"</pre>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333;"><strong>Multi-Database - Header:</strong></p>
+            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:13px; overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" \
+     -H "X-Odoo-Database: production" \
+     https://your-odoo.com/api/server/info</pre>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333;"><strong>With Module List Refresh:</strong></p>
+            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:13px; overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" \
+     "https://your-odoo.com/api/server/info?db=production&amp;refresh=true"</pre>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Response Data Structure</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Server Section</strong></p>
+            <ul style="font-size:14px; color:#666;">
+                <li>version (e.g., "18.0+e" for Enterprise)</li>
+                <li>version_info array [18, 0, 0, "final", 0, "e"]</li>
+                <li>serie (e.g., "18.0")</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">License Section</strong></p>
+            <ul style="font-size:14px; color:#666;">
+                <li>is_enterprise (true/false)</li>
+                <li>expiration_date</li>
+                <li>enterprise_code</li>
+                <li>expiration_reason</li>
+                <li>is_neutralized</li>
+            </ul>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Users Section</strong></p>
+            <ul style="font-size:14px; color:#666;">
+                <li>total_internal (backend users)</li>
+                <li>active_last_30_days</li>
+                <li>total_portal</li>
+                <li>total_inactive</li>
+                <li>User list with id, login, name, last_activity</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Modules Section</strong></p>
+            <ul style="font-size:14px; color:#666;">
+                <li>Available modules (total + detailed list)</li>
+                <li>Installed modules (total + detailed list)</li>
+                <li>Modules pending upgrade count</li>
+                <li>Version, author, application flag per module</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Complete JSON Response Example</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <pre style="background:#2d2d2d; color:#f8f8f2; padding:15px; border-radius:5px; font-size:12px; overflow-x:auto;">{
+  "success": true,
+  "timestamp": "2026-01-23T12:00:00",
+  "database": "production_db",
+  "server": {
+    "version": "18.0+e",
+    "version_info": [18, 0, 0, "final", 0, "e"],
+    "serie": "18.0"
+  },
+  "license": {
+    "is_enterprise": true,
+    "expiration_date": "2027-12-16 00:00:00",
+    "enterprise_code": "M22110752881618",
+    "expiration_reason": "renewal",
+    "is_neutralized": false
+  },
+  "users": {
+    "total_internal": 25,
+    "active_last_30_days": 18,
+    "total_portal": 150,
+    "total_inactive": 5,
+    "list": [
+      {
+        "id": 2,
+        "login": "admin",
+        "name": "Administrator",
+        "last_activity": "2026-01-23T09:21:23"
+      }
+    ]
+  },
+  "addons_paths": [
+    "/opt/odoo/odoo/addons",
+    "/opt/odoo/enterprise",
+    "/opt/odoo/custom"
+  ],
+  "modules": {
+    "available": {
+      "total": 1745,
+      "list": [
+        {"name": "base", "version": "18.0.1.3.0",
+         "state": "installed", "author": "Odoo S.A.",
+         "application": false}
+      ]
+    },
+    "installed": {
+      "total": 225,
+      "to_upgrade": 0,
+      "list": [
+        {"name": "base", "version": "18.0.1.3.0",
+         "author": "Odoo S.A.", "application": false}
+      ]
+    }
+  }
+}</pre>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Use Cases</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">DevOps Dashboard</strong></p>
+            <p style="font-size:14px; color:#666;">Monitor all your Odoo instances from a single dashboard. Track versions, uptime, and health status in real-time.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Multi-Database Monitoring</strong></p>
+            <p style="font-size:14px; color:#666;">Single endpoint for all databases on the same instance. Perfect for multi-tenant deployments and staging environments.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Update Planning</strong></p>
+            <p style="font-size:14px; color:#666;">Identify servers with pending module upgrades. Plan maintenance windows effectively across all databases.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">License Management</strong></p>
+            <p style="font-size:14px; color:#666;">Get alerts before Enterprise licenses expire. Track expiration reasons and renewal status across instances.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">User Audit</strong></p>
+            <p style="font-size:14px; color:#666;">Identify inactive users and optimize license usage. Track activity patterns and last login times per database.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Compliance Documentation</strong></p>
+            <p style="font-size:14px; color:#666;">Document installed modules per instance for audits and compliance requirements. Export module inventories.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Configuration</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333;">
+                After installation, configure the API token in:
+            </p>
+            <p style="font-size:14px; color:#333;">
+                <strong>Settings</strong> &rarr; <strong>Technical</strong> &rarr; <strong>System Parameters</strong>
+            </p>
+            <p style="font-size:14px; color:#333;">
+                Key: <code style="background:#f5f5f5; padding:2px 6px;">server_info_monitor.token</code>
+            </p>
+            <p style="font-size:14px; color:#666; margin-top:10px;">
+                Default token: <code style="background:#f5f5f5; padding:2px 6px;">srvmon_a7b3c9d2e5f8</code>
+            </p>
+            <p style="font-size:14px; color:#c00; margin-top:5px;">
+                <strong>IMPORTANT: Change this token in production environments!</strong>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Error Responses</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">400 Bad Request</strong></p>
+            <p style="font-size:14px; color:#666;">Database not specified (when no default available in multi-db mode)</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">401 Unauthorized</strong></p>
+            <p style="font-size:14px; color:#666;">Invalid or missing authentication token</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">404 Not Found</strong></p>
+            <p style="font-size:14px; color:#666;">Specified database does not exist on this instance</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">500 Internal Error</strong></p>
+            <p style="font-size:14px; color:#666;">Internal server error (check Odoo logs for details)</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Security</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Bearer Token Authentication</strong></p>
+            <p style="font-size:14px; color:#666;">Only requests with valid Authorization header can access the API. No session or cookie required.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Read-Only Endpoint</strong></p>
+            <p style="font-size:14px; color:#666;">Cannot modify any data on your server. Safe for monitoring tools and external dashboards.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Technical Details</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Dependencies</strong></p>
+            <p style="font-size:14px; color:#666;">Only requires <code style="background:#f5f5f5; padding:2px 6px;">base</code> module. No external Python packages needed. Minimal footprint.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Compatibility</strong></p>
+            <p style="font-size:14px; color:#666;">Odoo 18 Community and Enterprise. Works with both editions and multi-database configurations.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Support</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12 text-center">
+            <p style="font-size:14px; color:#666;">
+                For support, feature requests, and bug reports, please visit our website or contact us directly.
+            </p>
+            <p style="font-size:14px; color:#333;">
+                <strong>Website:</strong> <a href="https://fl1.cz">https://fl1.cz</a>
+            </p>
+            <p style="font-size:14px; color:#333;">
+                <strong>Email:</strong> <a href="mailto:info@fl1.cz">info@fl1.cz</a>
+            </p>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <!-- API authentication token for server info monitor -->
+        <record id="server_info_monitor_token" model="ir.config_parameter">
+            <field name="key">server_info_monitor.token</field>
+            <field name="value">srvmon_a7b3c9d2e5f8</field>
+        </record>
+    </data>
+</odoo>
