@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_notification" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.l10n_it_edi_notification</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="l10n_it_edi.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='account_edi']" position="after">
+                <block title="SDI Notifications" invisible="country_code != 'IT'" id="l10n_it_edi_notification_settings">
+                    <setting
+                        id="sdi_notification_channel"
+                        string="Notification Channel"
+                        help="Odoo channel where daily summaries will be posted. If not set, uses the module's default channel.">
+                        <field name="l10n_it_edi_notification_channel_id" />
+                    </setting>
+                    <setting
+                        id="sdi_fallback_user"
+                        string="Fallback Notification User"
+                        help="If set, also receives a direct email in addition to the channel notification">
+                        <field name="l10n_it_edi_default_notification_user_id" />
+                    </setting>
+                    <setting
+                        id="sdi_create_activity"
+                        string="Create Activity for Errors"
+                        help="If enabled, creates a mail.activity on invoices rejected by SDI or PA">
+                        <field name="l10n_it_edi_create_activity" />
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

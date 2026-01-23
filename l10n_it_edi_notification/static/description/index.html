@@ -1,0 +1,192 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Italian EDI - SDI Notifications</h2>
+        <h3 class="oe_slogan">Automated daily summary of Italian electronic invoicing (SDI) issues</h3>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Daily Report in Discuss Channel</h2>
+        <h3 class="oe_slogan">Never miss a rejected or blocked invoice again</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12 text-center">
+            <img src="01_channel_daily_report.png" alt="Daily SDI report in Discuss channel" style="max-width:100%; border:1px solid #ddd;">
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <p class="text-center" style="font-size:14px; color:#666;">
+            Every day, the module automatically posts a message in your configured Odoo Discuss channel
+            with a summary of all problematic invoices, organized by error category.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">4 Problem Categories Monitored</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Requires Signature</strong></p>
+            <p>Invoices that require user signature before being sent to SDI.</p>
+            <p style="font-size:12px; color:#888;">Status: <code>requires_user_signature</code></p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Rejected by SDI</strong></p>
+            <p>Invoices rejected by the Italian Tax Authority interchange system.</p>
+            <p style="font-size:12px; color:#888;">Status: <code>rejected</code></p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Rejected by PA Partner</strong></p>
+            <p>Invoices to Public Administration rejected by the recipient.</p>
+            <p style="font-size:12px; color:#888;">Status: <code>rejected_by_pa_partner</code></p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Self-Invoices Not Sent</strong></p>
+            <p>Confirmed self-invoices (reverse charge) not yet transmitted to SDI.</p>
+            <p style="font-size:12px; color:#888;">Requires manual action</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Dedicated Filters in Invoice List</h2>
+        <h3 class="oe_slogan">Quickly find all problematic invoices</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12 text-center">
+            <img src="02_invoice_filters.png" alt="SDI filters in invoice search" style="max-width:100%; border:1px solid #ddd;">
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <p class="text-center" style="font-size:14px; color:#666;">
+            New SDI-specific filters: Requires Signature, Rejected, Rejected by PA, All Problems.
+            Plus grouping by SDI State for easy organization.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">SDI State Column Visible by Default</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12 text-center">
+            <img src="03_invoice_list_sdi_column.png" alt="Invoice list with SDI State column" style="max-width:100%; border:1px solid #ddd;">
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <p class="text-center" style="font-size:14px; color:#666;">
+            The SDI State column is now visible by default in the invoice list,
+            allowing you to immediately identify the transmission status of each document.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Easy Configuration</h2>
+        <h3 class="oe_slogan">Settings > Accounting > Electronic Invoicing</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12 text-center">
+            <img src="04_settings_configuration.png" alt="Module configuration page" style="max-width:100%; border:1px solid #ddd;">
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Configuration Options</h2>
+        <div class="oe_span12">
+            <p><strong>Notification Channel</strong> - Odoo Discuss channel where daily summaries will be posted.
+            If not configured, uses the default channel created by the module.</p>
+            <p><strong>Fallback Notification User</strong> - Optional user who also receives a direct email
+            in addition to the channel notification.</p>
+            <p><strong>Create Activity for Errors</strong> - If enabled, automatically creates a mail.activity
+            on invoices with SDI problems, assigned to the responsible user.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Technical Details</h2>
+        <div class="oe_span6">
+            <p><strong>Features</strong></p>
+            <ul>
+                <li>Daily cron job for report generation</li>
+                <li>QWeb template for message formatting</li>
+                <li>Direct links to invoices in the report</li>
+                <li>Automatic extraction of SDI error messages</li>
+                <li>Multi-company support (Italian companies only)</li>
+                <li>Notification flag to avoid duplicate activities</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <p><strong>Requirements</strong></p>
+            <ul>
+                <li>Odoo Version: 18.0</li>
+                <li>Dependencies: l10n_it_edi, mail</li>
+                <li>Edition: Community / Enterprise</li>
+                <li>License: LGPL-3</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Installation</h2>
+        <div class="oe_span12">
+            <ol>
+                <li>Download the module and place it in your addons directory</li>
+                <li>Update the apps list: Apps > Update Apps List</li>
+                <li>Search for "Italian EDI - SDI Notifications" and install</li>
+                <li>Configure settings in Settings > Accounting > Electronic Invoicing</li>
+            </ol>
+            <p style="margin-top:16px; padding:12px; border-left:4px solid #875A7B; background-color:#f8f9fa;">
+                <strong>Note:</strong> The module requires <code>l10n_it_edi</code> to be already installed and configured.
+                The cron job runs automatically every day at 06:00.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Changelog</h2>
+        <div class="oe_span12">
+            <p><strong>Version 18.0.2.1.0</strong></p>
+            <ul>
+                <li>Initial release for Odoo 18</li>
+                <li>Daily SDI report in Discuss channel</li>
+                <li>Monitoring of 4 problem categories</li>
+                <li>Dedicated filters in invoice list</li>
+                <li>SDI State column visible by default</li>
+                <li>Optional email to fallback user</li>
+                <li>Optional activity creation</li>
+                <li>Multi-company support</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Support</h2>
+        <div class="oe_span12 text-center">
+            <p>For technical assistance, bug reports or feature requests:</p>
+            <p><strong>Email:</strong> support@fl1.cz</p>
+            <p><strong>Website:</strong> https://fl1.cz</p>
+            <p style="margin-top:20px; color:#888; font-size:12px;">
+                Developed by FL1 sro - Odoo solutions specialists for the Italian market.
+            </p>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <!-- Channel for SDI notifications - accessible to accounting users -->
+        <record id="channel_sdi_notifications" model="discuss.channel">
+            <field name="name">🇮🇹 Notifiche SDI</field>
+            <field name="description">Riepilogo giornaliero problemi fatturazione elettronica italiana</field>
+            <field name="channel_type">channel</field>
+            <field name="group_public_id" ref="account.group_account_invoice" />
+            <field name="group_ids" eval="[Command.link(ref('account.group_account_invoice'))]" />
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- QWeb template for SDI Daily Report - uses translated labels from Python -->
+    <template id="sdi_daily_report_template">
+        <div style="text-align: left;">
+            <h2 style="margin-bottom: 8px;">
+                <t t-out="labels['title']" /> - <t t-out="date" />
+            </h2>
+            <p style="margin-bottom: 20px;">
+                <strong>
+                    <t t-out="labels['company_label']" />
+                </strong>
+                <t t-out="company.name" />
+            </p>
+
+            <!-- Requires Signature Section -->
+            <t t-if="problems.get('requires_signature')">
+                <h3 style="margin-top: 24px; margin-bottom: 8px;">
+                    <t t-out="labels['requires_signature_title']" />
+                </h3>
+                <p style="color: #666; font-size: 13px; margin-bottom: 8px;">
+                    <t t-out="labels['requires_signature_desc']" />
+                </p>
+                <ul style="margin-bottom: 16px;">
+                    <t t-foreach="problems['requires_signature']" t-as="move">
+                        <li style="margin-bottom: 4px;">
+                            <a t-att-href="move._get_sdi_report_link()" target="_blank">
+                            <kbd t-out="move.name" />
+                        </a>
+                            - <t t-out="move.partner_id.display_name or '-'" />
+                            - <t t-out="format_monetary(move.amount_total, move.currency_id)" />
+                            (<t t-out="format_date(move.invoice_date)" />)
+                        </li>
+                    </t>
+                </ul>
+            </t>
+
+            <!-- Rejected by SDI Section -->
+            <t t-if="problems.get('rejected')">
+                <h3 style="margin-top: 24px; margin-bottom: 8px;">
+                    <t t-out="labels['rejected_title']" />
+                </h3>
+                <p style="color: #666; font-size: 13px; margin-bottom: 8px;">
+                    <t t-out="labels['rejected_desc']" />
+                </p>
+                <ul style="margin-bottom: 16px;">
+                    <t t-foreach="problems['rejected']" t-as="move">
+                        <li style="margin-bottom: 6px;">
+                            <details>
+                                <summary>
+                                    <a t-att-href="move._get_sdi_report_link()" target="_blank">
+                                    <kbd t-out="move.name" />
+                                </a>
+                                    - <t t-out="move.partner_id.display_name or '-'" />
+                                    - <t t-out="format_monetary(move.amount_total, move.currency_id)" />
+                                    (<t t-out="format_date(move.invoice_date)" />)
+                                </summary>
+                                <p t-if="move.l10n_it_edi_header" style="margin: 8px 0 0 20px; color: #666; font-size: 12px;">
+                                    <t t-out="move._get_sdi_error_text()" />
+                                </p>
+                            </details>
+                        </li>
+                    </t>
+                </ul>
+            </t>
+
+            <!-- Rejected by PA Section -->
+            <t t-if="problems.get('rejected_by_pa')">
+                <h3 style="margin-top: 24px; margin-bottom: 8px;">
+                    <t t-out="labels['rejected_pa_title']" />
+                </h3>
+                <p style="color: #666; font-size: 13px; margin-bottom: 8px;">
+                    <t t-out="labels['rejected_pa_desc']" />
+                </p>
+                <ul style="margin-bottom: 16px;">
+                    <t t-foreach="problems['rejected_by_pa']" t-as="move">
+                        <li style="margin-bottom: 6px;">
+                            <details>
+                                <summary>
+                                    <a t-att-href="move._get_sdi_report_link()" target="_blank">
+                                    <kbd t-out="move.name" />
+                                </a>
+                                    - <t t-out="move.partner_id.display_name or '-'" />
+                                    - <t t-out="format_monetary(move.amount_total, move.currency_id)" />
+                                    (<t t-out="format_date(move.invoice_date)" />)
+                                </summary>
+                                <p t-if="move.l10n_it_edi_header" style="margin: 8px 0 0 20px; color: #666; font-size: 12px;">
+                                    <t t-out="move._get_sdi_error_text()" />
+                                </p>
+                            </details>
+                        </li>
+                    </t>
+                </ul>
+            </t>
+
+            <!-- Not Sent Self-Invoices Section -->
+            <t t-if="problems.get('not_sent_self_invoices')">
+                <h3 style="margin-top: 24px; margin-bottom: 8px;">
+                    <t t-out="labels['self_invoices_title']" />
+                </h3>
+                <p style="color: #666; font-size: 13px; margin-bottom: 8px;">
+                    <t t-out="labels['self_invoices_desc']" />
+                </p>
+                <ul style="margin-bottom: 16px;">
+                    <t t-foreach="problems['not_sent_self_invoices']" t-as="move">
+                        <li style="margin-bottom: 4px;">
+                            <a t-att-href="move._get_sdi_report_link()" target="_blank">
+                            <kbd t-out="move.name" />
+                        </a>
+                            - <t t-out="move.partner_id.display_name or '-'" />
+                            - <t t-out="format_monetary(move.amount_total, move.currency_id)" />
+                            (<t t-out="format_date(move.invoice_date)" />)
+                        </li>
+                    </t>
+                </ul>
+            </t>
+        </div>
+    </template>
+</odoo>

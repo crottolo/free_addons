@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Make l10n_it_edi_state visible by default in invoice list -->
+    <record id="view_invoice_tree_inherit_notification" model="ir.ui.view">
+        <field name="name">account.move.list.inherit.l10n_it_edi_notification</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_it_edi.view_invoice_tree_inherit" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_it_edi_state']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add SDI problem filters to invoice search view -->
+    <record id="view_account_invoice_filter_sdi" model="ir.ui.view">
+        <field name="name">account.move.search.l10n_it_edi_notification</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter" />
+        <field name="arch" type="xml">
+            <!-- Add SDI filters after 'Not Sent' filter -->
+            <xpath expr="//filter[@name='not_sent']" position="after">
+                <separator />
+                <filter
+                    name="sdi_requires_signature"
+                    string="SDI: Requires Signature"
+                    domain="[('l10n_it_edi_state', '=', 'requires_user_signature')]" />
+                <filter name="sdi_rejected" string="SDI: Rejected" domain="[('l10n_it_edi_state', '=', 'rejected')]" />
+                <filter name="sdi_rejected_pa" string="SDI: Rejected by PA" domain="[('l10n_it_edi_state', '=', 'rejected_by_pa_partner')]" />
+                <filter
+                    name="sdi_problems"
+                    string="SDI: All Problems"
+                    domain="[('l10n_it_edi_state', 'in', ['requires_user_signature', 'rejected', 'rejected_by_pa_partner'])]" />
+            </xpath>
+            <!-- Add SDI state grouping -->
+            <xpath expr="//filter[@name='status']" position="after">
+                <filter name="group_sdi_state" string="SDI State" context="{'group_by': 'l10n_it_edi_state'}" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,243 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_it_edi_notification
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-23 00:00+0000\n"
+"PO-Revision-Date: 2026-01-23 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model,name:l10n_it_edi_notification.model_account_move
+msgid "Journal Entry"
+msgstr "Registrazione contabile"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model,name:l10n_it_edi_notification.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni di configurazione"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model.fields,field_description:l10n_it_edi_notification.field_res_config_settings__l10n_it_edi_create_activity
+msgid "Create Activity for SDI Errors"
+msgstr "Crea attività per errori SDI"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model.fields,help:l10n_it_edi_notification.field_res_config_settings__l10n_it_edi_create_activity
+msgid "If enabled, creates a mail.activity for rejected invoices"
+msgstr "Se attivo, crea una mail.activity per le fatture rifiutate"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model.fields,field_description:l10n_it_edi_notification.field_res_config_settings__l10n_it_edi_default_notification_user_id
+msgid "Fallback Notification User"
+msgstr "Utente notifica fallback"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model.fields,help:l10n_it_edi_notification.field_res_config_settings__l10n_it_edi_default_notification_user_id
+msgid "User who receives SDI summary emails. If not set, only the channel notification is sent."
+msgstr "Utente che riceve le email di riepilogo SDI. Se non impostato, viene inviata solo la notifica nel canale."
+
+#. module: l10n_it_edi_notification
+#: model:ir.model.fields,field_description:l10n_it_edi_notification.field_res_config_settings__l10n_it_edi_notification_channel_id
+msgid "SDI Notification Channel"
+msgstr "Canale notifiche SDI"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model.fields,help:l10n_it_edi_notification.field_res_config_settings__l10n_it_edi_notification_channel_id
+msgid "Odoo channel where daily SDI summaries will be posted"
+msgstr "Canale Odoo dove verranno pubblicati i riepilogi giornalieri SDI"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model.fields,field_description:l10n_it_edi_notification.field_account_move__l10n_it_edi_notified
+msgid "SDI Error Notified"
+msgstr "Errore SDI notificato"
+
+#. module: l10n_it_edi_notification
+#: model:ir.model.fields,help:l10n_it_edi_notification.field_account_move__l10n_it_edi_notified
+msgid "True if notification was already sent for this SDI error"
+msgstr "Vero se la notifica è già stata inviata per questo errore SDI"
+
+#. module: l10n_it_edi_notification
+#: model:discuss.channel,name:l10n_it_edi_notification.channel_sdi_notifications
+msgid "IT EDI Notifications"
+msgstr "🇮🇹 Notifiche SDI"
+
+#. module: l10n_it_edi_notification
+#: model:discuss.channel,description:l10n_it_edi_notification.channel_sdi_notifications
+msgid "Daily summary of Italian electronic invoicing issues"
+msgstr "Riepilogo giornaliero problemi fatturazione elettronica italiana"
+
+#. module: l10n_it_edi_notification
+#: model:mail.activity.type,name:l10n_it_edi_notification.mail_activity_sdi_error
+msgid "SDI Error"
+msgstr "Errore SDI"
+
+#. module: l10n_it_edi_notification
+#: model:mail.activity.type,summary:l10n_it_edi_notification.mail_activity_sdi_error
+msgid "Electronic Invoice - SDI Error"
+msgstr "Fattura elettronica - Errore SDI"
+
+#. module: l10n_it_edi_notification
+#: model:ir.cron,name:l10n_it_edi_notification.ir_cron_l10n_it_edi_daily_report
+msgid "IT EDI: Daily SDI Issues Report"
+msgstr "IT EDI: Riepilogo Giornaliero Problemi SDI"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.res_config_settings_view_form_inherit_notification
+msgid "SDI Notifications"
+msgstr "Notifiche SDI"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.res_config_settings_view_form_inherit_notification
+msgid "Notification Channel"
+msgstr "Canale notifiche"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.res_config_settings_view_form_inherit_notification
+msgid "Odoo channel where daily summaries will be posted. If not set, uses the module's default channel."
+msgstr "Canale Odoo dove verranno pubblicati i riepilogi giornalieri. Se non impostato, usa il canale predefinito del modulo."
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.res_config_settings_view_form_inherit_notification
+msgid "If set, also receives a direct email in addition to the channel notification"
+msgstr "Se impostato, riceve anche una email diretta oltre alla notifica nel canale"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.res_config_settings_view_form_inherit_notification
+msgid "Create Activity for Errors"
+msgstr "Crea attività per errori"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.res_config_settings_view_form_inherit_notification
+msgid "If enabled, creates a mail.activity on invoices rejected by SDI or PA"
+msgstr "Se attivo, crea una mail.activity sulle fatture rifiutate da SDI o PA"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.view_account_invoice_filter_sdi
+msgid "SDI: Requires Signature"
+msgstr "SDI: Richiede Firma"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.view_account_invoice_filter_sdi
+msgid "SDI: Rejected"
+msgstr "SDI: Rifiutata"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.view_account_invoice_filter_sdi
+msgid "SDI: Rejected by PA"
+msgstr "SDI: Rifiutata PA"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.view_account_invoice_filter_sdi
+msgid "SDI: All Problems"
+msgstr "SDI: Tutti i Problemi"
+
+#. module: l10n_it_edi_notification
+#: model_terms:ir.ui.view,arch_db:l10n_it_edi_notification.view_account_invoice_filter_sdi
+msgid "SDI State"
+msgstr "Stato SDI"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "[%(company)s] SDI Summary - %(count)s issues"
+msgstr "[%(company)s] Riepilogo SDI - %(count)s problemi"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "SDI Error: %s"
+msgstr "Errore SDI: %s"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Self-invoice <b>%(name)s</b> is confirmed but <b>NOT SENT</b> to SDI.<br/>Click 'Send Tax Integration' to send it."
+msgstr "L'autofattura <b>%(name)s</b> è confermata ma <b>NON INVIATA</b> allo SDI.<br/>Cliccare su 'Invia Integrazione Fiscale' per inviarla."
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Invoice <b>%(name)s</b> <b>REQUIRES SIGNATURE</b> before sending.<br/>Access the invoice and complete the signature."
+msgstr "La fattura <b>%(name)s</b> <b>RICHIEDE LA FIRMA</b> prima dell'invio.<br/>Accedere alla fattura e completare la firma."
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Invoice <b>%(name)s</b> was <b>REJECTED</b> by SDI.<br/>Check the errors in the invoice chatter and fix them."
+msgstr "La fattura <b>%(name)s</b> è stata <b>RIFIUTATA</b> dallo SDI.<br/>Verificare gli errori nel chatter della fattura e correggere."
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Invoice <b>%(name)s</b> was <b>REJECTED BY PA PARTNER</b>.<br/>Contact the customer to verify the rejection reason."
+msgstr "La fattura <b>%(name)s</b> è stata <b>RIFIUTATA DAL PARTNER PA</b>.<br/>Contattare il cliente per verificare il motivo del rifiuto."
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "SDI Daily Summary"
+msgstr "Riepilogo Giornaliero SDI"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Company:"
+msgstr "Azienda:"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Requires Signature"
+msgstr "Richiede Firma"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Invoices that require user signature before sending."
+msgstr "Fatture che richiedono la firma utente prima dell'invio."
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Rejected by SDI"
+msgstr "Rifiutate dallo SDI"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Invoices rejected by SDI - check errors in the chatter."
+msgstr "Fatture rifiutate dallo SDI - verificare errori nel chatter."
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Rejected by PA Partner"
+msgstr "Rifiutate dal Partner PA"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Invoices rejected by PA partner - contact the customer."
+msgstr "Fatture rifiutate dal partner PA - contattare il cliente."
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Self-Invoices Not Sent"
+msgstr "Autofatture Non Inviate"
+
+#. module: l10n_it_edi_notification
+#: code:addons/l10n_it_edi_notification/models/account_move.py:0
+#, python-format
+msgid "Confirmed self-invoices (reverse charge) not yet sent to SDI."
+msgstr "Autofatture confermate (reverse charge) non ancora inviate allo SDI."
