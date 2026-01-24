@@ -13,6 +13,7 @@ Multi-database support:
 
 import logging
 
+import odoo.modules.module as module_util
 import odoo.modules.registry
 import odoo.service.common
 import odoo.service.db
@@ -125,12 +126,13 @@ class ServerInfoController(http.Controller):
             status=status,
         )
 
-    def _format_module_data(self, module, include_state=True):
+    def _format_module_data(self, module, include_state=True, include_path_check=False):
         """Format module record for JSON response.
 
         Args:
             module: ir.module.module record.
             include_state: Whether to include state field.
+            include_path_check: Whether to check if module path exists in filesystem.
 
         Returns:
             dict: Formatted module data.
@@ -143,7 +145,54 @@ class ServerInfoController(http.Controller):
         }
         if include_state:
             data["state"] = module.state
+        if include_path_check:
+            module_path = module_util.get_module_path(module.name, downloaded=False)
+            data["path_exists"] = bool(module_path)
         return data
+
+    def _get_orphan_modules(self, modules):
+        """Find modules that exist in DB but not in filesystem.
+
+        Args:
+            modules: ir.module.module recordset.
+
+        Returns:
+            list: List of orphan module data dicts.
+        """
+        orphan_list = []
+        for module in modules:
+            module_path = module_util.get_module_path(module.name, downloaded=False)
+            if not module_path:
+                orphan_list.append(
+                    {
+                        "name": module.name,
+                        "state": module.state,
+                        "version": module.installed_version
+                        or module.latest_version
+                        or "",
+                    },
+                )
+        return orphan_list
+
+    def _get_module_stats(self, Module, orphan_count):
+        """Get module statistics by state.
+
+        Args:
+            Module: ir.module.module model.
+            orphan_count: Number of orphan modules.
+
+        Returns:
+            dict: Module statistics.
+        """
+        return {
+            "installed": Module.search_count([("state", "=", "installed")]),
+            "uninstalled": Module.search_count([("state", "=", "uninstalled")]),
+            "to_upgrade": Module.search_count([("state", "=", "to upgrade")]),
+            "to_install": Module.search_count([("state", "=", "to install")]),
+            "to_remove": Module.search_count([("state", "=", "to remove")]),
+            "uninstallable": Module.search_count([("state", "=", "uninstallable")]),
+            "orphan": orphan_count,
+        }
 
     def _get_user_stats(self, cr):
         """Get user statistics.
@@ -331,8 +380,11 @@ class ServerInfoController(http.Controller):
                     order="name",
                 )
 
-                # Count modules to upgrade
-                to_upgrade_count = Module.search_count([("state", "=", "to upgrade")])
+                # Find orphan modules (exist in DB but not in filesystem)
+                orphan_modules = self._get_orphan_modules(all_modules)
+
+                # Get module statistics
+                module_stats = self._get_module_stats(Module, len(orphan_modules))
 
                 # Format response
                 response_data = {
@@ -348,18 +400,27 @@ class ServerInfoController(http.Controller):
                     "users": user_stats,
                     "addons_paths": addons_paths,
                     "modules": {
+                        "stats": module_stats,
+                        "orphan_modules": orphan_modules,
                         "available": {
                             "total": len(all_modules),
                             "list": [
-                                self._format_module_data(m, include_state=True)
+                                self._format_module_data(
+                                    m,
+                                    include_state=True,
+                                    include_path_check=True,
+                                )
                                 for m in all_modules
                             ],
                         },
                         "installed": {
                             "total": len(installed_modules),
-                            "to_upgrade": to_upgrade_count,
                             "list": [
-                                self._format_module_data(m, include_state=False)
+                                self._format_module_data(
+                                    m,
+                                    include_state=True,
+                                    include_path_check=True,
+                                )
                                 for m in installed_modules
                             ],
                         },

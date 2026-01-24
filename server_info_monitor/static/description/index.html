@@ -7,7 +7,7 @@
         <p class="text-center" style="font-size:16px; color:#666;">
             A lightweight module that exposes server information via a secure REST API.
             Perfect for DevOps dashboards, multi-instance monitoring, and automated health checks.
-            Now with full multi-database support for complex Odoo deployments.
+            Now with full multi-database support, module statistics, and orphan module detection.
         </p>
     </div>
 </section>
@@ -44,6 +44,33 @@
         <div class="oe_span6">
             <p><strong style="color:#875A7B;">Addons Paths</strong></p>
             <p>See all configured addons paths on the server. Useful for understanding module deployment structure.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">New in v18.0.1.1.0</h2>
+        <h3 class="oe_slogan">Enhanced Module Monitoring Features</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Module Statistics</strong></p>
+            <p>Comprehensive module state counts: installed, uninstalled, to_upgrade, to_install, to_remove, uninstallable, and orphan modules at a glance.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Orphan Module Detection</strong></p>
+            <p>Detect "ghost" modules - modules in the database but missing from the filesystem. Safe read-only check for cleanup planning.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Path Existence Check</strong></p>
+            <p>Each module now includes a <code style="background:#f5f5f5; padding:2px 6px;">path_exists</code> boolean indicating whether it exists in the filesystem.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Complete State Information</strong></p>
+            <p>All modules (available and installed) now include their state field for complete visibility into module lifecycle.</p>
         </div>
     </div>
 </section>
@@ -158,10 +185,11 @@
         <div class="oe_span6">
             <p><strong style="color:#875A7B;">Modules Section</strong></p>
             <ul style="font-size:14px; color:#666;">
+                <li>Module statistics by state (installed, uninstalled, orphan, etc.)</li>
+                <li>Orphan modules list (DB entries without filesystem)</li>
                 <li>Available modules (total + detailed list)</li>
                 <li>Installed modules (total + detailed list)</li>
-                <li>Modules pending upgrade count</li>
-                <li>Version, author, application flag per module</li>
+                <li>Version, author, application, state, path_exists per module</li>
             </ul>
         </div>
     </div>
@@ -194,8 +222,27 @@
   },
   "addons_paths": ["/opt/odoo/addons", "/opt/odoo/enterprise"],
   "modules": {
-    "available": {"total": 1745, "list": [...]},
-    "installed": {"total": 225, "to_upgrade": 0, "list": [...]}
+    "stats": {
+      "installed": 225,
+      "uninstalled": 1400,
+      "to_upgrade": 2,
+      "to_install": 1,
+      "to_remove": 0,
+      "uninstallable": 50,
+      "orphan": 3
+    },
+    "orphan_modules": [
+      {"name": "old_module", "state": "to install", "version": "18.0.1.0.0"}
+    ],
+    "available": {
+      "total": 1745,
+      "list": [{"name": "sale", "version": "18.0.1.0", "author": "Odoo S.A.", "application": true, "state": "installed", "path_exists": true}]
+    },
+    "installed": {
+      "total": 225,
+      "to_upgrade": 0,
+      "list": [{"name": "sale", "version": "18.0.1.0", "author": "Odoo S.A.", "application": true, "state": "installed", "path_exists": true}]
+    }
   }
 }</pre>
             </div>
@@ -235,6 +282,16 @@
         <div class="oe_span6">
             <p><strong style="color:#875A7B;">Compliance Documentation</strong></p>
             <p style="font-size:14px; color:#666;">Document installed modules per instance for audits and compliance requirements. Export module inventories.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Orphan Module Cleanup</strong></p>
+            <p style="font-size:14px; color:#666;">Detect modules stuck in the database after addon paths are removed. Plan cleanup operations safely with read-only detection.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Module Health Dashboard</strong></p>
+            <p style="font-size:14px; color:#666;">Get instant module state statistics. Know exactly how many modules are installed, pending upgrade, or orphaned.</p>
         </div>
     </div>
 </section>

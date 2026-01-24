@@ -1,6 +1,6 @@
 {
     "name": "Server Info Monitor",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "summary": "REST API endpoint to monitor Odoo instances with multi-database support",
     "description": """
 Server Info Monitor
@@ -8,7 +8,7 @@ Server Info Monitor
 
 A lightweight module that exposes server information via a secure REST API.
 Perfect for DevOps dashboards, multi-instance monitoring, and automated health checks.
-Now with full multi-database support for complex Odoo deployments.
+Now with full multi-database support, module statistics, and orphan module detection.
 
 Features
 --------
@@ -18,6 +18,25 @@ Features
 * User statistics (internal, portal, active, inactive with last activity)
 * Module inventory with upgrade status and application flags
 * Addons paths configuration
+
+New in v18.0.1.1.0
+------------------
+* Module Statistics (modules.stats)
+  - Count of installed, uninstalled, to_upgrade, to_install, to_remove, uninstallable modules
+  - Orphan module count (modules in DB but missing from filesystem)
+
+* Orphan Module Detection (modules.orphan_modules)
+  - Detects "ghost" modules - entries in database without filesystem presence
+  - Returns name, state, and version for each orphan
+  - Safe, read-only operation - does NOT auto-delete anything
+
+* Path Existence Check (path_exists field)
+  - Each module now includes a boolean indicating filesystem presence
+  - Useful for identifying modules that may need attention
+
+* Complete State Information
+  - All modules (available and installed) now include their state field
+  - Full visibility into module lifecycle status
 
 Endpoint
 --------
