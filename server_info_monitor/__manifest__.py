@@ -1,6 +1,6 @@
 {
     "name": "Server Info Monitor",
-    "version": "18.0.1.1.0",
+    "version": "18.0.1.2.0",
     "summary": "REST API endpoint to monitor Odoo instances with multi-database support",
     "description": """
 Server Info Monitor
@@ -38,9 +38,18 @@ New in v18.0.1.1.0
   - All modules (available and installed) now include their state field
   - Full visibility into module lifecycle status
 
-Endpoint
---------
+New in v18.0.1.2.0
+------------------
+* Orphan Module Cleanup Endpoint (POST /api/server/cleanup-orphans)
+  - Safely remove orphan modules from database
+  - Only removes modules in safe states: uninstalled, uninstallable
+  - Dry-run mode available (?dry_run=true) to preview changes
+  - Modules will reappear if re-added to addons path and 'Update Apps List' is run
+
+Endpoints
+---------
 GET /api/server/info
+POST /api/server/cleanup-orphans
 
 Authentication: Bearer token via Authorization header
 
@@ -74,6 +83,12 @@ curl -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/inf
 
 # Multi-database via header
 curl -H "Authorization: Bearer YOUR_TOKEN" -H "X-Odoo-Database: production" https://your-odoo.com/api/server/info
+
+# Cleanup orphan modules (dry-run first)
+curl -X POST -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/cleanup-orphans?dry_run=true"
+
+# Cleanup orphan modules (execute)
+curl -X POST -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/cleanup-orphans"
     """,
     "author": "FL1 sro",
     "website": "https://fl1.cz",

@@ -432,3 +432,123 @@ class ServerInfoController(http.Controller):
         except Exception as e:
             _logger.exception("Server Info Monitor: Error getting server info")
             return self._error_response(f"Internal server error: {e!s}", 500)
+
+    @http.route(
+        "/api/server/cleanup-orphans",
+        type="http",
+        auth="none",
+        methods=["POST"],
+        csrf=False,
+    )
+    def cleanup_orphan_modules(self, **kwargs):
+        """Remove orphan modules from database.
+
+        Orphan modules are modules that exist in the database but are no longer
+        present in the filesystem. Only modules in safe states are removed:
+        - uninstalled: Never installed or completely uninstalled
+        - uninstallable: Cannot be installed (missing dependencies)
+
+        These modules will reappear if re-added to addons path and
+        'Update Apps List' is executed.
+
+        Query Parameters:
+            db (str): Database name (optional, for multi-database instances).
+            dry_run (str): If "true", only report what would be deleted.
+
+        Headers:
+            X-Odoo-Database: Database name (alternative to ?db= param).
+            Authorization: Bearer token.
+
+        Returns:
+            JSON response with cleanup results.
+        """
+        # Safe states that can be removed without risk
+        SAFE_STATES = ("uninstalled", "uninstallable")
+
+        try:
+            # Determine which database to use
+            db = self._get_database(kwargs)
+            if not db:
+                return self._error_response(
+                    "Database not specified. Use ?db=name or X-Odoo-Database header.",
+                    400,
+                )
+
+            # Validate database exists
+            if not self._validate_database(db):
+                return self._error_response(f"Database '{db}' not found.", 404)
+
+            # Get registry and create environment for the database
+            registry = odoo.modules.registry.Registry(db)
+            with registry.cursor() as cr:
+                env = api.Environment(cr, SUPERUSER_ID, {})
+
+                # Validate token for this database
+                if not self._validate_token_for_db(env):
+                    return self._error_response(
+                        "Unauthorized: Invalid or missing token",
+                        401,
+                    )
+
+                Module = env["ir.module.module"].sudo()
+                dry_run = kwargs.get("dry_run", "").lower() == "true"
+
+                # Find orphan modules in safe states
+                all_modules = Module.search([("state", "in", SAFE_STATES)])
+                orphan_modules = []
+
+                for module in all_modules:
+                    module_path = module_util.get_module_path(
+                        module.name,
+                        downloaded=False,
+                    )
+                    if not module_path:
+                        orphan_modules.append(module)
+
+                # Prepare response data
+                orphan_data = [
+                    {
+                        "name": m.name,
+                        "state": m.state,
+                        "version": m.installed_version or m.latest_version or "",
+                    }
+                    for m in orphan_modules
+                ]
+
+                if dry_run:
+                    # Just report what would be deleted
+                    response_data = {
+                        "success": True,
+                        "dry_run": True,
+                        "timestamp": fields.Datetime.now().isoformat(),
+                        "database": db,
+                        "message": f"Would remove {len(orphan_modules)} orphan modules",
+                        "modules_to_remove": orphan_data,
+                    }
+                else:
+                    # Actually delete the orphan modules
+                    count = len(orphan_modules)
+                    if orphan_modules:
+                        # Convert list to recordset and unlink
+                        orphan_recordset = Module.browse([m.id for m in orphan_modules])
+                        orphan_recordset.unlink()
+                        _logger.info(
+                            "Server Info Monitor: Removed %d orphan modules from %s",
+                            count,
+                            db,
+                        )
+
+                    response_data = {
+                        "success": True,
+                        "dry_run": False,
+                        "timestamp": fields.Datetime.now().isoformat(),
+                        "database": db,
+                        "message": f"Removed {count} orphan modules",
+                        "removed_modules": orphan_data,
+                    }
+
+                return request.make_json_response(response_data, status=200)
+
+        except Exception as e:
+            _logger.exception("Server Info Monitor: Error cleaning orphan modules")
+            return self._error_response(f"Internal server error: {e!s}", 500)
