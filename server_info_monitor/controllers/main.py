@@ -153,6 +153,9 @@ class ServerInfoController(http.Controller):
     def _get_orphan_modules(self, modules):
         """Find modules that exist in DB but not in filesystem.
 
+        Excludes Enterprise modules (to_buy=True) as they are legitimate
+        Odoo modules shown for upgrade purposes on Community instances.
+
         Args:
             modules: ir.module.module recordset.
 
@@ -161,6 +164,9 @@ class ServerInfoController(http.Controller):
         """
         orphan_list = []
         for module in modules:
+            # Skip Enterprise modules - they show "Upgrade" button, not orphans
+            if module.to_buy:
+                continue
             module_path = module_util.get_module_path(module.name, downloaded=False)
             if not module_path:
                 orphan_list.append(
@@ -494,7 +500,13 @@ class ServerInfoController(http.Controller):
                 dry_run = kwargs.get("dry_run", "").lower() == "true"
 
                 # Find orphan modules in safe states
-                all_modules = Module.search([("state", "in", SAFE_STATES)])
+                # Exclude Enterprise modules (to_buy=True) - they are legitimate
+                all_modules = Module.search(
+                    [
+                        ("state", "in", SAFE_STATES),
+                        ("to_buy", "=", False),
+                    ],
+                )
                 orphan_modules = []
 
                 for module in all_modules:
