@@ -148,6 +148,7 @@ class ServerInfoController(http.Controller):
         if include_path_check:
             module_path = module_util.get_module_path(module.name, downloaded=False)
             data["path_exists"] = bool(module_path)
+            data["module_path"] = module_path or ""
         return data
 
     def _get_orphan_modules(self, modules):
