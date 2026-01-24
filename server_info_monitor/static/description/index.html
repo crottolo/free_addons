@@ -50,8 +50,105 @@
 
 <section class="oe_container">
     <div class="oe_row oe_spaced">
-        <h2 class="oe_slogan" style="color:#875A7B;">New in v18.0.1.1.0</h2>
-        <h3 class="oe_slogan">Enhanced Module Monitoring Features</h3>
+        <h2 class="oe_slogan" style="color:#875A7B;">New in v18.0.1.2.0</h2>
+        <h3 class="oe_slogan">Orphan Module Cleanup Endpoint</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="font-size:14px; color:#333;">
+                <strong>New Endpoint:</strong> <code style="background:#f5f5f5; padding:2px 6px;">POST /api/server/cleanup-orphans</code>
+            </p>
+            <p style="font-size:14px; color:#666;">
+                Safely removes orphan modules from the database. Orphan modules are modules that exist in the database but are no longer present in the filesystem.
+            </p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Safe States Only</strong></p>
+            <p style="font-size:14px; color:#666;">Only removes modules in <code style="background:#f5f5f5; padding:2px 6px;">uninstalled</code> and <code style="background:#f5f5f5; padding:2px 6px;">uninstallable</code> states. Does NOT touch installed, to upgrade, to install, or to remove modules.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Dry-Run Mode</strong></p>
+            <p style="font-size:14px; color:#666;">Preview what would be deleted before executing with <code style="background:#f5f5f5; padding:2px 6px;">?dry_run=true</code>. Always recommended to run dry-run first.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Recoverable</strong></p>
+            <p style="font-size:14px; color:#666;">Modules will automatically reappear if re-added to addons path and 'Update Apps List' is run. No permanent data loss.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Multi-Database Support</strong></p>
+            <p style="font-size:14px; color:#666;">Use <code style="background:#f5f5f5; padding:2px 6px;">?db=database_name</code> to target a specific database on multi-database instances.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Cleanup Endpoint Usage</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p><strong>Step 1 - Dry-Run (Recommended):</strong></p>
+            <p class="alert alert-info">
+                <code>curl -X POST -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/cleanup-orphans?dry_run=true"</code>
+            </p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p><strong>Dry-Run Response:</strong></p>
+            <div class="alert alert-info">
+<pre>{
+  "success": true,
+  "dry_run": true,
+  "message": "Would remove 194 orphan modules",
+  "modules_to_remove": [
+    {"name": "old_module", "state": "uninstalled", "version": "18.0.1.0.0"}
+  ]
+}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p><strong>Step 2 - Execute Cleanup:</strong></p>
+            <p class="alert alert-info">
+                <code>curl -X POST -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/cleanup-orphans"</code>
+            </p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p><strong>Execute Response:</strong></p>
+            <div class="alert alert-info">
+<pre>{
+  "success": true,
+  "dry_run": false,
+  "message": "Removed 194 orphan modules",
+  "removed_modules": [
+    {"name": "old_module", "state": "uninstalled", "version": "18.0.1.0.0"}
+  ]
+}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p><strong>With Database Specification:</strong></p>
+            <p class="alert alert-info">
+                <code>curl -X POST -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/cleanup-orphans?db=production&amp;dry_run=true"</code>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">v18.0.1.1.0 Features</h2>
+        <h3 class="oe_slogan">Enhanced Module Monitoring</h3>
     </div>
     <div class="oe_row oe_spaced">
         <div class="oe_span6">
@@ -77,13 +174,24 @@
 
 <section class="oe_container">
     <div class="oe_row oe_spaced">
-        <h2 class="oe_slogan" style="color:#875A7B;">API Endpoint</h2>
+        <h2 class="oe_slogan" style="color:#875A7B;">API Endpoints</h2>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p style="font-size:14px; color:#333;">
+                <strong>Server Info:</strong> <code style="background:#f5f5f5; padding:2px 6px;">GET /api/server/info</code>
+            </p>
+            <p style="font-size:14px; color:#666;">Retrieve server, license, users, and modules information.</p>
+        </div>
+        <div class="oe_span6">
+            <p style="font-size:14px; color:#333;">
+                <strong>Cleanup Orphans:</strong> <code style="background:#f5f5f5; padding:2px 6px;">POST /api/server/cleanup-orphans</code>
+            </p>
+            <p style="font-size:14px; color:#666;">Remove orphan modules from database (safe states only).</p>
+        </div>
     </div>
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
-            <p style="font-size:14px; color:#333;">
-                <strong>Endpoint:</strong> <code style="background:#f5f5f5; padding:2px 6px;">GET /api/server/info</code>
-            </p>
             <p style="font-size:14px; color:#333;">
                 <strong>Authentication:</strong> Bearer token via Authorization header
             </p>
@@ -357,8 +465,18 @@
             <p style="font-size:14px; color:#666;">Only requests with valid Authorization header can access the API. No session or cookie required.</p>
         </div>
         <div class="oe_span6">
-            <p><strong style="color:#875A7B;">Read-Only Endpoint</strong></p>
-            <p style="font-size:14px; color:#666;">Cannot modify any data on your server. Safe for monitoring tools and external dashboards.</p>
+            <p><strong style="color:#875A7B;">Controlled Access</strong></p>
+            <p style="font-size:14px; color:#666;">GET endpoint is read-only. POST cleanup requires explicit action and supports dry-run mode for safe preview.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Safe Cleanup Operations</strong></p>
+            <p style="font-size:14px; color:#666;">Cleanup only removes modules in safe states (uninstalled, uninstallable). Installed modules are never touched.</p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Reversible Actions</strong></p>
+            <p style="font-size:14px; color:#666;">Removed orphan modules can be restored by re-adding to addons path and running 'Update Apps List'.</p>
         </div>
     </div>
 </section>
