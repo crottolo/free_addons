@@ -42,19 +42,14 @@ class Odoo3cxCrm(http.Controller):
             crm_action_id = request.env.ref("crm.crm_lead_all_leads")
 
             if res_partner:
-                print("res_partner", res_partner)
                 b = res_partner
                 link = f"web#id={b.id}&model=res.partner&view_type=form&action={partner_action_id.id}"
-                company = ""
-                if b.company_type == "company":
-                    company = b.name
-                else:
-                    company = ""
+                firstname, lastname, company = self._get_partner_name_parts(b)
                 data = {
                     "partner_id": f"{b.id}",
                     "type": b.type,
-                    "firstname": b.firstname if b.firstname else "",
-                    "lastname": b.lastname if b.lastname else "",
+                    "firstname": firstname,
+                    "lastname": lastname,
                     "mobile": b.mobile if b.mobile else "",
                     "phone": b.phone if b.phone else "",
                     "email": b.email if b.email else "",
@@ -63,11 +58,10 @@ class Odoo3cxCrm(http.Controller):
                     if b.company_type == "company"
                     else "",
                     "name": company,
-                    # 'link_end': 'link_end'
                 }
                 return data
             if crm_lead:
-                print("crm_lead", crm_lead)
+                _logger.info("crm_lead %s", crm_lead)
                 b = crm_lead
                 if b.type == "lead" or b.type == "opportunity":
                     link = f"web#id={b.id}&model=crm.lead&view_type=form&action={crm_action_id.id}"
@@ -88,41 +82,26 @@ class Odoo3cxCrm(http.Controller):
 
         return BadRequest("ApiKey not set")
 
-    # odoo crm.lead search lead
-    # query = request.env['crm.lead'].with_user(1).search([('phone_mobile_search','ilike', '39358')])
+    @staticmethod
+    def _get_partner_name_parts(partner):
+        """Extract firstname, lastname and company from partner.
 
-    # dato = data.get('messages','')
-    # print(dato)
-    # for msg in dato:
-    #     date = datetime.datetime.fromtimestamp( msg.get('date','') )
-    #     request.env['wa.message'].sudo().create({
-    #         'id_mp': msg.get('id',''),
-    #         'messenger': msg.get('messenger',''),
-    #         'usernumber': msg.get('usernumber',''),
-    #         'date': date,
-    #         'attachment': msg.get('attachment',''),
-    #         'attachment_type': msg.get('attachment_type',''),
-    #         'text': msg.get('text',''),
-    #         'welcome': msg.get('welcome',''),
-    #         'userstatus': msg.get('userstatus',''),
-    #         'chatid': msg.get('chat_id',''),
-    #         'is_retry': msg.get('is_retry',''),
-    #         'ticket_id': msg.get('ticket_id',''),
-    #         'ticket_status': msg.get('ticket_status',''),
-    #         'agent_id': msg.get('agent_id',''),
-    #         'inbound': True,
-    #         'outbound': False
+        Works with or without partner_firstname module installed.
+        For individuals (is_company=False): splits name into first/last.
+        For companies: returns empty first/last and name as company.
+        """
+        has_firstname_module = "firstname" in partner._fields
+        company = partner.name if partner.is_company else ""
 
-    #     })
-    # sender =  msg.get('usernumber','')
-    # exist_channel = request.env['mail.channel'].sudo().search([('sender', '=', sender)])
-    # print('exist_channel',exist_channel)
-    # if exist_channel:
-    #     self.send_to_channel( msg.get('text',''), exist_channel.id)
-    # else:
-    #     aaa = self.search_sender(sender)
+        if partner.is_company:
+            return "", "", company
 
-    #     new_channel = self.channel_create( aaa+" "+sender, sender, privacy='public')
+        if has_firstname_module:
+            firstname = partner.firstname or ""
+            lastname = partner.lastname or ""
+        else:
+            name_parts = (partner.name or "").split(" ", 1)
+            firstname = name_parts[0] if name_parts else ""
+            lastname = name_parts[1] if len(name_parts) > 1 else ""
 
-    #     self.send_to_channel( msg.get('text',''), new_channel.get('id',''))
-    # print("response", response)
+        return firstname, lastname, company
