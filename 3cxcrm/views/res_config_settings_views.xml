@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_config_settings_view_form_3cx" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.3cx</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="3CX" string="3CX" groups="base.group_system">
+                        <block title="3CX PBX Integration">
+                            <setting string="API Token" help="Token used by 3CX to authenticate webhook requests to Odoo.">
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label for="token_3cx_crm" string="API Token" class="col-lg-3 o_light_label"/>
+                                        <field name="token_3cx_crm" class="col-lg-9" password="True"/>
+                                    </div>
+                                </div>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

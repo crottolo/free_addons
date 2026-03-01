@@ -1,1 +1,1 @@
-from . import models
+from . import models, res_config_settings

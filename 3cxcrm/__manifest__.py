@@ -14,7 +14,7 @@ Key Features:
 * Direct links to open contact/lead records in Odoo
 * Secure API authentication with configurable keys
 * Support for both individual contacts and company records
-* Compatible with partner firstname/lastname fields
+* Compatible with partner firstname/lastname fields (optional)
 * Easy 3CX configuration with provided XML templates
 
 Perfect for businesses using 3CX PBX who want to enhance their customer service
@@ -24,7 +24,7 @@ by instantly accessing customer information during phone calls.
     "website": "https://www.fl1.cz",
     "support": "support@fl1.cz",
     "category": "Productivity/VoIP",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "license": "AGPL-3",
     "depends": ["base", "crm"],
     "external_dependencies": {
@@ -33,6 +33,7 @@ by instantly accessing customer information during phone calls.
     "data": [
         # 'security/ir.model.access.csv',
         "data/data.xml",
+        "views/res_config_settings_views.xml",
     ],
     "images": [
         "static/description/banner.png",
