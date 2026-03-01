@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form" position="inside">
-                    <app data-string="3CX" string="3CX" groups="base.group_system">
+                    <app data-string="3CX" string="3CX" data-key="3cxcrm" groups="base.group_system">
                         <block title="3CX PBX Integration">
                             <setting string="API Token" help="Token used by 3CX to authenticate webhook requests to Odoo.">
                                 <div class="content-group">
