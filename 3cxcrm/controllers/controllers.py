@@ -27,24 +27,33 @@ class Odoo3cxCrm(http.Controller):
             if apikey != token:
                 return BadRequest("Wrong APIKEY")
 
-            res_partner = (
+            res_partners = (
                 request.env["res.partner"]
                 .with_user(1)
-                .search([("phone_mobile_search", "ilike", number)], limit=1)
+                .search([("phone_mobile_search", "ilike", number)], limit=10)
             )
-            crm_lead = (
+            crm_leads = (
                 request.env["crm.lead"]
                 .with_user(1)
-                .search([("phone_mobile_search", "ilike", number)], limit=1)
+                .search([("phone_mobile_search", "ilike", number)], limit=10)
             )
 
             partner_action_id = request.env.ref("contacts.action_contacts")
             crm_action_id = request.env.ref("crm.crm_lead_all_leads")
 
-            if res_partner:
-                b = res_partner
-                link = f"web#id={b.id}&model=res.partner&view_type=form&action={partner_action_id.id}"
+            if res_partners:
+                b = res_partners[0]
+                count = len(res_partners)
                 firstname, lastname, company = self._get_partner_name_parts(b)
+                if count > 1:
+                    suffix = f" !! ({count})"
+                    if lastname:
+                        lastname += suffix
+                    elif firstname:
+                        firstname += suffix
+                    else:
+                        company += suffix
+                url_root = request.httprequest.url_root.rstrip("/")
                 data = {
                     "partner_id": f"{b.id}",
                     "type": b.type,
@@ -53,27 +62,30 @@ class Odoo3cxCrm(http.Controller):
                     "mobile": b.mobile if b.mobile else "",
                     "phone": b.phone if b.phone else "",
                     "email": b.email if b.email else "",
-                    "web_url": f"{request.httprequest.url_root}{link}",
+                    "web_url": f"{url_root}/odoo/contacts/{b.id}",
                     "company_type": b.company_type
                     if b.company_type == "company"
                     else "",
                     "name": company,
                 }
                 return data
-            if crm_lead:
-                _logger.info("crm_lead %s", crm_lead)
-                b = crm_lead
-                if b.type == "lead" or b.type == "opportunity":
-                    link = f"web#id={b.id}&model=crm.lead&view_type=form&action={crm_action_id.id}"
-
+            if crm_leads:
+                _logger.info("crm_lead %s", crm_leads[0])
+                b = crm_leads[0]
+                count = len(crm_leads)
+                name = b.contact_name if b.contact_name else b.name
+                if count > 1:
+                    name = f"{name} !! ({count})"
+                url_root = request.httprequest.url_root.rstrip("/")
+                link = f"web#id={b.id}&model=crm.lead&view_type=form&action={crm_action_id.id}"
                 data = {
                     "partner_id": f"L{b.id}",
                     "type": b.type,
-                    "name": b.contact_name if b.contact_name else b.name,
+                    "name": name,
                     "contact_name": b.name if b.name else "",
                     "mobile": b.mobile if b.mobile else "",
                     "phone": b.phone if b.phone else "",
-                    "web_url": f"{request.httprequest.url_root}{link}",
+                    "web_url": f"{url_root}/{link}",
                     "link_end": "link_end",
                 }
                 return data
