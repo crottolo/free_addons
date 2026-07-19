@@ -7,9 +7,13 @@
         Questo modulo estende le funzionalità di Odoo per la gestione dei codici Ateco direttamente dalla repository ufficiale italiana
         https://github.com/italia/daf-ontologie-vocabolari-controllati/tree/master/VocabolariControllati/classifications-for-organizations/ateco-2007
     """,
-    "author": "FL1 sro",
-    "website": "https://fl1.cz",
-    "maintainer": "FL1 sro",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
+    "maintainer": "Singleflo",
     "version": "18.0.0.1",
     "license": "LGPL-3",
     "category": "Services",

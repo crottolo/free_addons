@@ -25,10 +25,14 @@ Configuration:
 --------------
 Settings > Accounting > Electronic Invoicing > SDI Notifications
     """,
-    "author": "FL1 sro",
-    "website": "https://fl1.cz",
-    "maintainer": "FL1 sro",
-    "support": "support@fl1.cz",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
+    "maintainer": "Singleflo",
+    "support": "support@singleflo.com",
     "version": "18.0.2.1.0",
     "installable": True,
     "auto_install": False,

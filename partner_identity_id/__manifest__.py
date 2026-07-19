@@ -23,9 +23,13 @@
         This module is useful for companies that need to maintain accurate records
         of their partners' identity documents for legal, compliance, or security reasons.
     """,
-    "author": "FL1 sro",
-    "website": "https://fl1.cz",
-    "maintainer": "FL1 sro",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
+    "maintainer": "Singleflo",
     "version": "18.1",
     "installable": True,
     "auto_install": False,

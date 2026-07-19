@@ -6,9 +6,13 @@
     "description": """
         Update reminder for enterprise license from 30 days to 60 days
     """,
-    "author": "FL1 sro",
-    "website": "https://fl1.cz",
-    "maintainer": "FL1 sro",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
+    "maintainer": "Singleflo",
     "version": "18.0.0.1",
     "installable": True,
     "auto_install": False,

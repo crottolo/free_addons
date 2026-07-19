@@ -6,9 +6,13 @@
     "description": """
         Questo modulo estende le funzionalità di Odoo per la gestione delle banche italiane, aggiungendo i campi ABI e CAB.
     """,
-    "author": "FL1 sro",
-    "website": "https://fl1.cz",
-    "maintainer": "FL1 sro",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
+    "maintainer": "Singleflo",
     "version": "18.0.0.1",
     "license": "LGPL-3",
     "category": "Accounting/Localizations",

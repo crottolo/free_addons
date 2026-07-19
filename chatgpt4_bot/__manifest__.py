@@ -10,8 +10,12 @@
         navigate away from the Odoo platform. This integration can be used to enhance the functionality of
         OdooBot, providing more accurate and detailed responses to user queries and improving overall user experience.
     """,
-    "author": "FL1 sro",
-    "website": "https://fl1.cz",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
     "images": ["static/description/banner.png", "static/description/gif_chat.gif"],
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml

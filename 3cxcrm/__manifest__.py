@@ -20,9 +20,13 @@ Key Features:
 Perfect for businesses using 3CX PBX who want to enhance their customer service
 by instantly accessing customer information during phone calls.
     """,
-    "author": "FL1 sro",
-    "website": "https://www.fl1.cz",
-    "support": "support@fl1.cz",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
+    "support": "support@singleflo.com",
     "category": "Productivity/VoIP",
     "version": "18.0.1.1.0",
     "license": "AGPL-3",

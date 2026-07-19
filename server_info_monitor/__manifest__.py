@@ -90,9 +90,13 @@ curl -X POST -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/se
 # Cleanup orphan modules (execute)
 curl -X POST -H "Authorization: Bearer YOUR_TOKEN" "https://your-odoo.com/api/server/cleanup-orphans"
     """,
-    "author": "FL1 sro",
-    "website": "https://fl1.cz",
-    "support": "info@fl1.cz",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
+    "support": "support@singleflo.com",
     "category": "Technical",
     "depends": ["base"],
     "data": [

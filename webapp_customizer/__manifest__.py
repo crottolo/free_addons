@@ -29,9 +29,13 @@
         Perfect for multi-company organizations, branding-conscious businesses,
         and service providers offering white-label Odoo solutions.
     """,
-    "author": "FL1 sro",
-    "website": "https://fl1.cz",
-    "maintainer": "FL1 sro",
+    "author": "Persevida S.L.",
+    "contributors": [
+        "https://persevida.com",
+        "Persevida S.L.",
+    ],
+    "website": "https://singleflo.com",
+    "maintainer": "Singleflo",
     "version": "18.0.1.0.0",
     "installable": True,
     "auto_install": False,
@@ -42,7 +46,7 @@
     "price": 13.0,
     "currency": "EUR",
     "live_test_url": "",
-    "support": "https://fl1.cz",
+    "support": "support@singleflo.com",
     # Images for store listing
     "images": [
         "static/description/03_pwa_icon_settings.png",
