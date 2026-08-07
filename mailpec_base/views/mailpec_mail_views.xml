@@ -5,6 +5,7 @@
         <field name="arch" type="xml">
             <list
                 string="Email PEC"
+                create="0"
                 decoration-bf="not read_by_user_id"
                 decoration-danger="pec_error and pec_error != 'nessuno'"
                 decoration-muted="pec_kind == 'ricevuta'">
@@ -28,7 +29,7 @@
                 <field name="pec_provider" optional="hide" />
                 <field name="pec_delivery" optional="hide" />
                 <field name="pec_transport" optional="hide" />
-                <field name="fetchmail_server_id" optional="hide" />
+                <field name="fetchmail_server_id" optional="hide" width="200px" />
                 <field name="origin_model" optional="hide" />
                 <field name="processed" optional="hide" />
                 <field
@@ -45,7 +46,7 @@
     <record id="mailpec_mail_view_form" model="ir.ui.view">
         <field name="model">mailpec.mail</field>
         <field name="arch" type="xml">
-            <form string="Email PEC">
+            <form string="Email PEC" create="0" edit="0">
                 <sheet>
                     <div class="alert alert-danger" role="alert" invisible="not pec_error or pec_error == 'nessuno'">
                         <span class="fw-bold">Errore certificato dal gestore: </span>
