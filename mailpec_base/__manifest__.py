@@ -4,7 +4,7 @@
     "author": "Persevida S.L.",
     "website": "https://singleflo.com",
     "maintainer": "Singleflo",
-    "version": "18.0.1.3.0",
+    "version": "18.0.1.3.1",
     "license": "LGPL-3",
     "category": "Productivity/Discuss",
     "depends": ["mail"],

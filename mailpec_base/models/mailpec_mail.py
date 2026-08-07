@@ -53,12 +53,15 @@ class MailpecMail(models.Model):
     body = fields.Html(string="Body")
     date_received = fields.Datetime(string="Received On")
     message_id = fields.Char(string="Message-Id", index="btree")
-    # Nessun codice nostro lo scrive: fetchmail mette default_fetchmail_server_id
-    # nel contesto (mail/models/fetchmail.py L223) e la create lo applica come
-    # qualunque default. Stesso nome e stesso meccanismo che il core usa su
-    # mail.mail (mail/models/mail_mail.py L94). Resta VUOTO se il messaggio e'
-    # arrivato per altra via: dichiarare un server che non ha scaricato nulla
-    # sarebbe un dato inventato.
+    # Stesso nome del campo core su mail.mail (mail/models/mail_mail.py L94),
+    # ma NON lo stesso meccanismo: il default_fetchmail_server_id del core
+    # (fetchmail.py L223) non arriva a message_new su un fetch avviato dal
+    # pulsante, perche' le chiavi default_* vengono scartate lungo la strada.
+    # Verificato a log su un fetch reale di 50 messaggi, e infatti il campo
+    # core su mail.mail resta vuoto. Lo popola il nostro override di
+    # fetchmail.server.fetch_mail via mailpec_fetchmail_server_id.
+    # Resta VUOTO se il messaggio arriva per altra via: dichiarare un server
+    # che non ha scaricato nulla sarebbe un dato inventato.
     fetchmail_server_id = fields.Many2one(
         "fetchmail.server",
         string="Inbound Mail Server",
@@ -573,6 +576,12 @@ class MailpecMail(models.Model):
             "date_received": date_received,
             "state": "ricevuta",
         }
+        # Chiave posata dal nostro override di fetchmail.server.fetch_mail:
+        # quella del core (default_fetchmail_server_id) non arriva fin qui.
+        defaults["fetchmail_server_id"] = self.env.context.get(
+            "mailpec_fetchmail_server_id",
+            False,
+        )
         defaults.update(custom_values or {})
         # Nei defaults, NON in una write successiva: _pec_original_values
         # legge self.pec_kind subito dopo la create per decidere se estrarre

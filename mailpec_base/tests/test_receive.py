@@ -233,13 +233,11 @@ class TestReceive(MailCommon):
     def test_fetchmail_server_is_recorded(self):
         """(g) Il record conserva il server che lo ha scaricato.
 
-        In produzione il valore non lo scrive questo modulo: fetchmail mette
-        ``default_fetchmail_server_id`` nel contesto
-        (odoo_core/odoo/addons/mail/models/fetchmail.py L223) e lo propaga a
-        ``message_process`` (L238, L271); la ``create`` lo applica come
-        qualunque default di contesto. Il test riproduce quel contesto, quindi
-        fallisce se il campo sparisce o viene rinominato - che e' l'unico modo
-        in cui questa catena si puo' rompere.
+        La chiave e' ``mailpec_fetchmail_server_id``, posata dal nostro
+        override di ``fetchmail.server.fetch_mail``, NON la
+        ``default_fetchmail_server_id`` del core (fetchmail.py L223): su un
+        fetch avviato dal pulsante le chiavi ``default_*`` non arrivano fino
+        a qui, come verificato a log su un fetch reale di 50 messaggi.
         """
         server = self.env["fetchmail.server"].create(
             {"name": "PEC di prova", "server_type": "imap"},
@@ -247,7 +245,7 @@ class TestReceive(MailCommon):
 
         record = (
             self.env["mailpec.mail"]
-            .with_context(default_fetchmail_server_id=server.id)
+            .with_context(mailpec_fetchmail_server_id=server.id)
             .message_new({"subject": "Ricevuta con server", "message_id": "<g@x>"})
         )
 
