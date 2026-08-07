@@ -40,3 +40,61 @@ Limiti Noti e Comportamenti Accettati
 Dettagli Tecnici Interni
 ========================
 * Il modello ``mailpec.mail`` dichiara ``_primary_email = "email_from"`` per consentire al core di Odoo di popolare automaticamente il mittente del messaggio in ingresso.
+
+Evidenze dal Primo Fetch Reale
+==============================
+L'analisi di un primo lotto di 156 messaggi reali in produzione ha evidenziato alcuni comportamenti e scelte di design che è opportuno documentare per evitare fraintendimenti durante la lettura del codice.
+
+Disallineamento tra pec_kind e pec_receipt_type (Caso Annidato)
+---------------------------------------------------------------
+È possibile che un record presenti ``pec_kind = 'non_certificata'`` e contemporaneamente ``pec_receipt_type = 'posta-certificata'``. Questo scenario non costituisce un'anomalia del codice, bensì rispecchia la struttura del messaggio ricevuto.
+Si verifica quando un messaggio PEC, inviato originariamente, ritorna al mittente attraverso il canale di errore (ad esempio a causa di un bounce). In questo caso:
+
+* L'involucro esterno (envelope) è un'anomalia di trasporto (identificata dall'header ``X-Trasporto: errore``, che determina il valore di ``pec_kind``).
+* Il file ``daticert.xml`` contenuto all'interno descrive invece il messaggio PEC originale (determinando il valore di ``pec_receipt_type``).
+
+Un esempio tipico è un messaggio con oggetto del tipo ``ANOMALIA MESSAGGIO: POSTA CERTIFICATA: R: Re...`` e mittente in formato bounce (es. ``benefit-return-5-bo=pec...``). I due campi descrivono quindi livelli diversi dello stesso messaggio ed è corretto che possano differire.
+
+Asimmetria tra pec_receipt_type (Char) e pec_kind (Selection)
+-------------------------------------------------------------
+La differenza di tipologia tra i due campi è intenzionale:
+
+* ``pec_receipt_type`` rappresenta una tassonomia esterna definita dai vari gestori PEC. Poiché non esiste uno standard univoco e documentato per tutti i possibili valori (analisi indipendenti hanno mostrato discrepanze, confermandone solo 4 nei campioni analizzati), il campo è mantenuto come ``Char`` per evitare la perdita di informazioni non censite.
+* ``pec_kind`` è invece una classificazione interna del modulo, derivata direttamente dall'elaborazione degli header ``X-Ricevuta`` e ``X-Trasporto``, ed è pertanto gestita come ``Selection``.
+
+La validità di questa scelta è stata confermata dal riscontro, nel primo fetch in produzione, di due ricevute di tipo ``errore-consegna`` con attributo ``errore="virus"`` (causate da ``5.5.1, Aruba Pec S.p.A., presenza di un virus nel messaggio``). Nessuno di questi valori era presente nei campioni di test iniziali. Se ``pec_receipt_type`` fosse stato una ``Selection`` chiusa, queste ricevute (che segnalano la presenza di un virus) sarebbero state scartate o registrate con un campo vuoto, senza alcuna evidenza nei log. La regola generale applicata è di enumerare tramite ``Selection`` solo i dati sotto il diretto controllo del modulo.
+
+Comportamento del Fetchmail in Ricezione
+----------------------------------------
+Il comportamento del modulo durante il fetch, ereditato dal core di Odoo (``mail/models/fetchmail.py``), prevede che:
+
+* Vengano scaricati esclusivamente i messaggi non letti (tramite la ricerca IMAP ``(UNSEEN)``).
+* I messaggi elaborati vengano marcati come letti sul server di posta (tramite il flag ``\Seen``).
+* Non venga effettuata alcuna cancellazione dei messaggi (nessun flag ``\Deleted`` o comando ``expunge``).
+
+Di conseguenza, i messaggi già letti prima del collegamento della casella a Odoo rimarranno invisibili al sistema. Inoltre, l'attivazione del server su una casella con un elevato numero di messaggi non letti comporterà la marcatura massiva di tutti i messaggi come letti in un unico passaggio. Si raccomanda di valutare lo stato della casella prima di abilitare il servizio, specialmente se lo stato "non letto" viene utilizzato come coda di lavoro esterna.
+
+Distribuzione dei Messaggi Osservata
+------------------------------------
+Di seguito si riporta la distribuzione reale dei messaggi rilevata su un campione di 156 messaggi ricevuti in produzione:
+
+.. list-table::
+   :widths: 70 30
+   :header-rows: 1
+
+   * - Tipologia / Ricevuta
+     - Quantità
+   * - accettazione
+     - 93
+   * - posta-certificata
+     - 47
+   * - avvenuta-consegna
+     - 11
+   * - errore-consegna
+     - 2
+   * - non certificate
+     - 2
+   * - anomalia con PEC incapsulata
+     - 1
+
+Nota: in tutti i 50 casi di messaggi incapsulati (ricevute e anomalie contenenti ``postacert.eml``), il mittente reale è stato estratto correttamente dal messaggio originale.
