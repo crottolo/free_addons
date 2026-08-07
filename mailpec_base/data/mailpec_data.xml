@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="param_pec_senders" model="ir.config_parameter">
+            <field name="key">mailpec_base.pec_senders</field>
+            <!--
+                Tutti i gestori PEC usano la stessa parte locale
+                "posta-certificata@": cambia solo il dominio. Verificato su 20
+                messaggi autentici di 5 gestori diversi:
+                  posta-certificata@pec.aruba.it
+                  posta-certificata@legalmail.it
+                  posta-certificata@postecert.it
+                  posta-certificata@sicurezzapostale.it
+                Poiche' message_route confronta per SOTTOSTRINGA (necessario per
+                reggere il formato "Nome <indirizzo>"), questa singola voce
+                cattura ogni gestore, presenti e futuri.
+
+                NON sostituire con un elenco di indirizzi completi: la versione
+                precedente ne conteneva tre, di cui due inventati e uno
+                (notifiche@pec.poste.it) inesistente. Il risultato era che solo
+                le ricevute Aruba venivano intercettate, mentre quelle degli
+                altri gestori passavano inosservate SENZA alcun errore.
+            -->
+            <field name="value">posta-certificata@</field>
+        </record>
+    </data>
+</odoo>

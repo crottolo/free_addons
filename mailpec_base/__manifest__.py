@@ -1,0 +1,20 @@
+{
+    "name": "PEC - Invio e Ricezione",
+    "summary": "Gestione caselle PEC: envelope sender corretto in invio e ricezione ricevute",
+    "author": "Persevida S.L.",
+    "website": "https://singleflo.com",
+    "maintainer": "Singleflo",
+    "version": "18.0.1.1.0",
+    "license": "LGPL-3",
+    "category": "Productivity/Discuss",
+    "depends": ["mail"],
+    "installable": True,
+    "application": False,
+    "auto_install": False,
+    "data": [
+        "security/ir.model.access.csv",
+        "data/mailpec_data.xml",
+        "views/ir_mail_server_views.xml",
+        "views/mailpec_mail_views.xml",
+    ],
+}

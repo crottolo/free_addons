@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="ir_mail_server_form_pec" model="ir.ui.view">
+        <field name="model">ir.mail_server</field>
+        <field name="inherit_id" ref="base.ir_mail_server_form" />
+        <field name="arch" type="xml">
+            <field name="from_filter" position="after">
+                <field name="is_pec" />
+                <field name="pec_email_from" invisible="not is_pec" required="is_pec" />
+            </field>
+        </field>
+    </record>
+</odoo>

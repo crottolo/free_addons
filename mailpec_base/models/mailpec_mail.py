@@ -1,0 +1,468 @@
+import logging
+import xml.etree.ElementTree as ET
+from datetime import UTC, datetime
+from email import message_from_bytes, message_from_string, policy
+from email.message import Message
+from email.utils import parseaddr
+
+from odoo import _, api, fields, models
+from odoo.tools.mail import decode_message_header
+
+_logger = logging.getLogger(__name__)
+
+# Display name che ogni gestore mette sulla busta esterna:
+# "Per conto di: <indirizzo reale>" <posta-certificata@...>.
+ON_BEHALF_PREFIX = "per conto di:"
+
+
+class MailpecMail(models.Model):
+    """Landing zone per le ricevute PEC in ingresso.
+
+    Una ricevuta PEC ha valore legale: deve atterrare INTATTA prima che
+    qualcuno provi a interpretarla. Prima si salva il messaggio grezzo, poi
+    si legge ``daticert.xml`` e si risale al messaggio inviato. L'ordine non
+    e' negoziabile: l'interpretazione puo' fallire, l'atterraggio no.
+    """
+
+    _name = "mailpec.mail"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _description = "Messaggio PEC ricevuto"
+    _order = "id desc"
+    _primary_email = "email_from"
+
+    color = fields.Integer(string="Color")
+    # MULTI-COMPANY: il campo esiste ed e valorizzato dal default, ma in questo
+    # todo NON viene creata alcuna ir.rule. Attenzione (non si risolve qui):
+    # message_new gira in sudo() con with_user(related_user)
+    # (odoo_core/odoo/addons/mail/models/mail_thread.py L1310), quindi
+    # env.company e l'azienda dell'utente catch-all, NON quella del
+    # destinatario. Derivare l'azienda dall'header To: e fuori scope.
+    company_id = fields.Many2one(
+        "res.company",
+        string="Company",
+        default=lambda self: self.env.company,
+    )
+    user_id = fields.Many2one("res.users", string="Responsible")
+    active = fields.Boolean(string="Active", default=True)
+    name = fields.Char(string="Subject")
+    email_from = fields.Char(string="From")
+    email_to = fields.Char(string="To")
+    body = fields.Html(string="Body")
+    date_received = fields.Datetime(string="Received On")
+    message_id = fields.Char(string="Message-Id", index="btree")
+    # Header X-Riferimento-Message-ID: collega la ricevuta al messaggio originale.
+    pec_ref_message_id = fields.Char(string="PEC Reference Message-Id", index="btree")
+    # Header X-Ricevuta. RESTA Char, NON va convertito in Selection: e' una
+    # scelta deliberata, non un ripiego, e non va "migliorata".
+    # Due ricerche indipendenti hanno prodotto elenchi di tipi DISCORDANTI.
+    # Solo 4 valori sono provati da traffico reale (accettazione,
+    # non-accettazione, avvenuta-consegna, posta-certificata); altri 6 vengono
+    # dalla specifica e non sono verificati. Una Selection rifiuterebbe in
+    # silenzio qualunque valore fuori elenco: su documenti con valore legale,
+    # perdere il tipo di una ricevuta perche' il gestore ne ha emesso uno che
+    # non avevamo previsto e' inaccettabile.
+    pec_receipt_type = fields.Char(string="PEC Receipt Type")
+    # Header X-Trasporto, grezzo. Presente sulle ricevute E sulla busta di
+    # trasporto; vale "errore" sulla posta NON certificata.
+    pec_transport = fields.Char(string="PEC Transport")
+    # Selection chiusa, DELIBERATAMENTE al contrario di pec_receipt_type.
+    # Quel campo rispecchia una tassonomia ESTERNA che non controlliamo e
+    # sulla quale le fonti sono discordi: resta Char per non rifiutare in
+    # silenzio un valore valido emesso da un gestore. pec_kind e' invece la
+    # NOSTRA classificazione, prodotta dalla nostra logica su un insieme che
+    # decidiamo noi, quindi l'enumerazione chiusa e' corretta: un valore
+    # fuori elenco sarebbe un difetto del nostro codice, non del gestore.
+    pec_kind = fields.Selection(
+        selection=[
+            ("ricevuta", "Ricevuta"),
+            ("messaggio_pec", "Messaggio PEC"),
+            ("non_certificata", "Non certificata"),
+        ],
+        string="Message Kind",
+        index="btree",
+    )
+    # --- Messaggio originale, estratto da postacert.eml ------------------
+    # Per messaggio_pec e non_certificata la busta esterna e' del gestore:
+    # mittente e oggetto veri stanno DENTRO l'allegato. Sulla posta non
+    # certificata questi due campi sono l'unico modo di filtrare spam e
+    # phishing, che e' cio' che quel canale riceve.
+    original_email_from = fields.Char(string="Original Sender")
+    original_subject = fields.Char(string="Original Subject")
+    # --- Esito certificato, estratto da daticert.xml ---------------------
+    # Specchio dei valori che _parse_daticert sa leggere. Mittente e oggetto
+    # dell'originale non sono replicati: il primo e' la nostra stessa casella,
+    # il secondo e' gia' dentro `name` (l'oggetto della ricevuta cita quello
+    # del messaggio), e la correlazione riporta comunque al record di origine.
+    pec_error = fields.Char(string="PEC Error Code")
+    pec_extended_error = fields.Text(string="PEC Extended Error")
+    pec_receipt_detail = fields.Char(string="PEC Receipt Detail")
+    pec_provider = fields.Char(string="PEC Issuing Provider")
+    pec_receipt_date = fields.Datetime(string="PEC Receipt Date")
+    pec_identifier = fields.Char(string="PEC Identifier", index="btree")
+    pec_delivery = fields.Char(string="PEC Delivery Address")
+    # Un destinatario per riga, "indirizzo (tipo)". Text e non modello figlio:
+    # sono dati di sola lettura, mai cercati per relazione e tipicamente uno o
+    # due. Il tipo certificato/esterno - che decide se il recapito ha valore
+    # legale - resta leggibile accanto a ogni indirizzo.
+    pec_recipients = fields.Text(string="PEC Recipients")
+    # --- Correlazione al messaggio inviato -------------------------------
+    # model/res_id arrivano dal mail.message trovato: puntano al record di
+    # business SENZA che questo modulo debba conoscerlo. E' cio' che tiene il
+    # modulo generico: niente pratiche, tutele o pagamenti qui dentro.
+    origin_message_id = fields.Many2one(
+        "mail.message",
+        string="Original Message",
+        index="btree",
+    )
+    origin_model = fields.Char(string="Original Model")
+    origin_res_id = fields.Integer(string="Original Record ID")
+    processed = fields.Boolean(string="Processed")
+    state = fields.Selection(
+        selection=[
+            ("ricevuta", "Ricevuta"),
+            ("elaborata", "Elaborata"),
+            ("errore", "Errore"),
+        ],
+        string="Status",
+        default="ricevuta",
+    )
+
+    @api.model
+    def _parse_daticert(self, xml_bytes):
+        empty_result = {
+            "receipt_type": "",
+            "error": "",
+            "sender": "",
+            "subject": "",
+            "recipients": [],
+            "gestore": "",
+            "date": False,
+            "identificativo": "",
+            "ref_message_id": "",
+            "receipt_detail": "",
+            "delivery": "",
+            "extended_error": "",
+        }
+        if not xml_bytes:
+            _logger.info("PEC daticert payload is missing")
+            return empty_result
+
+        try:
+            root = ET.fromstring(xml_bytes)
+            if root.tag != "postacert":
+                _logger.info("PEC daticert has unexpected root element: %s", root.tag)
+                return empty_result
+
+            date_element = root.find("./dati/data")
+            date_value = datetime.strptime(
+                "%s %s %s"
+                % (
+                    date_element.findtext("giorno", default=""),
+                    date_element.findtext("ora", default=""),
+                    date_element.get("zona", ""),
+                ),
+                "%d/%m/%Y %H:%M:%S %z",
+            )
+            return {
+                "receipt_type": root.get("tipo", ""),
+                "error": root.get("errore", ""),
+                "sender": root.findtext("./intestazione/mittente", default=""),
+                "subject": root.findtext("./intestazione/oggetto", default=""),
+                "recipients": [
+                    {
+                        "address": recipient.text or "",
+                        "type": recipient.get("tipo", ""),
+                    }
+                    for recipient in root.findall("./intestazione/destinatari")
+                ],
+                "gestore": root.findtext("./dati/gestore-emittente", default=""),
+                "date": date_value.astimezone(UTC).replace(tzinfo=None),
+                "identificativo": root.findtext("./dati/identificativo", default=""),
+                "ref_message_id": root.findtext("./dati/msgid", default=""),
+                "receipt_detail": (
+                    receipt.get("tipo", "")
+                    if (receipt := root.find("./dati/ricevuta")) is not None
+                    else ""
+                ),
+                "delivery": root.findtext("./dati/consegna", default=""),
+                "extended_error": root.findtext("./dati/errore-esteso", default=""),
+            }
+        except (AttributeError, ET.ParseError, TypeError, ValueError) as error:
+            _logger.info("PEC daticert could not be parsed: %s", error)
+            return empty_result
+
+    @api.model
+    def _pec_daticert_bytes(self, msg_dict):
+        """Ritorna i byte di ``daticert.xml``, o None se il messaggio non ne ha.
+
+        Recupero PER NOME, mai per mimetype: il core forza gli XML in ingresso
+        a text/plain (odoo_core/odoo/odoo/addons/base/models/ir_attachment.py
+        L376-381, conseguenza di ``attachments_mime_plainxml=True`` in
+        mail_thread.py L1294), quindi un filtro su application/xml non
+        troverebbe nulla in produzione.
+
+        Gli allegati si leggono da ``msg_dict`` e non da ``ir.attachment``:
+        qui non esistono ancora, il core li collega dopo, in ``message_post``.
+        """
+        for attachment in msg_dict.get("attachments") or []:
+            if attachment.fname == "daticert.xml":
+                # _message_parse_extract_payload L1602 usa part.get_content():
+                # str per i part text/*, bytes per gli altri. ET.fromstring
+                # rifiuta una str che dichiara l'encoding, quindi si normalizza.
+                content = attachment.content
+                return content.encode() if isinstance(content, str) else content
+        return None
+
+    @api.model
+    def _pec_kind(self, receipt_type, transport):
+        """Classifica il messaggio nelle tre specie che una casella PEC riceve.
+
+        Catena a PRIORITA', non a mutua esclusione: X-Ricevuta vince su
+        X-Trasporto perche' una ricevuta porta ENTRAMBI gli header, mentre la
+        busta di trasporto porta il solo X-Trasporto. Invertire l'ordine
+        classificherebbe come messaggio ogni ricevuta.
+
+        Nessuna corrispondenza -> False, cioe' campo NON valorizzato. E' una
+        decisione esplicita: NON esiste un quarto valore "sconosciuto", perche'
+        aggiungerlo dichiarerebbe una classificazione che non e' avvenuta.
+        Il record atterra comunque e resta visibile: nulla viene archiviato,
+        scartato o dedotto per congettura. Il filtro "Non classificata" della
+        vista di ricerca serve proprio a trovarli.
+        """
+        if receipt_type:
+            return "ricevuta"
+        if transport == "posta-certificata":
+            return "messaggio_pec"
+        if transport == "errore":
+            return "non_certificata"
+        _logger.info(
+            "PEC: message kind undetermined (X-Ricevuta=%r, X-Trasporto=%r)",
+            receipt_type,
+            transport,
+        )
+        return False
+
+    @api.model
+    def _pec_original_message(self, msg_dict):
+        """Ritorna il messaggio dentro ``postacert.eml``, o None se assente.
+
+        Recupero PER NOME, mai per mimetype, per la stessa ragione di
+        ``_pec_daticert_bytes``.
+
+        Il contenuto e' gia' un oggetto ``Message``: su un part message/rfc822
+        ``part.get_content()`` (mail_thread.py L1602) restituisce il messaggio
+        annidato, non i byte, ed e' cosi' che il core lo tratta piu' avanti
+        (mail_thread.py L2404-2405, ``content.as_bytes()``). I rami str/bytes
+        esistono per prudenza, non perche' osservati.
+        """
+        for attachment in msg_dict.get("attachments") or []:
+            if attachment.fname != "postacert.eml":
+                continue
+            content = attachment.content
+            if isinstance(content, Message):
+                return content
+            if isinstance(content, str):
+                return message_from_string(content, policy=policy.SMTP)
+            return message_from_bytes(content, policy=policy.SMTP)
+        return None
+
+    def _pec_original_from_display_name(self):
+        """Ripiego quando ``postacert.eml`` manca: il display name della busta.
+
+        I gestori scrivono ``"Per conto di: <indirizzo reale>"
+        <posta-certificata@...>``, quindi il mittente vero e' recuperabile
+        anche senza allegato. L'oggetto NON ha ripiego: quello esterno e' del
+        gestore ("ANOMALIA MESSAGGIO: ...") e spacciarlo per l'originale
+        sarebbe peggio che lasciarlo vuoto.
+        """
+        self.ensure_one()
+        display_name = parseaddr(self.email_from or "")[0]
+        if not display_name.lower().startswith(ON_BEHALF_PREFIX):
+            return {}
+        return {"original_email_from": display_name[len(ON_BEHALF_PREFIX) :].strip()}
+
+    def _pec_original_values(self, msg_dict):
+        """Mittente e oggetto VERI dei messaggi che il gestore ha imbustato.
+
+        Solo per messaggio_pec e non_certificata: su una ricevuta la busta
+        esterna e' gia' il documento che conta.
+
+        try/except che SOLO logga: una ricevuta ha valore legale e non si
+        perde perche' l'originale non si e' potuto leggere.
+        """
+        self.ensure_one()
+        if self.pec_kind not in ("messaggio_pec", "non_certificata"):
+            return {}
+        try:
+            original = self._pec_original_message(msg_dict)
+            if original is None:
+                return self._pec_original_from_display_name()
+            return {
+                "original_email_from": decode_message_header(original, "From"),
+                "original_subject": decode_message_header(original, "Subject"),
+            }
+        except Exception:
+            _logger.exception(
+                "PEC: original message wrapped in %s could not be read",
+                self.message_id,
+            )
+            return {}
+
+    def _pec_outcome_values(self, parsed):
+        """Traduce il dict di ``_parse_daticert`` nei campi del record."""
+        self.ensure_one()
+        return {
+            # Header e XML dicono la stessa cosa (verificato: msgid == header
+            # su 15 campioni su 15). L'header ha la precedenza perche' e' gia'
+            # sul record; l'XML vale come conferma, e come ripiego quando il
+            # gestore non ha emesso l'header.
+            "pec_receipt_type": self.pec_receipt_type or parsed["receipt_type"],
+            "pec_ref_message_id": self.pec_ref_message_id or parsed["ref_message_id"],
+            "pec_error": parsed["error"],
+            "pec_extended_error": parsed["extended_error"],
+            "pec_receipt_detail": parsed["receipt_detail"],
+            "pec_provider": parsed["gestore"],
+            "pec_receipt_date": parsed["date"],
+            "pec_identifier": parsed["identificativo"],
+            "pec_delivery": parsed["delivery"],
+            "pec_recipients": "\n".join(
+                "%s (%s)" % (recipient["address"], recipient["type"])
+                for recipient in parsed["recipients"]
+            ),
+            "state": "elaborata",
+        }
+
+    def _pec_correlation_values(self, ref_message_id):
+        """Risale al messaggio che abbiamo inviato, dal Message-ID di riferimento.
+
+        ``mail.message.message_id`` e' indicizzato (mail_message.py L178) e
+        sempre valorizzato alla create (L645-646): e' lo stesso aggancio che il
+        core usa per i thread (mail_thread.py L1151-1153).
+
+        Una sola lookup basta anche per le avvenute consegne: su campioni reali
+        accettazione e avvenuta-consegna dello stesso invio portano un
+        ``X-Riferimento-Message-ID`` IDENTICO. Nessuna tabella di
+        corrispondenza msgid originale -> msgid della busta di trasporto.
+
+        Solo logga: se non trova nulla la ricevuta atterra comunque, senza
+        riferimento.
+        """
+        if not ref_message_id:
+            return {}
+        try:
+            message = (
+                self.env["mail.message"]
+                .sudo()
+                .search([("message_id", "=", ref_message_id)], limit=1)
+            )
+        except Exception:
+            _logger.exception("PEC: correlation lookup failed for %s", ref_message_id)
+            return {}
+        if not message:
+            _logger.info("PEC: no sent message matches %s", ref_message_id)
+            return {}
+        return {
+            "origin_message_id": message.id,
+            "origin_model": message.model or False,
+            "origin_res_id": message.res_id or 0,
+        }
+
+    def _pec_receipt_values(self, xml_bytes):
+        """Esito + correlazione da scrivere sul record, o lo stato di errore."""
+        self.ensure_one()
+        parsed = self._parse_daticert(xml_bytes)
+        if not parsed["receipt_type"]:
+            # C'e' un daticert.xml ma non e' interpretabile: lo si dichiara,
+            # non lo si nasconde. Il messaggio resta comunque a DB.
+            return {"state": "errore"}
+        values = self._pec_outcome_values(parsed)
+        values.update(self._pec_correlation_values(values["pec_ref_message_id"]))
+        return values
+
+    def _pec_process_receipt(self, msg_dict):
+        """Estrae l'originale imbustato, interpreta ``daticert.xml``, correla.
+
+        Due ``try/except`` DISTINTI e non uno solo: l'originale dentro
+        ``postacert.eml`` e la certificazione sono indipendenti, e il
+        fallimento del primo non deve impedire la lettura della seconda.
+        Entrambi SOLO loggano, sul modello di
+        aiutotel_base/models/aiutotel_mail.py L413-419: una ricevuta PEC ha
+        valore legale e non si perde perche' l'interpretazione fallisce.
+        Un'unica ``write`` finale, cosi' un errore non lascia il record a meta'.
+        """
+        self.ensure_one()
+        values = self._pec_original_values(msg_dict)
+        try:
+            xml_bytes = self._pec_daticert_bytes(msg_dict)
+            # Senza daticert.xml non c'e' nulla da certificare: e' il caso
+            # normale della posta non certificata, ed e' anche cio' che
+            # succede con fetchmail e "Keep Attachments" disattivato. Il
+            # messaggio resta grezzo; non e' un errore di elaborazione.
+            if xml_bytes:
+                values.update(self._pec_receipt_values(xml_bytes))
+        except Exception:
+            _logger.exception(
+                "PEC: outcome of receipt %s could not be read",
+                self.message_id,
+            )
+            values["state"] = "errore"
+        if values:
+            self.write(values)
+
+    @api.model
+    def message_new(self, msg_dict, custom_values=None):
+        """Crea la ricevuta PEC dal messaggio in ingresso.
+
+        I valori vanno passati a super() COME custom_values, non scritti dopo:
+        message_new del core fa `self.create(custom_values.copy() | {...})`
+        (odoo_core/odoo/addons/mail/models/mail_thread.py L1453-1465), quindi
+        un unico create() vede tutti i campi. email_from NON si imposta qui:
+        lo popola il core dal mittente del messaggio (stesso file, L1461-1463)
+        SOLO perche' questo modello dichiara _primary_email = "email_from"
+        (requisito esplicito in mail_thread.py L103). Senza quella dichiarazione
+        _mail_get_primary_email_field ritorna None e il campo resta vuoto.
+
+        custom_values (pec_ref_message_id / pec_receipt_type, iniettati da
+        message_route) sovrascrive i default: viene dagli header, ha priorita.
+
+        L'interpretazione arriva DOPO la create, in ``_pec_process_receipt``, e
+        non prima: la ricevuta esiste a DB anche se il parsing esplode.
+        """
+        # msg_dict["date"] NON e' una chiave garantita: message_parse la imposta
+        # solo dentro `if message.get('Date')`
+        # (odoo_core/odoo/addons/mail/models/mail_thread.py L1781-1797), quindi
+        # senza header Date: e' ASSENTE. Quando c'e' e' una STRINGA
+        # '%Y-%m-%d %H:%M:%S' gia' normalizzata a UTC dal core; to_datetime la
+        # riporta a datetime naive UTC senza toccare il fuso.
+        message_date = msg_dict.get("date")
+        if message_date:
+            date_received = fields.Datetime.to_datetime(message_date)
+        else:
+            date_received = fields.Datetime.now()
+            _logger.info(
+                "PEC message %s has no Date header: date_received falls back to "
+                "ingestion time %s, which is NOT the legal date of the receipt.",
+                msg_dict.get("message_id"),
+                date_received,
+            )
+
+        defaults = {
+            "name": msg_dict.get("subject") or _("Senza oggetto"),
+            "email_to": msg_dict.get("to", ""),
+            "body": msg_dict.get("body", ""),
+            "message_id": msg_dict.get("message_id"),
+            "date_received": date_received,
+            "state": "ricevuta",
+        }
+        defaults.update(custom_values or {})
+        # Nei defaults, NON in una write successiva: _pec_original_values
+        # legge self.pec_kind subito dopo la create per decidere se estrarre
+        # l'originale. (message_route cattura gli header grezzi; interpretarli
+        # spetta a questo modello.)
+        defaults["pec_kind"] = self._pec_kind(
+            defaults.get("pec_receipt_type"),
+            defaults.get("pec_transport"),
+        )
+        record = super().message_new(msg_dict, defaults)
+        record._pec_process_receipt(msg_dict)
+        return record

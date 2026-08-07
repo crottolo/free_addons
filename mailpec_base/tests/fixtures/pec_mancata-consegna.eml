@@ -1,0 +1,71 @@
+Return-Path: <posta-certificata@pec.example.it>
+Received: from mail.pec.example.it (mail.pec.example.it [192.0.2.10])
+	by mx.example.org (Postfix) with ESMTPS id opec1005A1B2C3D4E
+	for <mittente@pec.example.it>; Sat, 8 Aug 2026 11:20:46 +0200
+From: "Per conto di: mittente@pec.example.it" <posta-certificata@pec.example.it>
+To: mittente@pec.example.it
+Subject: AVVISO DI MANCATA CONSEGNA: Comunicazione non recapitata
+Date: Sat, 8 Aug 2026 11:20:46 +0200
+Message-ID: <opec1005.20260808112046.00005.100.1.1@pec.example.it>
+X-Ricevuta: mancata-consegna
+X-Riferimento-Message-ID: <MSGID0003@pec.example.it>
+X-Trasporto: posta-certificata
+X-TipoRicevuta: completa
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+	micalg="sha-256"; boundary="----=_Signed_opec1005"
+
+------=_Signed_opec1005
+Content-Type: multipart/mixed; boundary="----=_Mixed_opec1005"
+
+------=_Mixed_opec1005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Avviso di mancata consegna per superamento dei tempi massimi
+
+Il giorno 08/08/2026 alle ore 11:20:46 (+0200) il messaggio con
+oggetto "Comunicazione non recapitata" proveniente da
+"mittente@pec.example.it" ed indirizzato a
+casella-piena@pec.example.org
+non e' stato consegnato entro le 24 ore previste.
+
+------=_Mixed_opec1005
+Content-Type: application/xml; name="daticert.xml"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: attachment; filename="daticert.xml"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<postacert tipo="mancata-consegna" errore="superamento-tempi-massimi">
+    <intestazione>
+        <mittente>mittente@pec.example.it</mittente>
+        <destinatari tipo="certificato">casella-piena@pec.example.org</destinatari>
+        <risposte>mittente@pec.example.it</risposte>
+        <oggetto>Comunicazione non recapitata</oggetto>
+    </intestazione>
+    <dati>
+        <gestore-emittente>Gestore Due S.r.l.</gestore-emittente>
+        <data zona="+0200">
+            <giorno>08/08/2026</giorno>
+            <ora>11:20:46</ora>
+        </data>
+        <identificativo>opec1005.20260808112046.00005.100.1.1@pec.example.it</identificativo>
+        <msgid>&lt;MSGID0003@pec.example.it&gt;</msgid>
+        <ricevuta tipo="completa"/>
+        <consegna>casella-piena@pec.example.org</consegna>
+        <errore-esteso>Il messaggio non e' stato consegnato entro le 24 ore previste: casella del destinatario non disponibile.</errore-esteso>
+    </dati>
+</postacert>
+------=_Mixed_opec1005--
+
+------=_Signed_opec1005
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+MIICyjCCAbKgAwIBAgIURklOVE9GSVJNQVNNSU1FUEVDMDEwDQYJKoZIhvcNAQELBQAwEjEQMA4G
+A1UEAwwHRVhBTVBMRTAeFw0yNjA4MDcwMDAwMDBaFw0yNzA4MDcwMDAwMDBaMBIxEDAOBgNVBAMM
+B0VYQU1QTEUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD0RklOVE9GSVJNQVNNSU1F
+UEVDRklYVFVSRVNJTlRFVElDQU5PTlZBTElEQVNPTE9QRVJURVNUMDAwMDAwMDAwMDAwMDAwMDAw
+MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
+------=_Signed_opec1005--

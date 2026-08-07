@@ -1,0 +1,72 @@
+Return-Path: <posta-certificata@pec.example.it>
+Received: from mail.pec.example.it (mail.pec.example.it [192.0.2.10])
+	by mx.example.org (Postfix) with ESMTPS id opec1001A1B2C3D4E
+	for <mittente@pec.example.it>; Fri, 7 Aug 2026 11:20:46 +0200
+From: "Per conto di: mittente@pec.example.it" <posta-certificata@pec.example.it>
+To: mittente@pec.example.it
+Subject: ACCETTAZIONE: Comunicazione di prova
+Date: Fri, 7 Aug 2026 11:20:46 +0200
+Message-ID: <opec1001.20260807112045.00001.100.1.1@pec.example.it>
+X-Ricevuta: accettazione
+X-Riferimento-Message-ID: <MSGID0001@pec.example.it>
+X-Trasporto: posta-certificata
+X-TipoRicevuta: completa
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+	micalg="sha-256"; boundary="----=_Signed_opec1001"
+
+------=_Signed_opec1001
+Content-Type: multipart/mixed; boundary="----=_Mixed_opec1001"
+
+------=_Mixed_opec1001
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Ricevuta di accettazione
+
+Il giorno 07/08/2026 alle ore 11:20:46 (+0200) il messaggio con
+oggetto "Comunicazione di prova" proveniente da
+"mittente@pec.example.it" ed indirizzato a:
+destinatario@pec.example.org (posta certificata)
+esterno@example.org (posta ordinaria)
+e' stato accettato dal sistema ed inoltrato.
+Identificativo messaggio: opec1001.20260807112045.00001.100.1.1@pec.example.it
+
+------=_Mixed_opec1001
+Content-Type: application/xml; name="daticert.xml"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: attachment; filename="daticert.xml"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<postacert tipo="accettazione" errore="nessuno">
+    <intestazione>
+        <mittente>mittente@pec.example.it</mittente>
+        <destinatari tipo="certificato">destinatario@pec.example.org</destinatari>
+        <destinatari tipo="esterno">esterno@example.org</destinatari>
+        <risposte>mittente@pec.example.it</risposte>
+        <oggetto>Comunicazione di prova</oggetto>
+    </intestazione>
+    <dati>
+        <gestore-emittente>Gestore Uno S.p.A.</gestore-emittente>
+        <data zona="+0200">
+            <giorno>07/08/2026</giorno>
+            <ora>11:20:46</ora>
+        </data>
+        <identificativo>opec1001.20260807112045.00001.100.1.1@pec.example.it</identificativo>
+        <msgid>&lt;MSGID0001@pec.example.it&gt;</msgid>
+        <ricevuta tipo="completa"/>
+    </dati>
+</postacert>
+------=_Mixed_opec1001--
+
+------=_Signed_opec1001
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+MIICyjCCAbKgAwIBAgIURklOVE9GSVJNQVNNSU1FUEVDMDEwDQYJKoZIhvcNAQELBQAwEjEQMA4G
+A1UEAwwHRVhBTVBMRTAeFw0yNjA4MDcwMDAwMDBaFw0yNzA4MDcwMDAwMDBaMBIxEDAOBgNVBAMM
+B0VYQU1QTEUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD0RklOVE9GSVJNQVNNSU1F
+UEVDRklYVFVSRVNJTlRFVElDQU5PTlZBTElEQVNPTE9QRVJURVNUMDAwMDAwMDAwMDAwMDAwMDAw
+MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
+------=_Signed_opec1001--

@@ -1,0 +1,40 @@
+Return-Path: <posta-certificata@pec.example.it>
+Received: from mail.pec.example.it (mail.pec.example.it [192.0.2.10])
+	by mx.example.org (Postfix) with ESMTPS id opec1011A1B2C3D4E
+	for <destinatario@pec.example.org>; Fri, 7 Aug 2026 14:03:22 +0200
+From: "Per conto di: mittente-ordinario@example.com" <posta-certificata@pec.example.it>
+To: destinatario@pec.example.org
+Subject: ANOMALIA MESSAGGIO: Comunicazione non certificata
+Date: Fri, 7 Aug 2026 14:03:22 +0200
+Message-ID: <opec1011.20260807140322.00011.100.1.1@pec.example.it>
+X-Trasporto: errore
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="----=_Mixed_opec1011"
+
+------=_Mixed_opec1011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Anomalia nel messaggio
+
+Il messaggio ricevuto non e' certificato: non proviene da una
+casella di posta elettronica certificata oppure la busta di
+trasporto non era valida. Il testo originale e' riportato in
+allegato senza alcuna garanzia sulla provenienza.
+
+------=_Mixed_opec1011
+Content-Type: message/rfc822
+Content-Disposition: attachment; filename="postacert.eml"
+
+Return-Path: <mittente-ordinario@example.com>
+From: mittente-ordinario@example.com
+To: destinatario@pec.example.org
+Subject: Comunicazione non certificata
+Date: Fri, 7 Aug 2026 14:03:20 +0200
+Message-ID: <MSGID0007@example.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Messaggio spedito da una casella ordinaria verso una casella PEC.
+------=_Mixed_opec1011--

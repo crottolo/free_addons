@@ -1,0 +1,33 @@
+Return-Path: {return_path}
+To: {to}
+cc: {cc}
+Received: by mail1.pec.aruba.it (Postfix, from userid 10002)
+	id 6EF9ABFB2B; Fri, 10 Aug 2012 16:16:39 +0200 (CEST)
+From: {email_from}
+Subject: {subject}
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_PEC_0002"
+Date: Fri, 10 Aug 2012 14:16:26 +0000
+Message-ID: {msg_id}
+{extra}
+
+------=_Part_PEC_0002
+Content-Type: text/plain; charset=utf-8
+
+Ricevuta di accettazione con certificazione allegata.
+------=_Part_PEC_0002
+Content-Type: application/xml; name="daticert.xml"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="daticert.xml"
+
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHBvc3RhY2VydCB0aXBvPSJh
+Y2NldHRhemlvbmUiIGVycm9yZT0ibmVzc3VubyI+PGludGVzdGF6aW9uZT48bWl0dGVudGU+bWl0
+dGVudGVAZXhhbXBsZS5jb208L21pdHRlbnRlPjwvaW50ZXN0YXppb25lPjwvcG9zdGFjZXJ0Pgo=
+------=_Part_PEC_0002
+Content-Type: application/pdf; name="allegato.pdf"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="allegato.pdf"
+
+JVBERi0xLjQgZmludG8gYWxsZWdhdG8gUEVDCg==
+------=_Part_PEC_0002--

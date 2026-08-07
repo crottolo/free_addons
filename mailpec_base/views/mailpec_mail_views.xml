@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mailpec_mail_view_list" model="ir.ui.view">
+        <field name="model">mailpec.mail</field>
+        <field name="arch" type="xml">
+            <list string="PEC Mail">
+                <field name="name" />
+                <field name="email_from" />
+                <field name="email_to" optional="show" />
+                <field name="date_received" />
+                <field
+                    name="pec_kind"
+                    widget="badge"
+                    decoration-success="pec_kind == 'ricevuta'"
+                    decoration-info="pec_kind == 'messaggio_pec'"
+                    decoration-warning="pec_kind == 'non_certificata'" />
+                <field name="original_email_from" optional="hide" />
+                <field name="original_subject" optional="hide" />
+                <field name="pec_receipt_type" />
+                <field name="pec_transport" optional="hide" />
+                <field name="pec_error" optional="hide" />
+                <field name="pec_delivery" optional="hide" />
+                <field name="origin_model" optional="hide" />
+                <field name="processed" optional="hide" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'elaborata'"
+                    decoration-danger="state == 'errore'"
+                    decoration-info="state == 'ricevuta'" />
+            </list>
+        </field>
+    </record>
+
+    <record id="mailpec_mail_view_form" model="ir.ui.view">
+        <field name="model">mailpec.mail</field>
+        <field name="arch" type="xml">
+            <form string="PEC Mail">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="ricevuta,elaborata,errore" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="Oggetto..." />
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Mittente / Destinatario">
+                            <field name="email_from" />
+                            <field name="email_to" />
+                            <field name="date_received" />
+                        </group>
+                        <group string="PEC">
+                            <field name="pec_kind" />
+                            <field name="pec_receipt_type" />
+                            <field name="pec_transport" />
+                            <field name="message_id" />
+                            <field name="pec_ref_message_id" />
+                            <field name="processed" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                            <field name="user_id" />
+                        </group>
+                    </group>
+                    <group string="Messaggio originale" invisible="pec_kind not in ('messaggio_pec', 'non_certificata')">
+                        <field name="original_email_from" />
+                        <field name="original_subject" />
+                    </group>
+                    <group>
+                        <group string="Esito certificato">
+                            <field name="pec_receipt_date" />
+                            <field name="pec_receipt_detail" />
+                            <field name="pec_provider" />
+                            <field name="pec_identifier" />
+                            <field name="pec_delivery" />
+                        </group>
+                        <group string="Messaggio di origine">
+                            <field name="origin_message_id" />
+                            <field name="origin_model" />
+                            <field name="origin_res_id" />
+                        </group>
+                    </group>
+                    <group string="Errore" invisible="not pec_error and not pec_extended_error">
+                        <field name="pec_error" />
+                        <field name="pec_extended_error" />
+                    </group>
+                    <notebook>
+                        <page string="Corpo" name="body">
+                            <field name="body" widget="html" readonly="1" />
+                        </page>
+                        <page string="Destinatari certificati" name="pec_recipients">
+                            <field name="pec_recipients" readonly="1" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="mailpec_mail_view_search" model="ir.ui.view">
+        <field name="model">mailpec.mail</field>
+        <field name="arch" type="xml">
+            <search string="PEC Mail">
+                <field name="name" />
+                <field name="email_from" />
+                <field name="email_to" />
+                <field name="message_id" />
+                <field name="pec_ref_message_id" />
+                <field name="original_email_from" />
+                <field name="original_subject" />
+                <separator />
+                <filter name="kind_ricevuta" string="Ricevute" domain="[('pec_kind', '=', 'ricevuta')]" />
+                <filter name="kind_messaggio_pec" string="Messaggi PEC" domain="[('pec_kind', '=', 'messaggio_pec')]" />
+                <filter name="kind_non_certificata" string="Non certificate" domain="[('pec_kind', '=', 'non_certificata')]" />
+                <filter name="kind_unset" string="Non classificate" domain="[('pec_kind', '=', False)]" />
+                <separator />
+                <filter name="state_ricevuta" string="Ricevuta" domain="[('state', '=', 'ricevuta')]" />
+                <filter name="state_elaborata" string="Elaborata" domain="[('state', '=', 'elaborata')]" />
+                <filter name="state_errore" string="Errore" domain="[('state', '=', 'errore')]" />
+                <separator />
+                <filter name="not_processed" string="Non elaborate" domain="[('processed', '=', False)]" />
+                <filter name="not_correlated" string="Senza messaggio di origine" domain="[('origin_message_id', '=', False)]" />
+                <group expand="0" string="Raggruppa per">
+                    <filter name="group_kind" string="Tipo messaggio" context="{'group_by': 'pec_kind'}" />
+                    <filter name="group_email_from" string="Mittente" context="{'group_by': 'email_from'}" />
+                    <filter name="group_receipt_type" string="Tipo ricevuta" context="{'group_by': 'pec_receipt_type'}" />
+                    <filter name="group_origin_model" string="Modello di origine" context="{'group_by': 'origin_model'}" />
+                    <filter name="group_state" string="Stato" context="{'group_by': 'state'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="mailpec_mail_action" model="ir.actions.act_window">
+        <field name="name">PEC Mail</field>
+        <field name="res_model">mailpec.mail</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="mailpec_mail_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Nessuna email PEC ricevuta.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="mailpec_menu_root" name="PEC" sequence="90" />
+    <menuitem id="mailpec_menu_mail" name="Email PEC" parent="mailpec_menu_root" action="mailpec_mail_action" sequence="10" />
+</odoo>
