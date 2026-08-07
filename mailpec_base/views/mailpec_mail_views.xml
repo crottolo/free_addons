@@ -3,27 +3,37 @@
     <record id="mailpec_mail_view_list" model="ir.ui.view">
         <field name="model">mailpec.mail</field>
         <field name="arch" type="xml">
-            <list string="PEC Mail">
-                <field name="name" />
-                <field name="email_from" />
-                <field name="email_to" optional="show" />
-                <field name="date_received" />
+            <list
+                string="Email PEC"
+                decoration-bf="not read_by_user_id"
+                decoration-danger="pec_error and pec_error != 'nessuno'"
+                decoration-muted="pec_kind == 'ricevuta'">
+                <field name="date_received" width="155px" />
+                <field name="counterpart" width="300px" />
+                <field name="display_subject" />
                 <field
                     name="pec_kind"
                     widget="badge"
-                    decoration-success="pec_kind == 'ricevuta'"
+                    width="140px"
                     decoration-info="pec_kind == 'messaggio_pec'"
                     decoration-warning="pec_kind == 'non_certificata'" />
+                <field name="pec_receipt_type" optional="hide" />
+                <field name="read_by_user_id" column_invisible="True" />
+                <field name="pec_error" column_invisible="True" />
+                <field name="name" optional="hide" />
                 <field name="original_email_from" optional="hide" />
                 <field name="original_subject" optional="hide" />
-                <field name="pec_receipt_type" />
-                <field name="pec_transport" optional="hide" />
-                <field name="pec_error" optional="hide" />
+                <field name="email_from" optional="hide" />
+                <field name="email_to" optional="hide" />
+                <field name="pec_provider" optional="hide" />
                 <field name="pec_delivery" optional="hide" />
+                <field name="pec_transport" optional="hide" />
+                <field name="fetchmail_server_id" optional="hide" />
                 <field name="origin_model" optional="hide" />
                 <field name="processed" optional="hide" />
                 <field
                     name="state"
+                    optional="hide"
                     widget="badge"
                     decoration-success="state == 'elaborata'"
                     decoration-danger="state == 'errore'"
@@ -35,55 +45,42 @@
     <record id="mailpec_mail_view_form" model="ir.ui.view">
         <field name="model">mailpec.mail</field>
         <field name="arch" type="xml">
-            <form string="PEC Mail">
-                <header>
-                    <field name="state" widget="statusbar" statusbar_visible="ricevuta,elaborata,errore" />
-                </header>
+            <form string="Email PEC">
                 <sheet>
+                    <div class="alert alert-danger" role="alert" invisible="not pec_error or pec_error == 'nessuno'">
+                        <span class="fw-bold">Errore certificato dal gestore: </span>
+                        <field name="pec_error" readonly="1" class="oe_inline" />
+                        <div invisible="not pec_extended_error">
+                            <field name="pec_extended_error" readonly="1" />
+                        </div>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="state != 'errore'">
+                        La certificazione allegata non è stata interpretata. Il messaggio è
+                        conservato integro; i dati strutturati non sono disponibili.
+                    </div>
                     <div class="oe_title">
-                        <label for="name" />
+                        <label for="display_subject" />
                         <h1>
-                            <field name="name" placeholder="Oggetto..." />
+                            <field name="display_subject" readonly="1" />
                         </h1>
                     </div>
                     <group>
-                        <group string="Mittente / Destinatario">
-                            <field name="email_from" />
-                            <field name="email_to" />
+                        <group string="Messaggio">
+                            <field name="counterpart" readonly="1" />
                             <field name="date_received" />
+                            <field
+                                name="pec_kind"
+                                widget="badge"
+                                decoration-info="pec_kind == 'messaggio_pec'"
+                                decoration-warning="pec_kind == 'non_certificata'" />
+                            <field name="read_by_user_id" widget="many2one_avatar_user" />
                         </group>
-                        <group string="PEC">
-                            <field name="pec_kind" />
+                        <group string="Certificazione">
                             <field name="pec_receipt_type" />
-                            <field name="pec_transport" />
-                            <field name="message_id" />
-                            <field name="pec_ref_message_id" />
-                            <field name="processed" />
-                            <field name="company_id" groups="base.group_multi_company" />
-                            <field name="user_id" />
-                        </group>
-                    </group>
-                    <group string="Messaggio originale" invisible="pec_kind not in ('messaggio_pec', 'non_certificata')">
-                        <field name="original_email_from" />
-                        <field name="original_subject" />
-                    </group>
-                    <group>
-                        <group string="Esito certificato">
-                            <field name="pec_receipt_date" />
                             <field name="pec_receipt_detail" />
+                            <field name="pec_receipt_date" />
                             <field name="pec_provider" />
-                            <field name="pec_identifier" />
-                            <field name="pec_delivery" />
                         </group>
-                        <group string="Messaggio di origine">
-                            <field name="origin_message_id" />
-                            <field name="origin_model" />
-                            <field name="origin_res_id" />
-                        </group>
-                    </group>
-                    <group string="Errore" invisible="not pec_error and not pec_extended_error">
-                        <field name="pec_error" />
-                        <field name="pec_extended_error" />
                     </group>
                     <notebook>
                         <page string="Corpo" name="body">
@@ -91,6 +88,42 @@
                         </page>
                         <page string="Destinatari certificati" name="pec_recipients">
                             <field name="pec_recipients" readonly="1" />
+                        </page>
+                        <page string="Dettagli tecnici" name="technical">
+                            <group>
+                                <group string="Busta del gestore">
+                                    <field name="name" />
+                                    <field name="email_from" />
+                                    <field name="email_to" />
+                                    <field name="pec_transport" />
+                                </group>
+                                <group string="Messaggio originale">
+                                    <field name="original_email_from" />
+                                    <field name="original_subject" />
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Identificatori">
+                                    <field name="message_id" />
+                                    <field name="pec_ref_message_id" />
+                                    <field name="pec_identifier" />
+                                    <field name="pec_delivery" />
+                                </group>
+                                <group string="Messaggio di origine">
+                                    <field name="origin_message_id" />
+                                    <field name="origin_model" />
+                                    <field name="origin_res_id" />
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Elaborazione">
+                                    <field name="fetchmail_server_id" />
+                                    <field name="state" />
+                                    <field name="processed" />
+                                    <field name="user_id" />
+                                    <field name="company_id" groups="base.group_multi_company" />
+                                </group>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
@@ -102,42 +135,43 @@
     <record id="mailpec_mail_view_search" model="ir.ui.view">
         <field name="model">mailpec.mail</field>
         <field name="arch" type="xml">
-            <search string="PEC Mail">
+            <search string="Email PEC">
+                <field name="counterpart" />
+                <field name="display_subject" />
                 <field name="name" />
                 <field name="email_from" />
-                <field name="email_to" />
+                <field name="fetchmail_server_id" />
                 <field name="message_id" />
                 <field name="pec_ref_message_id" />
-                <field name="original_email_from" />
-                <field name="original_subject" />
                 <separator />
-                <filter name="kind_ricevuta" string="Ricevute" domain="[('pec_kind', '=', 'ricevuta')]" />
-                <filter name="kind_messaggio_pec" string="Messaggi PEC" domain="[('pec_kind', '=', 'messaggio_pec')]" />
-                <filter name="kind_non_certificata" string="Non certificate" domain="[('pec_kind', '=', 'non_certificata')]" />
+                <filter name="unread" string="Da leggere" domain="[('read_by_user_id', '=', False)]" />
+                <separator />
+                <filter name="solo_messaggi" string="Solo messaggi" domain="[('pec_kind', 'in', ['messaggio_pec', 'non_certificata'])]" />
+                <filter name="solo_ricevute" string="Solo ricevute" domain="[('pec_kind', '=', 'ricevuta')]" />
                 <filter name="kind_unset" string="Non classificate" domain="[('pec_kind', '=', False)]" />
                 <separator />
-                <filter name="state_ricevuta" string="Ricevuta" domain="[('state', '=', 'ricevuta')]" />
-                <filter name="state_elaborata" string="Elaborata" domain="[('state', '=', 'elaborata')]" />
-                <filter name="state_errore" string="Errore" domain="[('state', '=', 'errore')]" />
-                <separator />
-                <filter name="not_processed" string="Non elaborate" domain="[('processed', '=', False)]" />
+                <filter name="con_errore" string="Con errore" domain="[('pec_error', '!=', False), ('pec_error', '!=', 'nessuno')]" />
+                <filter name="state_errore" string="Certificazione non interpretata" domain="[('state', '=', 'errore')]" />
                 <filter name="not_correlated" string="Senza messaggio di origine" domain="[('origin_message_id', '=', False)]" />
                 <group expand="0" string="Raggruppa per">
+                    <filter name="group_counterpart" string="Controparte" context="{'group_by': 'counterpart'}" />
                     <filter name="group_kind" string="Tipo messaggio" context="{'group_by': 'pec_kind'}" />
-                    <filter name="group_email_from" string="Mittente" context="{'group_by': 'email_from'}" />
                     <filter name="group_receipt_type" string="Tipo ricevuta" context="{'group_by': 'pec_receipt_type'}" />
-                    <filter name="group_origin_model" string="Modello di origine" context="{'group_by': 'origin_model'}" />
-                    <filter name="group_state" string="Stato" context="{'group_by': 'state'}" />
+                    <filter name="group_provider" string="Gestore" context="{'group_by': 'pec_provider'}" />
+                    <filter name="group_fetchmail_server" string="Server di posta" context="{'group_by': 'fetchmail_server_id'}" />
+                    <filter name="group_read_by" string="Letta da" context="{'group_by': 'read_by_user_id'}" />
+                    <filter name="group_date" string="Mese di ricezione" context="{'group_by': 'date_received:month'}" />
                 </group>
             </search>
         </field>
     </record>
 
     <record id="mailpec_mail_action" model="ir.actions.act_window">
-        <field name="name">PEC Mail</field>
+        <field name="name">Email PEC</field>
         <field name="res_model">mailpec.mail</field>
         <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="mailpec_mail_view_search" />
+        <field name="context">{'search_default_solo_messaggi': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Nessuna email PEC ricevuta.

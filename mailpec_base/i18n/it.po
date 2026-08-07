@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-07 10:33+0000\n"
+"POT-Creation-Date: 2026-08-07 14:22+0000\n"
 "PO-Revision-Date: 2026-08-07 10:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,6 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "<span class=\"fw-bold\">Errore certificato dal gestore: </span>"
+msgstr "<span class=\"fw-bold\">Errore certificato dal gestore: </span>"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__message_needaction
@@ -57,9 +62,24 @@ msgid "Body"
 msgstr "Corpo"
 
 #. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "Busta del gestore"
+msgstr "Busta del gestore"
+
+#. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_ir_mail_server__is_pec
 msgid "Casella PEC"
 msgstr "Casella PEC"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "Certificazione"
+msgstr "Certificazione"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Certificazione non interpretata"
+msgstr "Certificazione non interpretata"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__color
@@ -72,9 +92,24 @@ msgid "Company"
 msgstr "Azienda"
 
 #. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Con errore"
+msgstr "Con errore"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Controparte"
+msgstr "Controparte"
+
+#. module: mailpec_base
 #: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
 msgid "Corpo"
 msgstr "Corpo"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__counterpart
+msgid "Counterpart"
+msgstr "Controparte"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__create_uid
@@ -87,18 +122,41 @@ msgid "Created on"
 msgstr "Creato il"
 
 #. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Da leggere"
+msgstr "Da leggere"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "Destinatari certificati"
+msgstr "Destinatari certificati"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "Dettagli tecnici"
+msgstr "Dettagli tecnici"
+
+#. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: mailpec_base
 #: model:ir.model.fields.selection,name:mailpec_base.selection__mailpec_mail__state__elaborata
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
 msgid "Elaborata"
 msgstr "Elaborata"
 
 #. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "Elaborazione"
+msgstr "Elaborazione"
+
+#. module: mailpec_base
+#: model:ir.actions.act_window,name:mailpec_base.mailpec_mail_action
 #: model:ir.ui.menu,name:mailpec_base.mailpec_menu_mail
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_list
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
 msgid "Email PEC"
 msgstr "Email PEC"
 
@@ -108,8 +166,12 @@ msgid "Email Thread"
 msgstr "Discussione e-mail"
 
 #. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__name
+msgid "Envelope Subject"
+msgstr "Oggetto busta"
+
+#. module: mailpec_base
 #: model:ir.model.fields.selection,name:mailpec_base.selection__mailpec_mail__state__errore
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
 msgid "Errore"
 msgstr "Errore"
 
@@ -143,6 +205,11 @@ msgid "From"
 msgstr "Da"
 
 #. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Gestore"
+msgstr "Gestore"
+
+#. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__has_message
 msgid "Has Message"
 msgstr "Ha messaggio"
@@ -161,6 +228,11 @@ msgstr "Icona"
 #: model:ir.model.fields,help:mailpec_base.field_mailpec_mail__activity_exception_icon
 msgid "Icon to indicate an exception activity."
 msgstr "Icona per indicare un'attività eccezione."
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "Identificatori"
+msgstr "Identificatori"
 
 #. module: mailpec_base
 #: model:ir.model.fields,help:mailpec_base.field_mailpec_mail__message_needaction
@@ -183,9 +255,23 @@ msgid "Indirizzo della casella autenticata sul server."
 msgstr "Indirizzo della casella autenticata sul server."
 
 #. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__fetchmail_server_id
+msgid "Inbound Mail Server"
+msgstr "Server di posta in ingresso"
+
+#. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__message_is_follower
 msgid "Is Follower"
 msgstr "È seguito"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid ""
+"La certificazione allegata non è stata interpretata. Il messaggio è\n"
+"                        conservato integro; i dati strutturati non sono disponibili."
+msgstr ""
+"La certificazione allegata non è stata interpretata. Il messaggio è\n"
+"                        conservato integro; i dati strutturati non sono disponibili."
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__write_uid
@@ -198,14 +284,29 @@ msgid "Last Updated on"
 msgstr "Ultima modifica il"
 
 #. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Letta da"
+msgstr "Letta da"
+
+#. module: mailpec_base
 #: model:ir.model,name:mailpec_base.model_ir_mail_server
 msgid "Mail Server"
 msgstr "Server di posta"
 
 #. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Mese di ricezione"
+msgstr "Mese di ricezione"
+
+#. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__message_has_error
 msgid "Message Delivery error"
 msgstr "Errore di consegna messaggio"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_kind
+msgid "Message Kind"
+msgstr "Tipo messaggio"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__message_id
@@ -218,19 +319,29 @@ msgid "Messages"
 msgstr "Messaggi"
 
 #. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "Messaggio"
+msgstr "Messaggio"
+
+#. module: mailpec_base
+#: model:ir.model.fields.selection,name:mailpec_base.selection__mailpec_mail__pec_kind__messaggio_pec
+msgid "Messaggio PEC"
+msgstr "Messaggio PEC"
+
+#. module: mailpec_base
 #: model:ir.model,name:mailpec_base.model_mailpec_mail
 msgid "Messaggio PEC ricevuto"
 msgstr "Messaggio PEC ricevuto"
 
 #. module: mailpec_base
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
-msgid "Mittente"
-msgstr "Mittente"
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
+msgid "Messaggio di origine"
+msgstr "Messaggio di origine"
 
 #. module: mailpec_base
 #: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
-msgid "Mittente / Destinatario"
-msgstr "Mittente / Destinatario"
+msgid "Messaggio originale"
+msgstr "Messaggio originale"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__my_activity_date_deadline
@@ -258,9 +369,14 @@ msgid "Next Activity Type"
 msgstr "Tipo prossima attività"
 
 #. module: mailpec_base
+#: model:ir.model.fields.selection,name:mailpec_base.selection__mailpec_mail__pec_kind__non_certificata
+msgid "Non certificata"
+msgstr "Non certificata"
+
+#. module: mailpec_base
 #: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
-msgid "Non elaborate"
-msgstr "Non elaborate"
+msgid "Non classificate"
+msgstr "Non classificate"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__message_needaction_counter
@@ -283,9 +399,29 @@ msgid "Number of messages with delivery error"
 msgstr "Numero di messaggi con errore di consegna"
 
 #. module: mailpec_base
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
-msgid "Oggetto..."
-msgstr "Oggetto..."
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__origin_message_id
+msgid "Original Message"
+msgstr "Messaggio di origine"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__origin_model
+msgid "Original Model"
+msgstr "Modello originale"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__origin_res_id
+msgid "Original Record ID"
+msgstr "ID record originale"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__original_email_from
+msgid "Original Sender"
+msgstr "Mittente originale"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__original_subject
+msgid "Original Subject"
+msgstr "Oggetto originale"
 
 #. module: mailpec_base
 #: model:ir.model,name:mailpec_base.model_mail_mail
@@ -294,17 +430,43 @@ msgstr "Posta in uscita"
 
 #. module: mailpec_base
 #: model:ir.ui.menu,name:mailpec_base.mailpec_menu_root
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
 msgid "PEC"
 msgstr "PEC"
 
 #. module: mailpec_base
-#: model:ir.actions.act_window,name:mailpec_base.mailpec_mail_action
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_form
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_list
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
-msgid "PEC Mail"
-msgstr "Email PEC"
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_delivery
+msgid "PEC Delivery Address"
+msgstr "Indirizzo di consegna PEC"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_error
+msgid "PEC Error Code"
+msgstr "Codice errore PEC"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_extended_error
+msgid "PEC Extended Error"
+msgstr "Dettaglio errore PEC"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_identifier
+msgid "PEC Identifier"
+msgstr "Identificativo PEC"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_provider
+msgid "PEC Issuing Provider"
+msgstr "Gestore PEC emittente"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_receipt_date
+msgid "PEC Receipt Date"
+msgstr "Data ricevuta PEC"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_receipt_detail
+msgid "PEC Receipt Detail"
+msgstr "Dettaglio ricevuta PEC"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_receipt_type
@@ -312,9 +474,19 @@ msgid "PEC Receipt Type"
 msgstr "Tipo ricevuta PEC"
 
 #. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_recipients
+msgid "PEC Recipients"
+msgstr "Destinatari certificati"
+
+#. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_ref_message_id
 msgid "PEC Reference Message-Id"
 msgstr "Message-Id di riferimento PEC"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_transport
+msgid "PEC Transport"
+msgstr "Trasporto PEC"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__processed
@@ -325,6 +497,11 @@ msgstr "Elaborato"
 #: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
 msgid "Raggruppa per"
 msgstr "Raggruppa per"
+
+#. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__read_by_user_id
+msgid "Read By"
+msgstr "Letta da"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__date_received
@@ -342,10 +519,15 @@ msgid "Responsible User"
 msgstr "Utente responsabile"
 
 #. module: mailpec_base
+#: model:ir.model.fields.selection,name:mailpec_base.selection__mailpec_mail__pec_kind__ricevuta
 #: model:ir.model.fields.selection,name:mailpec_base.selection__mailpec_mail__state__ricevuta
-#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
 msgid "Ricevuta"
 msgstr "Ricevuta"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Senza messaggio di origine"
+msgstr "Senza messaggio di origine"
 
 #. module: mailpec_base
 #. odoo-python
@@ -355,8 +537,13 @@ msgstr "Senza oggetto"
 
 #. module: mailpec_base
 #: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
-msgid "Stato"
-msgstr "Stato"
+msgid "Solo messaggi"
+msgstr "Solo messaggi"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Solo ricevute"
+msgstr "Solo ricevute"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__state
@@ -377,9 +564,14 @@ msgstr ""
 "Pianificate: attività future."
 
 #. module: mailpec_base
-#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__name
+#: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__display_subject
 msgid "Subject"
 msgstr "Oggetto"
+
+#. module: mailpec_base
+#: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
+msgid "Tipo messaggio"
+msgstr "Tipo messaggio"
 
 #. module: mailpec_base
 #: model_terms:ir.ui.view,arch_db:mailpec_base.mailpec_mail_view_search
@@ -395,3 +587,18 @@ msgstr "A"
 #: model:ir.model.fields,help:mailpec_base.field_mailpec_mail__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr "Tipo di attività eccezione sul record."
+
+#~ msgid "Mittente"
+#~ msgstr "Mittente"
+
+#~ msgid "Mittente / Destinatario"
+#~ msgstr "Mittente / Destinatario"
+
+#~ msgid "Oggetto..."
+#~ msgstr "Oggetto..."
+
+#~ msgid "PEC Mail"
+#~ msgstr "Email PEC"
+
+#~ msgid "Stato"
+#~ msgstr "Stato"

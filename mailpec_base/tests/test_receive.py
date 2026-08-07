@@ -229,3 +229,46 @@ class TestReceive(MailCommon):
             fields.Datetime.now().date(),
             "date_received non deve essere l'istante di ingestione",
         )
+
+    def test_fetchmail_server_is_recorded(self):
+        """(g) Il record conserva il server che lo ha scaricato.
+
+        In produzione il valore non lo scrive questo modulo: fetchmail mette
+        ``default_fetchmail_server_id`` nel contesto
+        (odoo_core/odoo/addons/mail/models/fetchmail.py L223) e lo propaga a
+        ``message_process`` (L238, L271); la ``create`` lo applica come
+        qualunque default di contesto. Il test riproduce quel contesto, quindi
+        fallisce se il campo sparisce o viene rinominato - che e' l'unico modo
+        in cui questa catena si puo' rompere.
+        """
+        server = self.env["fetchmail.server"].create(
+            {"name": "PEC di prova", "server_type": "imap"},
+        )
+
+        record = (
+            self.env["mailpec.mail"]
+            .with_context(default_fetchmail_server_id=server.id)
+            .message_new({"subject": "Ricevuta con server", "message_id": "<g@x>"})
+        )
+
+        self.assertEqual(
+            record.fetchmail_server_id,
+            server,
+            "il record deve conservare il server di posta che lo ha scaricato",
+        )
+
+    def test_fetchmail_server_empty_without_context(self):
+        """(h) Senza fetchmail il campo resta VUOTO, non indovinato.
+
+        Un messaggio puo' arrivare anche per altra via (gateway SMTP diretto,
+        reimport di .eml). Dichiarare un server che non ha scaricato nulla
+        sarebbe un dato inventato su un record con valore legale.
+        """
+        record = self.env["mailpec.mail"].message_new(
+            {"subject": "Ricevuta senza server", "message_id": "<h@x>"},
+        )
+
+        self.assertFalse(
+            record.fetchmail_server_id,
+            "senza contesto fetchmail il campo non deve essere valorizzato",
+        )

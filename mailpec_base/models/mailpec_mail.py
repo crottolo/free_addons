@@ -27,7 +27,10 @@ class MailpecMail(models.Model):
     _name = "mailpec.mail"
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Messaggio PEC ricevuto"
-    _order = "id desc"
+    # date_received, NON id: su un fetch massivo l'ordine di inserimento non
+    # coincide con quello cronologico (156 messaggi dal 2023 al 2026 sono
+    # entrati tutti in 17 secondi). id resta come spareggio deterministico.
+    _order = "date_received desc, id desc"
     _primary_email = "email_from"
 
     color = fields.Integer(string="Color")
@@ -44,12 +47,24 @@ class MailpecMail(models.Model):
     )
     user_id = fields.Many2one("res.users", string="Responsible")
     active = fields.Boolean(string="Active", default=True)
-    name = fields.Char(string="Subject")
+    name = fields.Char(string="Envelope Subject")
     email_from = fields.Char(string="From")
     email_to = fields.Char(string="To")
     body = fields.Html(string="Body")
     date_received = fields.Datetime(string="Received On")
     message_id = fields.Char(string="Message-Id", index="btree")
+    # Nessun codice nostro lo scrive: fetchmail mette default_fetchmail_server_id
+    # nel contesto (mail/models/fetchmail.py L223) e la create lo applica come
+    # qualunque default. Stesso nome e stesso meccanismo che il core usa su
+    # mail.mail (mail/models/mail_mail.py L94). Resta VUOTO se il messaggio e'
+    # arrivato per altra via: dichiarare un server che non ha scaricato nulla
+    # sarebbe un dato inventato.
+    fetchmail_server_id = fields.Many2one(
+        "fetchmail.server",
+        string="Inbound Mail Server",
+        readonly=True,
+        index="btree",
+    )
     # Header X-Riferimento-Message-ID: collega la ricevuta al messaggio originale.
     pec_ref_message_id = fields.Char(string="PEC Reference Message-Id", index="btree")
     # Header X-Ricevuta. RESTA Char, NON va convertito in Selection: e' una
@@ -126,6 +141,110 @@ class MailpecMail(models.Model):
         string="Status",
         default="ricevuta",
     )
+    # --- Presentazione per l'operatore -----------------------------------
+    # email_from e' sempre la busta del gestore (posta-certificata@...): su
+    # 156 messaggi reali assume 31 valori, tutti indirizzi di sistema. Non
+    # identifica nessuno. Stored perche' e' la colonna principale della
+    # lista e deve restare ordinabile, cercabile e raggruppabile.
+    counterpart = fields.Char(
+        string="Counterpart",
+        compute="_compute_counterpart",
+        store=True,
+    )
+    display_subject = fields.Char(
+        string="Subject",
+        compute="_compute_display_subject",
+        store=True,
+    )
+    # Non letta = campo VUOTO. Un solo campo invece di booleano + utente:
+    # l'assenza di un lettore e' gia' lo stato "da leggere", e i record gia'
+    # a DB partono corretti senza migrazione.
+    read_by_user_id = fields.Many2one(
+        "res.users",
+        string="Read By",
+        readonly=True,
+        index="btree",
+        tracking=True,
+    )
+
+    @api.depends("pec_kind", "original_email_from", "email_from", "pec_recipients")
+    def _compute_counterpart(self):
+        """Con chi ha a che fare questa riga.
+
+        Sui messaggi e' il mittente vero, sulle ricevute il destinatario del
+        nostro invio: una ricevuta non ha un mittente umano, certifica una
+        spedizione NOSTRA, quindi la controparte e' chi avevamo scritto.
+        """
+        for mail in self:
+            if mail.pec_kind == "ricevuta":
+                recipients = (mail.pec_recipients or "").splitlines()
+                mail.counterpart = recipients[0].split(" (")[0] if recipients else ""
+            else:
+                source = mail.original_email_from or mail.email_from or ""
+                mail.counterpart = parseaddr(source)[1] or source
+
+    @api.depends("original_subject", "name")
+    def _compute_display_subject(self):
+        for mail in self:
+            mail.display_subject = mail.original_subject or mail.name
+
+    @api.model
+    @api.readonly
+    def web_search_read(
+        self,
+        domain,
+        specification,
+        offset=0,
+        limit=None,
+        order=None,
+        count_limit=None,
+    ):
+        """Segnala a ``web_read`` che sta servendo un ELENCO, non una scheda.
+
+        Serve perche' ``web_search_read`` del core chiama ``web_read`` al suo
+        interno (web/models/models.py L46): senza questo flag, aprire la lista
+        marcherebbe come lette tutte le righe caricate. Il flag viaggia nel
+        contesto, che ``search_fetch`` propaga al recordset risultante.
+
+        Resta ``@api.readonly`` come il core: con la guardia attiva questo
+        ramo non scrive davvero nulla.
+        """
+        return super(
+            MailpecMail,
+            self.with_context(mailpec_listing=True),
+        ).web_search_read(
+            domain,
+            specification,
+            offset=offset,
+            limit=limit,
+            order=order,
+            count_limit=count_limit,
+        )
+
+    def web_read(self, specification):
+        """Marca il messaggio come letto quando se ne apre la scheda.
+
+        La distinzione lista/scheda e' STRUTTURALE, non basata sui campi
+        richiesti: si scrive solo quando la chiamata NON arriva da
+        ``web_search_read``. Un controllo sulla presenza di ``body`` nella
+        specification legherebbe il comportamento del modello al contenuto
+        della vista, e si romperebbe in silenzio al primo ritocco del form.
+
+        L'override NON ripete ``@api.readonly`` del core
+        (web/models/models.py L77): questo ramo scrive, quindi readonly
+        sarebbe falso. Senza quel decoratore la richiesta parte gia' in
+        read/write ed evita il rollback-e-rilancia di http.py L2163-2169.
+
+        Limite noto: un Many2one verso questo modello da un modulo esterno
+        produrrebbe letture annidate di co-record (models.py L118) che
+        marcherebbero come letti messaggi mai aperti. Oggi non accade: i
+        consumatori si agganciano via origin_model/origin_res_id.
+        """
+        if not self.env.context.get("mailpec_listing"):
+            unread = self.filtered(lambda mail: not mail.read_by_user_id)
+            if unread:
+                unread.sudo().write({"read_by_user_id": self.env.user.id})
+        return super().web_read(specification)
 
     @api.model
     def _parse_daticert(self, xml_bytes):
