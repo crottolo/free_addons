@@ -84,7 +84,10 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Corpo" name="body">
+                        <page string="Messaggio" name="original_body" invisible="not original_body">
+                            <field name="original_body" widget="html" readonly="1" />
+                        </page>
+                        <page string="Busta del gestore" name="body">
                             <field name="body" widget="html" readonly="1" />
                         </page>
                         <page string="Destinatari certificati" name="pec_recipients">

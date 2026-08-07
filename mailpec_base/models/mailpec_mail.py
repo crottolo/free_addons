@@ -6,7 +6,7 @@ from email.message import Message
 from email.utils import parseaddr
 
 from odoo import _, api, fields, models
-from odoo.tools.mail import decode_message_header
+from odoo.tools.mail import decode_message_header, plaintext2html
 
 _logger = logging.getLogger(__name__)
 
@@ -159,6 +159,14 @@ class MailpecMail(models.Model):
         compute="_compute_display_subject",
         store=True,
     )
+    # sanitize esplicito benche' sia gia' il default: questo HTML arriva da
+    # una mail ESTERNA, e la sanificazione e' l'unica difesa contro script
+    # iniettati in un messaggio. Non e' una preferenza di formattazione.
+    original_body = fields.Html(
+        string="Original Body",
+        compute="_compute_original_body",
+        sanitize=True,
+    )
     # Non letta = campo VUOTO. Un solo campo invece di booleano + utente:
     # l'assenza di un lettore e' gia' lo stato "da leggere", e i record gia'
     # a DB partono corretti senza migrazione.
@@ -190,6 +198,62 @@ class MailpecMail(models.Model):
     def _compute_display_subject(self):
         for mail in self:
             mail.display_subject = mail.original_subject or mail.name
+
+    def _compute_original_body(self):
+        """Corpo del solo messaggio umano, letto da ``postacert.eml``.
+
+        NON memorizzato di proposito: il contenuto vive gia' nell'allegato,
+        quindi cosi' funziona anche sui record atterrati prima che il campo
+        esistesse, senza alcun riempimento retroattivo.
+
+        ``original_email.eml`` NON va usato al suo posto, per quanto il nome
+        lo suggerisca: e' l'intera busta scaricata (multipart/signed) e il suo
+        corpo e' proprio il testo del gestore ("Messaggio di posta
+        certificata", "Ricevuta di accettazione", "Anomalia nel messaggio").
+        Il messaggio del mittente sta solo dentro postacert.eml.
+        """
+        # bin_size=False OBBLIGATORIO: il form legge in contesto bin_size=True e
+        # in quel contesto attachment.raw restituisce la dimensione formattata
+        # ("326.00 bytes") invece dei byte. Da shell non si vede, perche' quel
+        # contesto non c'e': il difetto compare solo aprendo la scheda.
+        attachments = (
+            self.env["ir.attachment"]
+            .sudo()
+            .with_context(bin_size=False)
+            .search(
+                [
+                    ("res_model", "=", self._name),
+                    ("res_id", "in", self.ids),
+                    ("name", "=", "postacert.eml"),
+                ],
+            )
+        )
+        by_record = {attachment.res_id: attachment for attachment in attachments}
+        for mail in self:
+            attachment = by_record.get(mail.id)
+            mail.original_body = (
+                self._pec_body_from_eml(attachment.raw) if attachment else False
+            )
+
+    @api.model
+    def _pec_body_from_eml(self, raw):
+        """HTML del corpo di un ``.eml``, o False se non si riesce a leggerlo.
+
+        Solo logga: un corpo illeggibile non deve impedire l'apertura della
+        scheda, dove restano comunque la busta e gli allegati originali.
+        """
+        try:
+            message = message_from_bytes(raw, policy=policy.SMTP)
+            part = message.get_body(preferencelist=("html", "plain"))
+            if part is None:
+                return False
+            content = part.get_content()
+            if part.get_content_type() == "text/plain":
+                return plaintext2html(content)
+            return content
+        except Exception:
+            _logger.exception("PEC: corpo di postacert.eml non leggibile")
+            return False
 
     @api.model
     @api.readonly
