@@ -26,7 +26,7 @@ business, si aggancia via origin_model / origin_res_id.
     ],
     "website": "https://singleflo.com",
     "maintainer": "Singleflo",
-    "version": "18.0.1.7.0",
+    "version": "18.0.1.11.0",
     "installable": True,
     "auto_install": False,
     "application": False,

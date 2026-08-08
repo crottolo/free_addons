@@ -4,9 +4,15 @@
         <field name="model">ir.mail_server</field>
         <field name="inherit_id" ref="base.ir_mail_server_form" />
         <field name="arch" type="xml">
+            <!--
+                from_filter diventa obbligatorio con is_pec: e' da li' che il
+                modulo legge l'indirizzo della casella, non da un campo proprio.
+            -->
+            <field name="from_filter" position="attributes">
+                <attribute name="required">is_pec</attribute>
+            </field>
             <field name="from_filter" position="after">
                 <field name="is_pec" />
-                <field name="pec_email_from" invisible="not is_pec" required="is_pec" />
             </field>
         </field>
     </record>
