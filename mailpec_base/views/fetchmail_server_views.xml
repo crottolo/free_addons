@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="fetchmail_server_form_pec" model="ir.ui.view">
+        <field name="model">fetchmail.server</field>
+        <field name="inherit_id" ref="mail.view_email_server_form" />
+        <field name="arch" type="xml">
+            <!--
+                Accanto a object_id, non nella pagina "Advanced": quella e'
+                groups="base.group_no_one" e sarebbe invisibile fuori dalla
+                modalita' sviluppatore, cioe' proprio a chi configura la casella.
+            -->
+            <field name="object_id" position="after">
+                <field name="is_pec" />
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -72,6 +72,7 @@ msgid "Busta del gestore"
 msgstr "Busta del gestore"
 
 #. module: mailpec_base
+#: model:ir.model.fields,field_description:mailpec_base.field_fetchmail_server__is_pec
 #: model:ir.model.fields,field_description:mailpec_base.field_ir_mail_server__is_pec
 msgid "Casella PEC"
 msgstr "Casella PEC"

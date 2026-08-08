@@ -26,7 +26,7 @@ business, si aggancia via origin_model / origin_res_id.
     ],
     "website": "https://singleflo.com",
     "maintainer": "Singleflo",
-    "version": "18.0.1.6.0",
+    "version": "18.0.1.7.0",
     "installable": True,
     "auto_install": False,
     "application": False,
@@ -43,6 +43,7 @@ business, si aggancia via origin_model / origin_res_id.
         "security/ir.model.access.csv",
         "data/mailpec_data.xml",
         "views/ir_mail_server_views.xml",
+        "views/fetchmail_server_views.xml",
         "views/mailpec_mail_views.xml",
     ],
 }

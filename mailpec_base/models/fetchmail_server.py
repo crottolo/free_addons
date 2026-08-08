@@ -1,8 +1,14 @@
-from odoo import models
+from odoo import fields, models
 
 
 class FetchmailServer(models.Model):
     _inherit = "fetchmail.server"
+
+    is_pec = fields.Boolean(
+        string="Casella PEC",
+        help="Instrada su mailpec.mail TUTTO cio' che arriva da questo server, "
+        "anche i messaggi di servizio del gestore.",
+    )
 
     def fetch_mail(self, raise_exception=True):
         """Porta l'id del server in una chiave di contesto NON prefissata ``default_``.
