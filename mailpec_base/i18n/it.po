@@ -251,16 +251,6 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionato, alcuni messaggi hanno un errore di consegna."
 
 #. module: mailpec_base
-#: model:ir.model.fields,field_description:mailpec_base.field_ir_mail_server__pec_email_from
-msgid "Indirizzo PEC"
-msgstr "Indirizzo PEC"
-
-#. module: mailpec_base
-#: model:ir.model.fields,help:mailpec_base.field_ir_mail_server__pec_email_from
-msgid "Indirizzo della casella autenticata sul server."
-msgstr "Indirizzo della casella autenticata sul server."
-
-#. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__fetchmail_server_id
 msgid "Inbound Mail Server"
 msgstr "Server di posta in ingresso"
