@@ -403,10 +403,17 @@ class MailpecMail(models.Model):
     def _pec_kind(self, receipt_type, transport):
         """Classifica il messaggio nelle tre specie che una casella PEC riceve.
 
-        Catena a PRIORITA', non a mutua esclusione: X-Ricevuta vince su
-        X-Trasporto perche' una ricevuta porta ENTRAMBI gli header, mentre la
-        busta di trasporto porta il solo X-Trasporto. Invertire l'ordine
-        classificherebbe come messaggio ogni ricevuta.
+        I due header appartengono a categorie DISGIUNTE: l'Allegato tecnico al
+        DM 2 novembre 2005 par. 6.3.4 definisce X-Trasporto sulle buste, ed e'
+        proprio l'header con cui il punto di consegna riconosce una busta
+        valida; X-Ricevuta sta su ricevute e avvisi. Riscontro sul traffico
+        reale: 0 ricevute su 119 portano X-Trasporto.
+
+        L'ordine e' quindi ridondante nei fatti, e resta come difesa: se un
+        gestore emettesse entrambi gli header, una ricevuta va classificata
+        ricevuta. NON e' vero - come diceva questo commento fino alla v1.6 -
+        che una ricevuta porti entrambi gli header: quella motivazione era
+        smentita sia dai dati sia dalla norma.
 
         Nessuna corrispondenza -> False, cioe' campo NON valorizzato. E' una
         decisione esplicita: NON esiste un quarto valore "sconosciuto", perche'
