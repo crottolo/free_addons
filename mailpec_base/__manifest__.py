@@ -37,6 +37,7 @@ business, si aggancia via origin_model / origin_res_id.
     # sull'icona generica. Dichiarandola, _get_icon_image usa questo percorso
     # e file_open accetta .svg (base/models/ir_module.py L280).
     "icon": "/mailpec_base/static/description/icon.svg",
+    "images": ["images/main_screenshot.png"],
     "depends": ["mail"],
     "data": [
         "security/mailpec_security.xml",
