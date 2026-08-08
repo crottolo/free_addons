@@ -1,0 +1,438 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">PEC - Invio e Ricezione</h2>
+        <h3 class="oe_slogan">Italian Certified Email (PEC) for Odoo 18</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <p class="text-center" style="font-size:16px; color:#666;">
+            La PEC ha valore legale: una ricevuta è un documento, e deve atterrare <strong>intatta</strong>
+            prima che qualcuno provi a interpretarla. Questo modulo fa spedire Odoo da una casella PEC senza
+            che il gestore rifiuti il messaggio, e trasforma la valanga di buste automatiche in un elenco su
+            cui una persona può davvero lavorare.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">In English</h2>
+        <h3 class="oe_slogan">PEC exists only in Italy, so the rest of this page is written in Italian</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">What PEC is</strong></p>
+            <p>
+                <em>Posta Elettronica Certificata</em> is the Italian legally binding email system. Providers
+                wrap every message in a signed envelope and issue certified receipts admissible as proof of
+                delivery.
+            </p>
+            <p><strong style="color:#875A7B;">Sending</strong></p>
+            <p>
+                Forces the envelope sender to the authenticated PEC address, otherwise the provider rejects
+                the message and Odoo records no error. Keeps PEC servers out of automatic selection, so
+                ordinary mail never goes out through the certified channel.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Receiving</strong></p>
+            <p>
+                Certified messages land intact on a dedicated model, are classified from the mandated PEC
+                headers, parsed from <code>daticert.xml</code> and correlated back to the message you sent.
+                Real sender, subject and body are surfaced from the enclosed original, so the list shows
+                people instead of 200 identical provider envelopes.
+            </p>
+            <p><strong style="color:#875A7B;">Requirements</strong></p>
+            <p>
+                Odoo 18, depends on <code>mail</code> only, LGPL-3, Community or Enterprise.
+                Not tied to <code>l10n_it_edi</code>. 45 automated tests on real samples from 5 providers.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">I due problemi che risolve</h2>
+        <h3 class="oe_slogan">The two problems it solves</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">In invio: il gestore rifiuta, e non te ne accorgi</strong></p>
+            <p>
+                Un gestore PEC accetta solo messaggi il cui envelope sender è l'indirizzo PEC autenticato.
+                Odoo lo ricava dall'indirizzo di bounce dell'azienda, quindi il gestore scarta il messaggio
+                e <strong>Odoo non registra alcun errore</strong>.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">In ricezione: i messaggi sembrano tutti uguali</strong></p>
+            <p>
+                Il gestore rispedisce ogni cosa dallo stesso indirizzo
+                <code>posta-certificata@&lt;dominio&gt;</code>, con un oggetto suo. In una casella normale
+                200 messaggi mostrano lo stesso mittente e lo stesso prefisso: nessuno capisce chi ha
+                scritto, né di cosa.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Invio da una casella PEC</h2>
+        <h3 class="oe_slogan">Sending: one checkbox on the outgoing mail server</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Envelope sender forzato</strong></p>
+            <p>
+                Il <code>Return-Path</code> viene impostato sull'indirizzo PEC autenticato prima che il
+                messaggio lasci Odoo, nel punto in cui il core ricava anche l'indirizzo di bounce. Impostare
+                l'header più a valle non basta: il contesto ha la precedenza sull'header.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">La posta ordinaria resta fuori dal canale PEC</strong></p>
+            <p>
+                I server PEC sono esclusi dalla selezione automatica. Senza questo, una casella PEC con
+                <code>from_filter</code> vuoto e sequenza bassa intercetterebbe in silenzio tutta la posta
+                aziendale, bruciando invii certificati sulle newsletter.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Ricezione: tre criteri di instradamento</h2>
+        <h3 class="oe_slogan">Receiving: three OR-ed criteria, grounded in the Italian technical rules</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p>
+                Un messaggio in ingresso finisce sull'elenco PEC se soddisfa <strong>almeno uno</strong> di
+                tre criteri, valutati in OR. Nessuno basta da solo, ed è esattamente il motivo per cui
+                convivono tutti e tre.
+            </p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">1. Header PEC</strong></p>
+            <p>
+                <code>X-Ricevuta</code> oppure <code>X-Trasporto</code>. L'Allegato tecnico al DM 2 novembre
+                2005 li prescrive ciascuno per la propria categoria, quindi il criterio vale
+                <strong>per costruzione con qualunque gestore</strong>, anche mai incontrato, e su
+                qualunque canale di ingresso.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">2. Casella dichiarata PEC</strong></p>
+            <p>
+                Una spunta sul server di posta in ingresso instrada <strong>tutto</strong> ciò che vi arriva,
+                comprese le comunicazioni di servizio del gestore (avvisi di quota, rinnovi) che header PEC
+                non ne hanno e altrimenti sfuggirebbero verso il gateway ordinario.
+            </p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p><strong style="color:#875A7B;">3. Mittente</strong></p>
+            <p>
+                Un unico parametro di sistema, <code>posta-certificata@</code>, confrontato per sottostringa:
+                cattura ogni gestore senza elencarne nessuno. Resta come ripiego, non più da solo. La norma
+                prescrive quel mittente per la sola <em>busta di trasporto</em>; per le ricevute nessuna
+                prescrizione equivalente esiste, ed è la ragione per cui sono stati aggiunti i criteri 1 e 2.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Un elenco su cui si lavora davvero</h2>
+        <h3 class="oe_slogan">A list an operator can actually triage</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">La controparte vera, non il gestore</strong></p>
+            <p>
+                Sui messaggi è il mittente reale, estratto dall'originale imbustato. Sulle ricevute è il
+                destinatario del tuo invio: una ricevuta non ha un mittente umano, certifica una spedizione
+                <em>tua</em>. Memorizzata, così la colonna resta ordinabile, cercabile e raggruppabile.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Oggetto senza il prefisso del gestore</strong></p>
+            <p>
+                L'oggetto vero del messaggio imbustato sostituisce
+                <code>POSTA CERTIFICATA: ...</code> e <code>ANOMALIA MESSAGGIO: ...</code>.
+            </p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Non lette in grassetto, marcate all'apertura</strong></p>
+            <p>
+                Un messaggio risulta letto quando se ne apre la scheda, non quando scorre in un elenco.
+                La distinzione è strutturale, quindi non si rompe al primo ritocco della vista.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Errori certificati in rosso</strong></p>
+            <p>
+                I mancati recapiti dichiarati dal gestore sono evidenziati, con il testo esteso dell'errore
+                in un riquadro sulla scheda.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Tre specie di messaggio, distinte</h2>
+        <h3 class="oe_slogan">Three kinds of message, told apart</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <table style="width:100%; border-collapse:collapse; background:#fff; font-size:14px;">
+                <thead>
+                    <tr style="background:#875A7B; color:#fff;">
+                        <th style="padding:8px; text-align:left; border:1px solid #ddd;">Specie</th>
+                        <th style="padding:8px; text-align:left; border:1px solid #ddd;">X-Ricevuta</th>
+                        <th style="padding:8px; text-align:left; border:1px solid #ddd;">X-Trasporto</th>
+                        <th style="padding:8px; text-align:left; border:1px solid #ddd;">Che cos'è</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ddd;"><strong>Ricevuta</strong></td>
+                        <td style="padding:8px; border:1px solid #ddd;">valorizzato</td>
+                        <td style="padding:8px; border:1px solid #ddd;">assente</td>
+                        <td style="padding:8px; border:1px solid #ddd;">Certifica una tua spedizione. È essa stessa il documento legale.</td>
+                    </tr>
+                    <tr style="background:#f8f9fa;">
+                        <td style="padding:8px; border:1px solid #ddd;"><strong>Messaggio PEC</strong></td>
+                        <td style="padding:8px; border:1px solid #ddd;">assente</td>
+                        <td style="padding:8px; border:1px solid #ddd;"><code>posta-certificata</code></td>
+                        <td style="padding:8px; border:1px solid #ddd;">Un messaggio certificato autentico, spedito da terzi.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ddd;"><strong>Non certificata</strong></td>
+                        <td style="padding:8px; border:1px solid #ddd;">assente</td>
+                        <td style="padding:8px; border:1px solid #ddd;"><code>errore</code></td>
+                        <td style="padding:8px; border:1px solid #ddd;">Posta ordinaria recapitata alla casella PEC. In pratica: spam e phishing.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size:14px; color:#666; margin-top:12px;">
+                Ai messaggi non riconosciuti <strong>non</strong> viene assegnata una quarta specie
+                «sconosciuto»: dichiarerebbe una classificazione mai avvenuta. Atterrano con il campo vuoto
+                e si trovano con il filtro dedicato. Nulla viene archiviato, scartato o dedotto per congettura.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Il messaggio umano, non la busta del gestore</h2>
+        <h3 class="oe_slogan">The human message, not the provider's wrapper</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Corpo letto da postacert.eml</strong></p>
+            <p>
+                Il testo che una persona ha davvero scritto viene estratto dall'originale imbustato e mostrato
+                in una pagina dedicata, sanificato. Calcolato alla lettura, quindi funziona anche sui record
+                atterrati prima che la funzione esistesse, senza alcun riempimento retroattivo.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">Correlato al messaggio inviato</strong></p>
+            <p>
+                La ricevuta risale al messaggio che hai spedito, tramite il Message-ID di riferimento, e da lì
+                al record di business su cui era stato registrato — senza che questo modulo conosca i tuoi
+                modelli.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Generico per scelta</h2>
+        <h3 class="oe_slogan">Generic by design: build your vertical on top of it</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p>
+                Nessuna conoscenza del tuo business: niente pratiche, tutele, pagamenti o logiche legate a un
+                cliente. Il collegamento ai tuoi record avviene tramite <code>origin_model</code> e
+                <code>origin_res_id</code>, risolti dal messaggio correlato. Ci costruisci sopra il tuo
+                verticale senza dover forkare il modulo.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Configurazione</h2>
+        <h3 class="oe_slogan">Configuration</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">In uscita — Impostazioni &gt; Tecnico &gt; Server di posta in uscita</strong></p>
+            <ul>
+                <li>Spunta <strong>Casella PEC</strong> e indica l'indirizzo PEC autenticato</li>
+                <li>Lascia <code>from_filter</code> <strong>vuoto</strong></li>
+                <li>Imposta il <code>From</code> dei mail template sullo stesso indirizzo PEC</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <p><strong style="color:#875A7B;">In ingresso — Impostazioni &gt; Tecnico &gt; Server di posta in ingresso</strong></p>
+            <ul>
+                <li><strong>Mantieni allegati</strong> attivo, o la certificazione viene scartata in silenzio</li>
+                <li><strong>Conserva originale</strong> attivo, necessario al valore legale</li>
+                <li>Spunta <strong>Casella PEC</strong> su una casella dedicata</li>
+                <li>Lascia vuoto <em>Crea un nuovo record</em></li>
+            </ul>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p style="padding:12px; border-left:4px solid #875A7B; background-color:#f8f9fa;">
+                <strong>Per ricevere non serve alcun server in uscita.</strong> Se vuoi solo tenere sotto
+                controllo una casella PEC in ingresso, configura il solo server di ricezione.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Chi vede l'applicazione</h2>
+        <h3 class="oe_slogan">Visibility is governed by a dedicated group</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p>
+                Il menu <strong>PEC</strong> è riservato al gruppo <strong>Utente PEC</strong>, assegnabile da
+                <em>Impostazioni &gt; Utenti</em>. È una restrizione di sola presentazione: i diritti di
+                accesso al modello restano invariati, quindi i record restano raggiungibili per altra via.
+                Se ti serve riservatezza sui contenuti, occorre intervenire anche sulle regole di accesso.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Che cosa NON fa</h2>
+        <h3 class="oe_slogan">Stated up front, so nothing surprises you in production</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <ul>
+                <li><strong>Nessuna verifica della firma S/MIME.</strong> La busta firmata viene conservata, non validata crittograficamente.</li>
+                <li><strong>Le ricevute tornano alla casella che ha spedito.</strong> Se invii da un indirizzo e ne monitori un altro, non vedrai mai le conferme dei tuoi invii.</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <ul>
+                <li><strong>La correlazione richiede che l'invio parta da Odoo.</strong> Le PEC spedite dalla webmail del gestore atterrano correttamente ma restano senza origine.</li>
+                <li><strong>La posta di servizio del gestore</strong> viene catturata solo se la casella è dichiarata PEC.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Dettagli tecnici</h2>
+        <h3 class="oe_slogan">Technical details</h3>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p><strong>Funzionalità</strong> / <em>Features</em></p>
+            <ul>
+                <li>Return-Path forzato sull'indirizzo PEC autenticato</li>
+                <li>Server PEC esclusi dalla selezione automatica</li>
+                <li>Tre criteri di instradamento in OR, fondati sulla norma</li>
+                <li>Interpretazione strutturata di <code>daticert.xml</code></li>
+                <li>Mittente, oggetto e corpo veri da <code>postacert.eml</code></li>
+                <li>Correlazione all'invio e al record di business</li>
+                <li>Elenco di triage, filtri, raggruppamenti, tracciamento letture</li>
+                <li>Record in sola lettura: nulla si crea o modifica a mano</li>
+                <li>Gruppo dedicato per la visibilità dell'app</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <p><strong>Requisiti</strong> / <em>Requirements</em></p>
+            <ul>
+                <li>Odoo 18.0</li>
+                <li>Dipendenze: solo <code>mail</code></li>
+                <li>Edizione: Community / Enterprise</li>
+                <li>Licenza: LGPL-3</li>
+                <li>Ambito: Italia (la PEC è un sistema italiano)</li>
+                <li><strong>Non</strong> dipende da <code>l10n_it_edi</code></li>
+                <li>45 test automatici su campioni reali di 5 gestori</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Installazione</h2>
+        <h3 class="oe_slogan">Installation</h3>
+        <div class="oe_span12">
+            <ol>
+                <li>Copia il modulo nella cartella degli addons</li>
+                <li>App &gt; Aggiorna elenco applicazioni</li>
+                <li>Cerca «PEC - Invio e Ricezione» e installa</li>
+                <li>Configura il server di posta in ingresso, e quello in uscita se spedisci anche</li>
+                <li>Assegna il gruppo <strong>Utente PEC</strong> a chi deve vedere l'app</li>
+            </ol>
+            <p style="margin-top:16px; padding:12px; border-left:4px solid #875A7B; background-color:#f8f9fa;">
+                <strong>Attenzione:</strong> vengono scaricati solo i messaggi non letti, e quelli scaricati
+                vengono marcati come letti sul server. Attivare la casella su una coda arretrata numerosa la
+                marca tutta come letta in un colpo solo. Valuta lo stato della casella prima, soprattutto se
+                usi «non letto» come coda di lavoro esterna.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Changelog</h2>
+        <div class="oe_span12">
+            <p><strong>Versione 18.0.1.7.0</strong></p>
+            <ul>
+                <li>Instradamento su tre criteri in OR: header PEC, casella dichiarata, mittente</li>
+                <li>Spunta <strong>Casella PEC</strong> sul server di posta in ingresso</li>
+                <li>Gruppo di visibilità <strong>Utente PEC</strong> sul menu dell'app</li>
+                <li>Corpo del messaggio originale estratto da <code>postacert.eml</code></li>
+                <li>Viste in sola lettura e tracciamento della lettura per utente</li>
+                <li>Controparte reale e oggetto pulito nell'elenco di triage</li>
+                <li>Interpretazione di <code>daticert.xml</code> e correlazione al messaggio inviato</li>
+                <li>Envelope sender corretto in invio</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Assistenza</h2>
+        <div class="oe_span12 text-center">
+            <p>Per assistenza tecnica, segnalazioni o richieste di funzionalità:</p>
+            <p><strong>Sito:</strong> https://singleflo.com</p>
+            <p style="margin-top:20px; color:#888; font-size:12px;">
+                Sviluppato da Persevida S.L. — soluzioni Odoo per il mercato italiano.<br/>
+                Developed by Persevida S.L. — Odoo solutions for the Italian market.
+            </p>
+        </div>
+    </div>
+</section>
