@@ -408,9 +408,12 @@
     <div class="oe_row oe_spaced">
         <h2 class="oe_slogan" style="color:#875A7B;">Changelog</h2>
         <div class="oe_span12">
-            <p><strong>Versione 18.0.1.7.0</strong></p>
+            <p><strong>Versione 18.0.1.11.0</strong></p>
             <ul>
-                <li>Instradamento su tre criteri in OR: header PEC, casella dichiarata, mittente</li>
+                <li>Un solo campo da configurare: l'indirizzo PEC si legge da <code>from_filter</code>, con vincolo di validita'</li>
+                <li>Server, Reply-To e Return-Path scritti sul record alla creazione: un ritentativo non ricalcola nulla</li>
+                <li>Il server PEC viene individuato dal mittente: <code>mail_server_id</code> sul template non e' piu' necessario</li>
+                <li>Instradamento in ricezione su tre criteri in OR: header PEC, casella dichiarata, mittente</li>
                 <li>Spunta <strong>Casella PEC</strong> sul server di posta in ingresso</li>
                 <li>Gruppo di visibilità <strong>Utente PEC</strong> sul menu dell'app</li>
                 <li>Corpo del messaggio originale estratto da <code>postacert.eml</code></li>

@@ -12,13 +12,30 @@ Configurazione Invio
 ====================
 Per configurare l'invio tramite una casella PEC, accedere alla configurazione dei server di posta in uscita (``ir.mail_server``) e configurare come segue:
 
-1. Spuntare l'opzione **Casella PEC** (campo ``is_pec``). Questo esclude il server dalla selezione automatica per le email ordinarie e forza l'envelope sender all'indirizzo PEC.
-2. Valorizzare il campo **Indirizzo PEC** (campo ``pec_email_from``) con l'indirizzo email della casella PEC autenticata sul server.
+1. Valorizzare il campo **Filtro mittente** (``from_filter``) con l'indirizzo della casella PEC autenticata, e **nient'altro**: una sola voce, completa di chiocciola.
+2. Spuntare l'opzione **Casella PEC** (``is_pec``).
+
+Sono i due soli campi. L'indirizzo PEC **si legge da** ``from_filter``: non esiste un campo dedicato, perché sarebbe un duplicato di un valore che deve comunque stare lì, e due campi separati possono divergere — è così che un messaggio finisce per uscire da una casella certificata diversa da quella dichiarata. La regola di lettura è la stessa del core (``_get_test_email_from``): la prima voce che contiene una chiocciola.
+
+Un vincolo rifiuta le forme ambigue quando ``is_pec`` è attivo: campo vuoto, dominio nudo, o più indirizzi. Con più voci non si saprebbe quale casella autentica.
+
+Una casella PEC = un server. Con più identità PEC (es. ``ctr@``, ``cqs@``, ``legale@``) serve un ``ir.mail_server`` per ciascuna: la selezione automatica confronta il mittente con l'indirizzo di ciascun server.
+
+Su un server PEC il modulo allinea alla casella tutte e tre le identità del messaggio in uscita: **envelope sender**, **Return-Path** e **Reply-To**.
+
+Il ``Reply-To`` va forzato perché in modalità ``comment`` quello del template viene scartato: ``message_post`` lo ricalcola con ``_notify_get_reply_to`` (``mail_thread.py`` L2271-2272) e produce il catchall dell'alias domain. Su una PEC significherebbe far tornare una risposta **certificata** su una casella ordinaria, perdendone il valore legale. Le risposte rientrano invece nella casella che il modulo stesso scarica, e l'aggancio alla pratica si recupera da ``origin_model``.
+
+I tre valori sono scritti **sul record alla creazione**: ``mail_server_id``, ``reply_to`` e il ``Return-Path`` dentro ``headers``. Correggere soltanto all'invio non basterebbe: se lo SMTP è irraggiungibile il messaggio resta in coda con i valori del core, e a ogni ritentativo la correttezza dipenderebbe da quale server viene risolto in quel momento. Nascendo corretto, il record è anche ispezionabile: ciò che si legge su ``mail.mail`` è ciò che partirà.
+
+Il riallineamento all'invio resta come ultima difesa, per i messaggi entrati in coda **prima** di questa versione. Su quei record i campi memorizzati mostrano ancora il catchall e il bounce dell'alias domain: sono vecchi, non un difetto in corso.
 
 Vincoli operativi critici (da rispettare rigorosamente):
 --------------------------------------------------------
-* **Filtro mittente (from_filter) vuoto**: Lasciare il campo ``from_filter`` completamente **VUOTO** sui server PEC. Se valorizzato, il server PEC potrebbe non essere selezionato correttamente o causare il rifiuto dei messaggi.
+* **Perché il from_filter è obbligatorio**: lasciarlo vuoto **falsificherebbe il mittente**. Il server verrebbe raggiunto solo al passo 3 di ``_find_mail_server`` (``ir_mail_server.py`` L833-835), che restituisce ``notifications_email`` al posto del mittente; più a valle ``_prepare_email_message`` (L692-694) riscrive di conseguenza l'header ``From``. Misurato su traffico reale: con ``from_filter`` vuoto l'header diventava ``consulenzaffari <notifications@progettorimborso.it>``, che il gestore rifiuta. Con ``from_filter`` valorizzato resta ``consulenzaffari@pec.it``. In entrambi i casi l'envelope è corretto: **guardare il solo envelope non basta a validare la configurazione**. Dalla v18.0.1.11.0 un vincolo impedisce la configurazione sbagliata.
+
+  *(Nota: fino alla v18.0.1.7.0 questo README prescriveva l'esatto contrario, cioè di lasciare il campo vuoto. L'indicazione era sbagliata.)*
 * **Mittente del Mail Template**: Impostare il campo ``From`` di qualsiasi ``mail.template`` utilizzato per l'invio PEC esattamente all'indirizzo PEC configurato. Se il mittente dichiarato non coincide con la casella PEC autenticata, il gestore PEC rifiuterà il messaggio senza che Odoo rilevi alcun errore.
+* **Il campo ``mail_server_id`` sul template non è più obbligatorio**: dalla v18.0.1.8.0 il server PEC viene individuato dal mittente. Valorizzarlo resta comunque la scelta più esplicita.
 
 Configurazione Ricezione
 ========================
