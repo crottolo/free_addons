@@ -183,6 +183,6 @@
         </field>
     </record>
 
-    <menuitem id="mailpec_menu_root" name="PEC" sequence="90" />
+    <menuitem id="mailpec_menu_root" name="PEC" sequence="90" web_icon="mailpec_base,static/description/icon.svg"/>
     <menuitem id="mailpec_menu_mail" name="Email PEC" parent="mailpec_menu_root" action="mailpec_mail_action" sequence="10" />
 </odoo>
