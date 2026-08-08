@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="module_category_mailpec" model="ir.module.category">
+        <field name="name">PEC</field>
+        <field name="description">Accesso alla casella PEC in ingresso.</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <!--
+        Gruppo di SOLA PRESENTAZIONE: decide chi vede l'app PEC, non chi puo'
+        leggere i messaggi. ir.model.access.csv resta su base.group_user, quindi
+        i record restano raggiungibili per altra via (ricerca globale, azione
+        richiamata a mano, export). E' una scelta esplicita: qui si governa la
+        UX, non la riservatezza.
+    -->
+    <record id="group_mailpec_user" model="res.groups">
+        <field name="name">PEC User</field>
+        <field name="category_id" ref="module_category_mailpec" />
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        <!--
+            Gli amministratori vanno iscritti QUI, dal lato gruppo, e NON con un
+            <record id="base.user_admin"> che aggiunge groups_id: quel record ha
+            noupdate="t" in ir_model_data, quindi su -u Odoo lo SALTA senza dire
+            nulla e l'app sparisce a tutti, amministratore compreso. Verificato:
+            con quella forma il gruppo restava a zero membri.
+            Stesso pattern del core (hr_attendance/security, im_livechat/security).
+            base.default_user NON va incluso: iscriverebbe d'ufficio ogni nuovo
+            utente, che e' l'opposto di un accesso da assegnare.
+        -->
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" />
+    </record>
+</odoo>

@@ -22,6 +22,11 @@ msgid "<span class=\"fw-bold\">Errore certificato dal gestore: </span>"
 msgstr "<span class=\"fw-bold\">Errore certificato dal gestore: </span>"
 
 #. module: mailpec_base
+#: model:ir.module.category,description:mailpec_base.module_category_mailpec
+msgid "Accesso alla casella PEC in ingresso."
+msgstr "Accesso alla casella PEC in ingresso."
+
+#. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__message_needaction
 msgid "Action Needed"
 msgstr "Azione richiesta"
@@ -429,6 +434,7 @@ msgid "Outgoing Mails"
 msgstr "Posta in uscita"
 
 #. module: mailpec_base
+#: model:ir.module.category,name:mailpec_base.module_category_mailpec
 #: model:ir.ui.menu,name:mailpec_base.mailpec_menu_root
 msgid "PEC"
 msgstr "PEC"
@@ -487,6 +493,11 @@ msgstr "Message-Id di riferimento PEC"
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__pec_transport
 msgid "PEC Transport"
 msgstr "Trasporto PEC"
+
+#. module: mailpec_base
+#: model:res.groups,name:mailpec_base.group_mailpec_user
+msgid "PEC User"
+msgstr "Utente PEC"
 
 #. module: mailpec_base
 #: model:ir.model.fields,field_description:mailpec_base.field_mailpec_mail__processed

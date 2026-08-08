@@ -183,6 +183,12 @@
         </field>
     </record>
 
-    <menuitem id="mailpec_menu_root" name="PEC" sequence="90" web_icon="mailpec_base,static/description/icon.svg"/>
+    <!-- groups sul solo menu radice: i figli ereditano la restrizione. -->
+    <menuitem
+        id="mailpec_menu_root"
+        name="PEC"
+        sequence="90"
+        web_icon="mailpec_base,static/description/icon.svg"
+        groups="mailpec_base.group_mailpec_user" />
     <menuitem id="mailpec_menu_mail" name="Email PEC" parent="mailpec_menu_root" action="mailpec_mail_action" sequence="10" />
 </odoo>
